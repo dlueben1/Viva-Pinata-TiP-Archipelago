@@ -7,6 +7,18 @@ namespace VivaPinata.AP.Client.Configuration
 {
     public class Config : Configurable<Config>
     {
+        [Category("Runtime Probes")]
+        [DisplayName("Monitor player stats")]
+        [Description("Read and log player coins, experience, and Gardener Level changes. Restart the mod after changing.")]
+        [DefaultValue(true)]
+        public bool EnablePlayerStatsProbe { get; set; } = true;
+
+        [Category("Runtime Probes")]
+        [DisplayName("Observe native coin additions")]
+        [Description("Passively hook guest function 0x8252B960 and log natural calls. Restart the mod after changing.")]
+        [DefaultValue(true)]
+        public bool EnableCoinAdditionProbe { get; set; } = true;
+
         /*
             User Properties:
                 - Please put all of your configurable properties here.

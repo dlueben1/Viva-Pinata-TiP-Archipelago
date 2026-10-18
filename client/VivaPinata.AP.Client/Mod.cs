@@ -2,7 +2,6 @@
 using Reloaded.Mod.Interfaces;
 using VivaPinata.AP.Client.Configuration;
 using VivaPinata.AP.Client.Template;
-
 #if DEBUG
 using System.Diagnostics;
 #endif
@@ -45,6 +44,11 @@ namespace VivaPinata.AP.Client
         /// </summary>
         private readonly IModConfig _modConfig;
 
+        private readonly RexGlueProbe _rexGlueProbe;
+
+        private PlayerHookProbe? _playerHookProbe;
+        private CoinAdditionProbe? _coinAdditionProbe;
+
         public Mod(ModContext context)
         {
             _modLoader = context.ModLoader;
@@ -54,10 +58,10 @@ namespace VivaPinata.AP.Client
             _configuration = context.Configuration;
             _modConfig = context.ModConfig;
 
-#if DEBUG
-            // Attaches debugger in debug mode; ignored in release.
-            Debugger.Launch();
-#endif
+            //#if DEBUG
+            //            // Attaches debugger in debug mode; ignored in release.
+            //            Debugger.Launch();
+            //#endif
 
             // For more information about this template, please see
             // https://reloaded-project.github.io/Reloaded-II/ModTemplate/
@@ -66,6 +70,50 @@ namespace VivaPinata.AP.Client
             // and some other neat features, override the methods in ModBase.
 
             // TODO: Implement some mod logic
+            _logger.WriteLine(
+                $"[VivaPinata.AP] Client initialized inside PID {Environment.ProcessId}!"
+            );
+
+            _logger.WriteLine($"[VivaPinata.AP] Process: {Environment.ProcessPath}");
+
+            _logger.WriteLine($"[VivaPinata.AP] Native hooks available: {_hooks is not null}");
+            _logger.WriteLine(
+                $"[VivaPinata.AP] Runtime probes: player stats={_configuration.EnablePlayerStatsProbe}, "
+                    + $"coin additions={_configuration.EnableCoinAdditionProbe}."
+            );
+
+            bool enablePlayerStatsProbe = _configuration.EnablePlayerStatsProbe;
+            bool enableCoinAdditionProbe = _configuration.EnableCoinAdditionProbe;
+
+            _rexGlueProbe = new RexGlueProbe(
+                _logger,
+                enablePlayerStatsProbe,
+                enableCoinAdditionProbe,
+                (playerNativeFunction, coinAdditionNativeFunction) =>
+                {
+                    if (_hooks is null)
+                    {
+                        _logger.WriteLine(
+                            "[AP] Cannot install runtime probes: Reloaded.Hooks unavailable."
+                        );
+                        return;
+                    }
+
+                    if (enablePlayerStatsProbe)
+                        _playerHookProbe = new PlayerHookProbe(
+                            _logger,
+                            _hooks,
+                            playerNativeFunction
+                        );
+
+                    if (enableCoinAdditionProbe)
+                        _coinAdditionProbe = new CoinAdditionProbe(
+                            _logger,
+                            _hooks,
+                            coinAdditionNativeFunction
+                        );
+                }
+            );
         }
 
         #region Standard Overrides
@@ -75,6 +123,13 @@ namespace VivaPinata.AP.Client
             // ... your code here.
             _configuration = configuration;
             _logger.WriteLine($"[{_modConfig.ModId}] Config Updated: Applying");
+        }
+
+        public override void Disposing()
+        {
+            _rexGlueProbe?.Dispose();
+            _playerHookProbe?.Dispose();
+            _coinAdditionProbe?.Dispose();
         }
         #endregion
 
