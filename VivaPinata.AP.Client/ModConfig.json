@@ -1,0 +1,21 @@
+{
+  "ModId": "VivaPinata.AP.Client",
+  "ModName": "Viva Piñata TiP Archipelago",
+  "ModAuthor": "Kirbyfanner",
+  "ModVersion": "1.0.0",
+  "ModDescription": "Adds support for the Archipelago Randomizer to TiP!",
+  "ModDll": "VivaPinata.AP.Client.dll",
+  "ModIcon": "Preview.png",
+  "ModR2RManagedDll32": "x86/VivaPinata.AP.Client.dll",
+  "ModR2RManagedDll64": "x64/VivaPinata.AP.Client.dll",
+  "ModNativeDll32": "",
+  "ModNativeDll64": "",
+  "IsLibrary": false,
+  "ReleaseMetadataFileName": "VivaPinata.AP.Client.ReleaseMetadata.json",
+  "PluginData": {},
+  "IsUniversalMod": false,
+  "ModDependencies": [ "reloaded.sharedlib.hooks" ],
+  "OptionalDependencies": [],
+  "SupportedAppId": [],
+  "ProjectUrl": ""
+}
