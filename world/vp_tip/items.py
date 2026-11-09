@@ -19,7 +19,6 @@ all_items = {
     "Blue Fertilizer": ItemData(14, ItemClassification.progression),
     "Brown Fertilizer": ItemData(15, ItemClassification.progression),
     "Green Fertilizer": ItemData(16, ItemClassification.progression),
-    "Special Mix Fertilizer": ItemData(17, ItemClassification.useful), # Not sure how this fits in yet, maybe disabled?
 
     # Money
     "10 Coins": ItemData(200000, ItemClassification.filler),

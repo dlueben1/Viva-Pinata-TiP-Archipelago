@@ -1,23 +1,40 @@
 This is a mod for TiP to add Archipelago Support!
 
+# Client development
+
+The client is a ReTiP Lua mod. Its source is in `client/`, with the mod manifest
+at `client/mod.toml` and Lua scripts in `client/scripts/`. The scaffold currently
+only logs that it loaded; it does not yet connect to Archipelago.
+
+From the repository root, build the mod into `dist/TiPAP/`:
+
+```powershell
+.\scripts\build-client.ps1
+```
+
+To build and install it, close ReTiP and provide your existing mods directory:
+
+```powershell
+.\scripts\build-client.ps1 -ModsDirectory 'X:\Programs\TiP\mods'
+```
+
+The installer refuses to overwrite an existing `TiPAP` directory. Back up or
+remove that directory before reinstalling. Configure ReTiP to load `TiPAP` and
+enable script mods in `retip.toml`, preserving any other mods you use. After
+launching ReTiP, look for `[TiPAP] Lua client loaded` in its log.
+
 # FAQ
-
-**Why isn't this a regular mod that lives in the mods folder?**
-
-I don't like C++ or Lua, and the official mod support lacked a lot of guides, so I'm not sure if Lua has full control over everything or limited access.
-
-I've been a C# developer for years, and this is a personal hobby project in my otherwise super busy life, so I decided to use Reloaded-II/C# since I'm comfortable modding in that framework.
 
 **Are other mods supported?**
 
-This mod is in super early development, uses an unofficial modding framework, and essentially provides a total game conversion to progression logic. I'm going to assume no, but please use other mods at your own risk.
+This mod is in super early development and aims to change progression logic. Compatibility with other mods is not yet established.
 
 # AI Disclosure
 
-This project is AI-assisted, such that Local LLMs and Codex were used to research the disassembly of VP TiP and help with programming design challenges. It also has been used for simple boilerplate that would be annoying to scaffold out.
+This project is AI-assisted, such that my Local LLM and occasionally Codex were used to help with the disassembly of VP TiP. It also has been used for simple boilerplate that would be annoying to scaffold out.
 
 The architecture, features, and final code are all written and maintained by me. I'm not a Vibe Coder, I've been a Software Engineer for most of my life, so I only use AI to help speed-up the tedious work since this is a hobby project of mine.
 
-With respect to @SolarCookies wishes, I have not used AI to run against any of their code specific to the recomp - I've only used it against the original Xbox 360 disassembly. The code used to hook into the game's memory from Reloaded-II was written and researched by me (probably poorly) and any other code that interfaces directly with the recomp rather than TiP's logic will be completely written by me.
+With respect to @SolarCookies wishes, I have not used AI to run against any of their code specific to the recomp - I've only used it against the original Xbox 360 disassembly.
 
 I'm also a human who makes mistakes, so if anything seems wrong with the repo, please reach out and I'd be happy to resolve any issues!

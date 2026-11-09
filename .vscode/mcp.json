@@ -1,0 +1,27 @@
+{
+  "servers": {
+    "ghidra": {
+      "type": "stdio",
+      "command": "C:\\Users\\dougl\\.local\\bin\\uv.EXE",
+      "args": [
+        "run",
+        "--directory",
+        "X:\\Local Documents\\TEMP\\ghidra-mcp",
+        "bridge-mcp-ghidra",
+        "--transport",
+        "stdio"
+      ],
+      "env": {
+        "GHIDRA_MCP_URL": "http://127.0.0.1:8089"
+      }
+    },
+
+    "pcsx2": {
+      "type": "stdio",
+      "command": "node",
+      "args": [
+        "X:\\Programs\\PCSX2\\PCSX2-MCP-v1.0.0-win64\\pcsx2-mcp-server\\dist\\index.js"
+      ]
+    }
+  }
+}
