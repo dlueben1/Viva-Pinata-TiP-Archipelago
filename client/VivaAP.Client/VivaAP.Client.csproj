@@ -4,6 +4,78 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <!-- Class libraries do not emit a runtimeconfig.json by default, but the
+         native bridge initializes hostfxr from exactly that file. -->
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
   </PropertyGroup>
+
+  <!--
+    Phase 2 deployment: the managed hosting files are copied beside the
+    native mod at <mod root>\managed, a folder RexFabric does NOT scan for
+    native DLLs (it only scans the mod root and plugins\). Override
+    VivaApGameDir / VivaApModRoot on machines where TiP lives elsewhere.
+  -->
+  <PropertyGroup>
+    <VivaApGameDir Condition="'$(VivaApGameDir)' == ''">X:\Programs\TiP</VivaApGameDir>
+    <VivaApModRoot Condition="'$(VivaApModRoot)' == ''">$(VivaApGameDir)\mods\VivaAP</VivaApModRoot>
+  </PropertyGroup>
+
+  <!--
+    Picks the nethost.dll belonging to the newest installed
+    Microsoft.NETCore.App.Host.win-x64 pack. Item globs return host pack
+    version directories unordered, so they are compared as Version.
+  -->
+  <UsingTask TaskName="SelectLatestHostPackFile" TaskFactory="RoslynCodeTaskFactory"
+             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <Candidates ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
+      <Selected ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+          ITaskItem best = null;
+          Version bestVersion = null;
+          foreach (ITaskItem candidate in Candidates)
+          {
+              // Layout: <pack root>\<version>\runtimes\win-x64\native\<file>
+              string dir = candidate.ItemSpec;
+              for (int i = 0; i < 4 && dir != null; i++)
+              {
+                  dir = System.IO.Path.GetDirectoryName(dir);
+              }
+
+              Version parsed;
+              if (dir != null
+                  && Version.TryParse(System.IO.Path.GetFileName(dir), out parsed)
+                  && (bestVersion == null || parsed > bestVersion))
+              {
+                  bestVersion = parsed;
+                  best = candidate;
+              }
+          }
+          Selected = best != null ? new ITaskItem[] { best } : new ITaskItem[0];
+      ]]></Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="DeployVivaApManaged" AfterTargets="Build"
+          Condition="'$(OS)' == 'Windows_NT' And '$(Configuration)' == 'Debug' And Exists('$(VivaApGameDir)\retip.exe')">
+    <MakeDir Directories="$(VivaApModRoot)\managed" />
+    <ItemGroup>
+      <VivaApManagedOutput Include="$(OutDir)VivaAP.Client.*" />
+      <!-- ProgramW6432 is always the 64-bit Program Files even for 32-bit MSBuild. -->
+      <NethostSearchRoots Include="$([System.Environment]::GetEnvironmentVariable('ProgramW6432'));$(ProgramFiles)" />
+      <VivaApNethostCandidates Include="%(NethostSearchRoots.Identity)\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\*\runtimes\win-x64\native\nethost.dll" />
+    </ItemGroup>
+    <SelectLatestHostPackFile Candidates="@(VivaApNethostCandidates)">
+      <Output TaskParameter="Selected" ItemName="VivaApNethostSelected" />
+    </SelectLatestHostPackFile>
+    <Warning Condition="'@(VivaApNethostSelected)' == ''"
+             Text="[VivaAP] No nethost.dll found in the installed .NET host packs; .NET hosting will fail at runtime." />
+    <Copy SourceFiles="@(VivaApManagedOutput);@(VivaApNethostSelected)"
+          DestinationFolder="$(VivaApModRoot)\managed"
+          SkipUnchangedFiles="true" />
+    <Message Importance="high" Text="[VivaAP] Managed hosting files deployed to $(VivaApModRoot)\managed" />
+  </Target>
 
 </Project>

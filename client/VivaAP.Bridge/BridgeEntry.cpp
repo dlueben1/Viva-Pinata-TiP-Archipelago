@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "include/rexfabric/api.h"
+#include "ManagedHost.h"
 
 #include <Windows.h>
 #include <filesystem>
@@ -41,6 +42,12 @@ int RexFabricModInit(
     {
         // Logging failures must not crash the game.
     }
+
+    // Phase 2: bring up the .NET 10 runtime via hostfxr and invoke one
+    // managed sign-of-life method in VivaAP.Client.dll. All stages inside
+    // are logged; any .NET failure is contained here and never fails the
+    // RexFabric initialization or the Phase 1 native sign-of-life above.
+    vivaap::TryStartManagedRuntime(api, mod);
 
     return 1; // RexFabric initialization succeeded
 }

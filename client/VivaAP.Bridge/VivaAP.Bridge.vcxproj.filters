@@ -24,6 +24,18 @@
     <ClInclude Include="include\rexfabric\api.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ManagedHost.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nethost\coreclr_delegates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nethost\hostfxr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nethost\nethost.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -33,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BridgeEntry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagedHost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
