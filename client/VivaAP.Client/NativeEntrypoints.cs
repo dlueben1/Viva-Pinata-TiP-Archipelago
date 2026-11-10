@@ -26,21 +26,6 @@ public static class NativeEntrypoints
         return SuccessToken;
     }
 
-    // Diagnostic variants (Phase 2 debugging only):
-    [UnmanagedCallersOnly]
-    public static int EntryFiveIntPtr(IntPtr a, IntPtr b, IntPtr c, IntPtr d, IntPtr e)
-    {
-        TryAppendMarker();
-        return SuccessToken;
-    }
-
-    [UnmanagedCallersOnly]
-    public static int EntryOneInt(int n)
-    {
-        TryAppendMarker();
-        return n ^ SuccessToken;
-    }
-
     private static void TryAppendMarker()
     {
         try

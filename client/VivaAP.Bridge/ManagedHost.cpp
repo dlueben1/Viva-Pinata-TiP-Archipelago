@@ -52,7 +52,8 @@ namespace
     // Must match VivaAP.Client.NativeEntrypoints.SuccessToken ("VIV1").
     constexpr int32_t kManagedSuccessToken = 0x56495631;
 
-    constexpr char_t kManagedTypeName[] = L"VivaAP.Client.NativeEntrypoints";
+    constexpr char_t kManagedTypeName[] =
+        L"VivaAP.Client.NativeEntrypoints, VivaAP.Client";
     constexpr char_t kManagedMethodName[] = L"VivaApManagedEntry";
 
     using get_hostfxr_path_fn =
@@ -112,7 +113,9 @@ namespace
         char buffer[1024];
         va_list args;
         va_start(args, format);
-        const int written = _snprintf_s(buffer, _TRUNCATE, format, args);
+        const int written =
+            _vsnprintf_s(buffer, sizeof(buffer),
+                _TRUNCATE, format, args);
         va_end(args);
         return written < 0 ? std::string("<log truncated>") : std::string(buffer);
     }
