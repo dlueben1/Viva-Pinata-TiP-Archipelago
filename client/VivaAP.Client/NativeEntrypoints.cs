@@ -22,20 +22,6 @@ public static class NativeEntrypoints
     [UnmanagedCallersOnly]
     public static int VivaApManagedEntry()
     {
-        TryAppendMarker();
         return SuccessToken;
-    }
-
-    private static void TryAppendMarker()
-    {
-        try
-        {
-            string path = Path.Combine(Path.GetTempPath(), "VivaAP-bridge.log");
-            File.AppendAllText(path, "VivaAP.Client managed entry reached\n");
-        }
-        catch
-        {
-            // Logging failures must never crash the game process.
-        }
     }
 }
