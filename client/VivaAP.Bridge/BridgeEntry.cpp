@@ -3,8 +3,6 @@
 #include "ManagedHost.h"
 
 #include <Windows.h>
-#include <filesystem>
-#include <fstream>
 
 extern "C" REXFABRIC_MOD_EXPORT
 int RexFabricModInit(
@@ -27,21 +25,6 @@ int RexFabricModInit(
     // Visual Studio debugger output
     OutputDebugStringA(message);
     OutputDebugStringA("\n");
-
-    // Independent sign-of-life file
-    try
-    {
-        const auto path =
-            std::filesystem::temp_directory_path()
-            / "VivaAP-bridge.log";
-
-        std::ofstream log(path, std::ios::app);
-        log << "RexFabricModInit reached\n";
-    }
-    catch (...)
-    {
-        // Logging failures must not crash the game.
-    }
 
     // Phase 2: bring up the .NET 10 runtime via hostfxr and invoke one
     // managed sign-of-life method in VivaAP.Client.dll. All stages inside
