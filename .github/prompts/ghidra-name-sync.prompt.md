@@ -1,6 +1,6 @@
 ---
 name: ghidra-name-sync
-description: Reconcile verified Viva Piñata research with Ghidra function names using evidence-based confidence prefixes.
+description: Reconcile verified Viva Pinata research with Ghidra function names using evidence-based confidence prefixes.
 argument-hint: "[scope: subsystem, address/range, or recent research] [max=25]"
 agent: agent
 ---

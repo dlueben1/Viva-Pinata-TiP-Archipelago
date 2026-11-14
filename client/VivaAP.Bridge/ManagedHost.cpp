@@ -40,7 +40,6 @@
 #include <cstdint>
 #include <cstdio>
 #include <filesystem>
-#include <fstream>
 #include <string>
 
 namespace vivaap
@@ -73,17 +72,6 @@ namespace
 
         OutputDebugStringA(line.c_str());
         OutputDebugStringA("\n");
-
-        try
-        {
-            const auto path = fs::temp_directory_path() / L"VivaAP-bridge.log";
-            std::ofstream logFile(path, std::ios::app);
-            logFile << line << '\n';
-        }
-        catch (...)
-        {
-            // Logging failures must never crash the game.
-        }
     }
 
     std::string WideToUtf8(const std::wstring& text)
@@ -157,10 +145,10 @@ bool TryStartManagedRuntime(const RexFabricApi* api, RexFabricMod* mod)
 {
     try
     {
-        Log(api, mod, REXFABRIC_LOG_INFO, "VivaAP: initializing .NET runtime");
+        Log(api, mod, REXFABRIC_LOG_INFO, "VivaAP: Initializing .NET runtime");
 
-        // All hosting files live in <modRoot>\managed, beside the
-        // RexFabric-scanned plugins\ folder.
+        /// All hosting files live in <modRoot>\managed, beside the
+        /// RexFabric-scanned plugins\ folder.
         const auto pluginDirectory = GetBridgeModuleDirectory();
         const DWORD gleResolve = GetLastError();
         if (pluginDirectory.empty())
@@ -272,8 +260,8 @@ bool TryStartManagedRuntime(const RexFabricApi* api, RexFabricMod* mod)
         hostfxr_handle hostContext = nullptr;
         int32_t hr = initializeForRuntimeConfig(
             runtimeConfigPath.c_str(), nullptr, &hostContext);
-        // 0x0 Success, 0x1 Success_HostAlreadyInitialized,
-        // 0x2 Success_DifferentRuntimeProperties are all usable.
+        /// 0x0 Success, 0x1 Success_HostAlreadyInitialized,
+        /// 0x2 Success_DifferentRuntimeProperties are all usable.
         if (hr < 0 || !hostContext)
         {
             Log(api, mod, REXFABRIC_LOG_ERROR,
@@ -293,9 +281,9 @@ bool TryStartManagedRuntime(const RexFabricApi* api, RexFabricMod* mod)
 
         Log(api, mod, REXFABRIC_LOG_INFO, "VivaAP: hostfxr initialized");
 
-        // Stage 3: obtain load_assembly_and_get_function_pointer (this is
-        // the call that actually brings CoreCLR online), then resolve the
-        // managed entry point.
+        /// Stage 3: obtain load_assembly_and_get_function_pointer (this is
+        /// the call that actually brings CoreCLR online), then resolve the
+        /// managed entry point.
         void* loaderDelegate = nullptr;
         hr = getRuntimeDelegate(
             hostContext, hdt_load_assembly_and_get_function_pointer,
@@ -330,9 +318,9 @@ bool TryStartManagedRuntime(const RexFabricApi* api, RexFabricMod* mod)
             return false;
         }
 
-        // Stage 4: invoke the managed sign-of-life method. The host context
-        // is deliberately left open (see file header): unloading the CLR is
-        // unsupported and unsafe while managed code may still run.
+        /// Stage 4: invoke the managed sign-of-life method. The host context
+        /// is deliberately left open (see file header): unloading the CLR is
+        /// unsupported and unsafe while managed code may still run.
         const auto managedEntry =
             reinterpret_cast<managed_entry_fn>(entryPointer);
         const int32_t result = managedEntry();

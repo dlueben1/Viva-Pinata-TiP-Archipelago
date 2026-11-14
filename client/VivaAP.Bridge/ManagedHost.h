@@ -12,8 +12,8 @@ namespace vivaap
 {
     // Starts the CLR using the mod's managed\ folder and invokes one managed
     // sign-of-life method. Never throws, never terminates the host process:
-    // every stage (success or failure) is logged to the RexFabric log, the
-    // debug output, and %TEMP%\VivaAP-bridge.log.
+    // every stage (success or failure) is logged through RexFabric and
+    // Visual Studio debugger output.
     //
     // Returns true only when the managed entry point executed and returned
     // the expected success token. A false return must not fail the mod.

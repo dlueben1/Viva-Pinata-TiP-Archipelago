@@ -7,6 +7,6 @@
   <Folder Name="/Solution Items/">
     <File Path="mod.toml" />
   </Folder>
-  <Project Path="../VivaAP.Bridge/VivaAP.Bridge.vcxproj" />
+  <Project Path="../VivaAP.Bridge/VivaAP.Bridge.vcxproj" Id="0f2637ce-e014-42aa-a982-1d6591a44008" />
   <Project Path="../VivaAP.Client/VivaAP.Client.csproj" />
 </Solution>

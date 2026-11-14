@@ -28,26 +28,8 @@ int RexFabricModInit(
     OutputDebugStringA(message);
     OutputDebugStringA("\n");
 
-    // Independent sign-of-life file
-    try
-    {
-        const auto path =
-            std::filesystem::temp_directory_path()
-            / "VivaAP-bridge.log";
-
-        std::ofstream log(path, std::ios::app);
-        log << "RexFabricModInit reached\n";
-    }
-    catch (...)
-    {
-        // Logging failures must not crash the game.
-    }
-
-    // Phase 2: bring up the .NET 10 runtime via hostfxr and invoke one
-    // managed sign-of-life method in VivaAP.Client.dll. All stages inside
-    // are logged; any .NET failure is contained here and never fails the
-    // RexFabric initialization or the Phase 1 native sign-of-life above.
+    // Host .NET inside of our mod
     vivaap::TryStartManagedRuntime(api, mod);
 
-    return 1; // RexFabric initialization succeeded
+    return 1; // RexFabric initialization succeeded, expects 1 as a success not 0
 }
