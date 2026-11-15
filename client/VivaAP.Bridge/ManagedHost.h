@@ -17,5 +17,6 @@ namespace vivaap
     //
     // Returns true only when the managed entry point executed and returned
     // the expected success token. A false return must not fail the mod.
+    void StopManagedRuntime();
     bool TryStartManagedRuntime(const RexFabricApi* api, RexFabricMod* mod);
 }

@@ -24,6 +24,7 @@
 
 #include "pch.h"
 #include "ManagedHost.h"
+#include "Logger.h"
 #include "include/rexfabric/api.h"
 
 // GetProcAddress is used for nethost; keep the header from dllimporting it.
@@ -62,16 +63,12 @@ namespace
     // int-returning signature. x64 Windows has a single calling convention.
     using managed_entry_fn = int32_t(*)();
 
-    void Log(const RexFabricApi* api, RexFabricMod* mod,
-             RexFabricLogLevel level, const std::string& line)
-    {
-        if (api && api->log && mod)
-        {
-            api->log(mod, level, line.c_str());
-        }
+    using managed_shutdown_fn = void(*)();
+    managed_shutdown_fn g_shutdown = nullptr;
 
-        OutputDebugStringA(line.c_str());
-        OutputDebugStringA("\n");
+    void Log(const RexFabricApi*, RexFabricMod*, RexFabricLogLevel level, const std::string& line)
+    {
+        vivaap::Log(level, line);
     }
 
     std::string WideToUtf8(const std::wstring& text)
@@ -321,6 +318,16 @@ bool TryStartManagedRuntime(const RexFabricApi* api, RexFabricMod* mod)
         /// Stage 4: invoke the managed sign-of-life method. The host context
         /// is deliberately left open (see file header): unloading the CLR is
         /// unsupported and unsafe while managed code may still run.
+        void* shutdownPointer = nullptr;
+        hr = loadAssemblyAndGetFunctionPointer(
+            assemblyPath.c_str(), kManagedTypeName, L"VivaApManagedShutdown",
+            UNMANAGEDCALLERSONLY_METHOD, nullptr, &shutdownPointer);
+        if (hr != 0 || !shutdownPointer)
+        {
+            Log(api, mod, REXFABRIC_LOG_ERROR, "Could not resolve managed shutdown entry point");
+            return false;
+        }
+        g_shutdown = reinterpret_cast<managed_shutdown_fn>(shutdownPointer);
         const auto managedEntry =
             reinterpret_cast<managed_entry_fn>(entryPointer);
         const int32_t result = managedEntry();
@@ -345,5 +352,10 @@ bool TryStartManagedRuntime(const RexFabricApi* api, RexFabricMod* mod)
             "VivaAP: .NET hosting aborted by an unexpected native exception");
         return false;
     }
+}
+
+void StopManagedRuntime()
+{
+    if (g_shutdown) { g_shutdown(); g_shutdown = nullptr; }
 }
 }
