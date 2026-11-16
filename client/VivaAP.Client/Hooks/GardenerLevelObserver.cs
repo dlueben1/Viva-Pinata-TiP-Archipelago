@@ -1,4 +1,7 @@
-﻿namespace VivaAP.Client;
+﻿using VivaAP.Client.Interop;
+using VivaAP.Client.Utils;
+
+namespace VivaAP.Client.Hooks;
 
 internal static class GardenerLevelObserver
 {
@@ -7,9 +10,9 @@ internal static class GardenerLevelObserver
         const uint setter = 0x8252E798;
         int status = hooks.Register(setter, 3, 0x14, Observe);
         if (status == 0)
-            Logger.Info($"Gardener Level observer registered at 0x{setter:X8}.");
+            LogUtility.Info($"Gardener Level observer registered at 0x{setter:X8}.");
         else
-            Logger.Warn(
+            LogUtility.Warn(
                 $"Gardener Level observer registration failed at 0x{setter:X8}: {Describe(status)} (status {status})."
             );
     }
@@ -28,6 +31,6 @@ internal static class GardenerLevelObserver
     private static void Observe(HookEvent item)
     {
         if ((item.Flags & 1) != 0 && item.After > item.Before)
-            Logger.Info($"Gardener Level increased: {item.Before} -> {item.After}");
+            LogUtility.Info($"Gardener Level increased: {item.Before} -> {item.After}");
     }
 }

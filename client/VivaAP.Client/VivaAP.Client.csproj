@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -18,6 +17,8 @@
   <PropertyGroup>
     <VivaApGameDir Condition="'$(VivaApGameDir)' == ''">X:\Programs\TiP</VivaApGameDir>
     <VivaApModRoot Condition="'$(VivaApModRoot)' == ''">$(VivaApGameDir)\mods\VivaAP</VivaApModRoot>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <GenerateDependencyFile>true</GenerateDependencyFile>
   </PropertyGroup>
 
   <!--
@@ -25,14 +26,18 @@
     Microsoft.NETCore.App.Host.win-x64 pack. Item globs return host pack
     version directories unordered, so they are compared as Version.
   -->
-  <UsingTask TaskName="SelectLatestHostPackFile" TaskFactory="RoslynCodeTaskFactory"
-             AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+  <UsingTask
+    TaskName="SelectLatestHostPackFile"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll"
+  >
     <ParameterGroup>
       <Candidates ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
       <Selected ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
     </ParameterGroup>
     <Task>
-      <Code Type="Fragment" Language="cs"><![CDATA[
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
           ITaskItem best = null;
           Version bestVersion = null;
           foreach (ITaskItem candidate in Candidates)
@@ -54,15 +59,19 @@
               }
           }
           Selected = best != null ? new ITaskItem[] { best } : new ITaskItem[0];
-      ]]></Code>
+      ]]>
+      </Code>
     </Task>
   </UsingTask>
 
-  <Target Name="DeployVivaApManaged" AfterTargets="Build"
-          Condition="'$(OS)' == 'Windows_NT' And '$(Configuration)' == 'Debug' And Exists('$(VivaApGameDir)\retip.exe')">
+  <Target
+    Name="DeployVivaApManaged"
+    AfterTargets="Build"
+    Condition="'$(OS)' == 'Windows_NT' And '$(Configuration)' == 'Debug' And Exists('$(VivaApGameDir)\retip.exe')"
+  >
     <MakeDir Directories="$(VivaApModRoot)\managed" />
     <ItemGroup>
-      <VivaApManagedOutput Include="$(OutDir)VivaAP.Client.*" />
+      <VivaApManagedOutput Include="$(TargetDir)*.*" />
       <!-- ProgramW6432 is always the 64-bit Program Files even for 32-bit MSBuild. -->
       <NethostSearchRoots Include="$([System.Environment]::GetEnvironmentVariable('ProgramW6432'));$(ProgramFiles)" />
       <VivaApNethostCandidates Include="%(NethostSearchRoots.Identity)\dotnet\packs\Microsoft.NETCore.App.Host.win-x64\*\runtimes\win-x64\native\nethost.dll" />
@@ -70,12 +79,22 @@
     <SelectLatestHostPackFile Candidates="@(VivaApNethostCandidates)">
       <Output TaskParameter="Selected" ItemName="VivaApNethostSelected" />
     </SelectLatestHostPackFile>
-    <Warning Condition="'@(VivaApNethostSelected)' == ''"
-             Text="[VivaAP] No nethost.dll found in the installed .NET host packs; .NET hosting will fail at runtime." />
-    <Copy SourceFiles="@(VivaApManagedOutput);@(VivaApNethostSelected)"
-          DestinationFolder="$(VivaApModRoot)\managed"
-          SkipUnchangedFiles="true" />
-    <Message Importance="high" Text="[VivaAP] Managed hosting files deployed to $(VivaApModRoot)\managed" />
+    <Warning
+      Condition="'@(VivaApNethostSelected)' == ''"
+      Text="[VivaAP] No nethost.dll found in the installed .NET host packs; .NET hosting will fail at runtime."
+    />
+    <Copy
+      SourceFiles="@(VivaApManagedOutput);@(VivaApNethostSelected)"
+      DestinationFolder="$(VivaApModRoot)\managed"
+      SkipUnchangedFiles="true"
+    />
+    <Message
+      Importance="high"
+      Text="[VivaAP] Managed hosting files deployed to $(VivaApModRoot)\managed"
+    />
   </Target>
 
+  <ItemGroup>
+    <PackageReference Include="Archipelago.MultiClient.Net" Version="6.7.1" />
+  </ItemGroup>
 </Project>
