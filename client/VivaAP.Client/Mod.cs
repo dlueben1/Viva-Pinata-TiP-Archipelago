@@ -11,6 +11,7 @@ public static class Mod
     private static readonly object _lock = new();
     private static GameHooks? hooks;
     private static bool initialized;
+    public static string GameName => "Viva Pinata: Trouble in Paradise";
 
     [UnmanagedCallersOnly]
     public static int VivaApManagedEntry()
@@ -35,6 +36,8 @@ public static class Mod
                 {
                     LogUtility.Warn($"Gardener Level observer registration failed: {ex.Message}");
                 }
+
+                // Connect to Archipelago (this method will change later when not hardcoded) (TODO)
 
                 // Mark the managed runtime as initialized so we don't try to start it again
                 initialized = true;
