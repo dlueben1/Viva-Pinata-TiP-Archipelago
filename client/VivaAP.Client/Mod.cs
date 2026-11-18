@@ -38,10 +38,11 @@ public static class Mod
                 try
                 {
                     GardenerLevelObserver.Register(hooks);
+                    AwardObserver.Register(hooks);
                 }
                 catch (Exception ex)
                 {
-                    LogUtility.Warn($"Gardener Level observer registration failed: {ex.Message}");
+                    LogUtility.Warn($"Observer registration failed: {ex.Message}");
                 }
 
                 // Launch the test connection without blocking native startup
