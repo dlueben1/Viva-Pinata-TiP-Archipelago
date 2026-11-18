@@ -7,11 +7,11 @@ struct VivaApHookEvent {
     uint64_t r3;
     uint64_t r4;
     uint64_t keyBefore; // u64 capture at call entry, when key capture is enabled
-    uint64_t keyAfter;  // ... and again after the original call
+    uint64_t keyAfter;  // reserved, always 0: the argument record may be transient after the call
     uint32_t address;
     uint32_t before;
     uint32_t after;
-    uint32_t flags; // bit 0: u32 pair captured, bit 1: u64 pair captured, bit 2: text captured at entry
+    uint32_t flags; // bit 0: u32 pair captured, bit 1: u64 captured at entry, bit 2: text captured at entry
     char text[72]; // NUL-terminated C string read at call entry, when text capture is enabled
 };
 static_assert(sizeof(VivaApHookEvent) == 128);

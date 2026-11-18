@@ -68,19 +68,43 @@ internal static class AwardObserver
     /// </summary>
     private static void Observe(HookEvent item)
     {
+        // A usable observation for new-award detection needs both the earned-list watch and a valid
+        // entry-time key. The key is taken at hook entry only: on the message grant route the record
+        // lives inside a transient game message and may be freed once the call returns.
+        bool fieldOk = (item.Flags & HookEventFlags.Field) != 0;
+        bool keyOk =
+            (item.Flags & HookEventFlags.Key) != 0
+            && item.KeyBefore != 0
+            && item.KeyBefore != 0xFFFFFFFFFFFFFFFF;
+
         string name = (item.Flags & HookEventFlags.Text) != 0 && !string.IsNullOrEmpty(item.Text)
             ? item.Text
             : "<no text>";
-        string key = (item.Flags & HookEventFlags.Key) != 0 ? $"0x{item.KeyBefore:X16}" : "<no key>";
 
-        // The list end only moves when the inserter appended the record (stride 0x78); a duplicate
-        // commit (import replay or second delivery) leaves both watches equal.
-        bool fresh = (item.Flags & HookEventFlags.Field) != 0 && item.After != item.Before;
+        if (!keyOk)
+        {
+            // Cannot identify or dedup without a key; never report this as earned.
+            LogUtility.Warn(
+                $"Award commit with unusable key capture (flags 0x{item.Flags:X}, "
+                    + $"key 0x{item.KeyBefore:X16}): {name}."
+            );
+            return;
+        }
+
+        // PROVISIONAL (v1 logging only): the earned-list end pointer only moves when the inserter
+        // appended the record (stride 0x78); a duplicate commit leaves it unchanged. A pointer delta
+        // is treated as new, but this can be skewed by concurrent list mutation (e.g. save imports).
+        // Production must instead verify an absent-to-present transition of the award key in the
+        // earned ledger (player + 0x1E48..+0x1E4C, stride 0x78, key at + 0x70); not built yet.
+        bool fresh = fieldOk && item.After != item.Before;
 
         if (fresh)
-            LogUtility.Info($"Award earned: {name} [{key}].");
+            LogUtility.Info($"Award earned: {name} [0x{item.KeyBefore:X16}].");
         else
-            LogUtility.Debug($"Award re-committed (already earned): {name} [{key}].");
+            LogUtility.Debug(
+                $"Award re-committed (already earned{(!fieldOk ? ", list watch unavailable" : "")}): "
+                    + $"{name} [0x{item.KeyBefore:X16}]."
+            );
 
         // Future work: match the observed award id against .research/xp/xp_sources.csv
         // (native_event_award_id) and complete the matching checks via ArchipelagoClient.Session.

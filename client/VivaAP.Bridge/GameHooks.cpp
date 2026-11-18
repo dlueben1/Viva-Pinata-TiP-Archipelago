@@ -7,7 +7,12 @@
 #include <limits>
 
 namespace {
-constexpr size_t kMaxHooks = 32, kQueueSize = 256, kTextCap = 71;
+constexpr size_t kMaxHooks = 32, kQueueSize = 256;
+// Ceiling for any captured text slot. The award identifier field is 0x44 (68) bytes at record+0x2C
+// and ends exactly at the u64 key at record+0x70, so scanning at most 68 bytes can never read into
+// the key or past the field. event.text is 72 bytes, so a full 68-byte scan still leaves room for
+// the guaranteed NUL.
+constexpr size_t kTextCap = 0x44;
 struct Slot {
     uint64_t id = 0;
     RexFabricHookId nativeId = 0;
@@ -52,15 +57,14 @@ void Hook(RexFabricCall* call, void* user) {
             event.before = g_api->read_u32(fieldAddress);
         }
     }
-    // u64 identity snapshot at entry and exit.
-    uint32_t keyAddress = 0;
-    bool keyOk = false;
+    // u64 identity snapshot at entry only: the record can be caller-owned and transient
+    // (e.g. embedded at msg+0x48 on the message grant route), so the entry value is authoritative
+    // and no post-call re-read is taken. keyAfter stays zero.
     if (active && slot.keyEnabled) {
         const uint64_t base = g_api->get_gpr(call, slot.keyBaseRegister);
-        keyOk = FitsGuestRange(base, slot.keyOffset, 8);
-        if (keyOk) {
-            keyAddress = static_cast<uint32_t>(base + slot.keyOffset);
-            event.keyBefore = g_api->read_u64(keyAddress);
+        if (FitsGuestRange(base, slot.keyOffset, 8)) {
+            event.keyBefore = g_api->read_u64(static_cast<uint32_t>(base + slot.keyOffset));
+            event.flags |= 2;
         }
     }
     // C string captured at entry only: caller-owned buffers (e.g. the award record embedded at
@@ -80,13 +84,11 @@ void Hook(RexFabricCall* call, void* user) {
         }
     }
     g_api->call_next(call);
+    // Only the u32 watch is re-sampled after the call: its target is the persistent earned-list
+    // word, not the transient argument record.
     if (fieldOk && slot.active.load(std::memory_order_acquire)) {
         event.after = g_api->read_u32(fieldAddress);
         event.flags |= 1;
-    }
-    if (keyOk && slot.active.load(std::memory_order_acquire)) {
-        event.keyAfter = g_api->read_u64(keyAddress);
-        event.flags |= 2;
     }
     if (!slot.active.load(std::memory_order_acquire) || g_stopping.load(std::memory_order_acquire)) return;
     if (!g_queueMutex.try_lock()) { ++g_dropped; return; }

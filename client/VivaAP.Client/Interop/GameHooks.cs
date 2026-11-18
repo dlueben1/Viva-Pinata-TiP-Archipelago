@@ -3,7 +3,7 @@ using VivaAP.Client.Utils;
 
 namespace VivaAP.Client.Interop;
 
-[StructLayout(LayoutKind.Sequential)]
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
 internal struct HookEvent
 {
     internal ulong HookId,
@@ -28,7 +28,10 @@ internal static class HookEventFlags
     /// <summary>The u32 Before/After pair at baseRegister + offset was sampled around the call.</summary>
     internal const uint Field = 1;
 
-    /// <summary>The u64 KeyBefore/KeyAfter pair at keyBaseRegister + keyOffset was sampled around the call.</summary>
+    /// <summary>
+    /// KeyBefore holds the u64 read at keyBaseRegister + keyOffset on hook entry. KeyAfter is reserved
+    /// and always 0: the captured record may be transient once the original call returns.
+    /// </summary>
     internal const uint Key = 2;
 
     /// <summary>Text was read as a NUL-terminated C string at hook entry.</summary>

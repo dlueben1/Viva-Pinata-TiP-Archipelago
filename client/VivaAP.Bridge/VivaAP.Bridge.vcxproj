@@ -70,6 +70,12 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <!-- Deployment roots, mirroring VivaAP.Client.csproj. Override with
+       /p:VivaApGameDir=<path> or in the .vcxproj.user file when TiP lives elsewhere. -->
+  <PropertyGroup>
+    <VivaApGameDir Condition="'$(VivaApGameDir)' == ''">X:\Programs\TiP</VivaApGameDir>
+    <VivaApModRoot Condition="'$(VivaApModRoot)' == ''">$(VivaApGameDir)\mods\VivaAP</VivaApModRoot>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -130,20 +136,20 @@
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
     <PostBuildEvent>
-      <Command>if not exist "X:\Programs\TiP\retip.exe" (
-    echo ERROR: ReTiP installation not found.
+      <Command>if not exist "$(VivaApGameDir)\retip.exe" (
+    echo ERROR: ReTiP installation not found at $(VivaApGameDir). Override with /p:VivaApGameDir=&lt;path&gt;.
     exit /b 1
 )
 
-if not exist "X:\Programs\TiP\mods\VivaAP\plugins" (
-    mkdir "X:\Programs\TiP\mods\VivaAP\plugins" || exit /b 1
+if not exist "$(VivaApModRoot)\plugins" (
+    mkdir "$(VivaApModRoot)\plugins" || exit /b 1
 )
 
-copy /Y "$(SolutionDir)mod.toml" "X:\Programs\TiP\mods\VivaAP\mod.toml" || exit /b 1
+copy /Y "$(ProjectDir)..\VivaAP\mod.toml" "$(VivaApModRoot)\mod.toml" || exit /b 1
 
-copy /Y "$(TargetPath)" "X:\Programs\TiP\mods\VivaAP\plugins\VivaAP.Bridge.dll" || exit /b 1
+copy /Y "$(TargetPath)" "$(VivaApModRoot)\plugins\VivaAP.Bridge.dll" || exit /b 1
 
-echo [VivaAP] Native bridge deployed successfully.</Command>
+echo [VivaAP] Native bridge deployed successfully to $(VivaApModRoot).</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -167,20 +173,20 @@ echo [VivaAP] Native bridge deployed successfully.</Command>
       <EnableSegmentHeap>true</EnableSegmentHeap>
     </Manifest>
     <PostBuildEvent>
-      <Command>if not exist "X:\Programs\TiP\retip.exe" (
-    echo ERROR: ReTiP installation not found.
+      <Command>if not exist "$(VivaApGameDir)\retip.exe" (
+    echo ERROR: ReTiP installation not found at $(VivaApGameDir). Override with /p:VivaApGameDir=&lt;path&gt;.
     exit /b 1
 )
 
-if not exist "X:\Programs\TiP\mods\VivaAP\plugins" (
-    mkdir "X:\Programs\TiP\mods\VivaAP\plugins" || exit /b 1
+if not exist "$(VivaApModRoot)\plugins" (
+    mkdir "$(VivaApModRoot)\plugins" || exit /b 1
 )
 
-copy /Y "$(SolutionDir)mod.toml" "X:\Programs\TiP\mods\VivaAP\mod.toml" || exit /b 1
+copy /Y "$(ProjectDir)..\VivaAP\mod.toml" "$(VivaApModRoot)\mod.toml" || exit /b 1
 
-copy /Y "$(TargetPath)" "X:\Programs\TiP\mods\VivaAP\plugins\VivaAP.Bridge.dll" || exit /b 1
+copy /Y "$(TargetPath)" "$(VivaApModRoot)\plugins\VivaAP.Bridge.dll" || exit /b 1
 
-echo [VivaAP] Native bridge deployed successfully.</Command>
+echo [VivaAP] Native bridge deployed successfully to $(VivaApModRoot).</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
