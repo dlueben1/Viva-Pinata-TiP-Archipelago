@@ -49,11 +49,11 @@ namespace
 {
     namespace fs = std::filesystem;
 
-    // Must match VivaAP.Client.NativeEntrypoints.SuccessToken ("VIV1").
+    // Must match C#'s SuccessToken ("VIV1").
     constexpr int32_t kManagedSuccessToken = 0x56495631;
 
     constexpr char_t kManagedTypeName[] =
-        L"VivaAP.Client.NativeEntrypoints, VivaAP.Client";
+        L"VivaAP.Client.Mod, VivaAP.Client";
     constexpr char_t kManagedMethodName[] = L"VivaApManagedEntry";
 
     using get_hostfxr_path_fn =
@@ -309,7 +309,7 @@ bool TryStartManagedRuntime(const RexFabricApi* api, RexFabricMod* mod)
         {
             Log(api, mod, REXFABRIC_LOG_ERROR,
                 Format("VivaAP: could not resolve %s.%s in %s (hr=0x%08X)",
-                       "VivaAP.Client.NativeEntrypoints", "VivaApManagedEntry",
+                       "VivaAP.Client.Mod", "VivaApManagedEntry",
                        WideToUtf8(assemblyPath.native()).c_str(),
                        static_cast<unsigned>(static_cast<uint32_t>(hr))));
             return false;

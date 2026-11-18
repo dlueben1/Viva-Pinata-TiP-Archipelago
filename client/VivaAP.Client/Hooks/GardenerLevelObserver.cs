@@ -55,7 +55,7 @@ internal static class GardenerLevelObserver
             else
             {
                 // Send the check
-                ArchipelagoClient.Session?.Locations.CompleteLocationChecks();
+                ArchipelagoClient.Session?.Locations.CompleteLocationChecks(location);
             }
         }
     }

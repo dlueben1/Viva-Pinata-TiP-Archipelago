@@ -13,6 +13,13 @@ public static class Mod
     private static bool initialized;
     public static string GameName => "Viva Pinata: Trouble in Paradise";
 
+    /// <summary>
+    /// Runs the Archipelago Connection task async, so we don't block the incredibly important managed entrypoint
+    /// </summary>
+    private static Task? apConnectTask;
+
+    #region Managed Entry/Exit Points
+
     [UnmanagedCallersOnly]
     public static int VivaApManagedEntry()
     {
@@ -37,7 +44,10 @@ public static class Mod
                     LogUtility.Warn($"Gardener Level observer registration failed: {ex.Message}");
                 }
 
-                // Connect to Archipelago (this method will change later when not hardcoded) (TODO)
+                // Launch the test connection without blocking native startup
+                apConnectTask = Task.Run(() =>
+                    ArchipelagoClient.ConnectAsync("127.0.0.1", 38281, "Pinata")
+                );
 
                 // Mark the managed runtime as initialized so we don't try to start it again
                 initialized = true;
@@ -70,4 +80,6 @@ public static class Mod
             hooks = null;
         }
     }
+
+    #endregion
 }
