@@ -10,6 +10,7 @@ public static class Mod
     public const int SuccessToken = 0x56495631;
     private static readonly object _lock = new();
     private static GameHooks? hooks;
+    private static MemoryObserver[] observers;
     private static bool initialized;
     public static string GameName => "Viva Pinata: Trouble in Paradise";
 
@@ -27,6 +28,10 @@ public static class Mod
         {
             if (initialized)
                 return SuccessToken;
+
+            // Initialize Observers
+            observers = new MemoryObserver[] { new GardenerLevelObserver(), new AwardObserver() };
+
             try
             {
                 // Start the Logger
@@ -37,8 +42,10 @@ public static class Mod
                 hooks = new GameHooks();
                 try
                 {
-                    GardenerLevelObserver.Register(hooks);
-                    AwardObserver.Register(hooks);
+                    foreach (var observer in observers)
+                    {
+                        observer.Register(hooks);
+                    }
                 }
                 catch (Exception ex)
                 {

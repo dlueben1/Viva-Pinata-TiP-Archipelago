@@ -11,7 +11,7 @@ namespace VivaAP.Client.Hooks;
 /// so watching that list end tells a fresh award from a duplicate.
 /// See .research/awards/qwen-native-awards.md (statically verified; runtime untested).
 /// </summary>
-internal static class AwardObserver
+internal sealed class AwardObserver : MemoryObserver
 {
     private const uint RememberAward = 0x8252B498;
 
@@ -25,11 +25,14 @@ internal static class AwardObserver
     private const uint AwardKeyOffset = 0x70;
     private const uint AwardTextOffset = 0x2C;
 
-    internal static void Register(GameHooks hooks)
+    protected override string Name => "Award";
+    protected override uint Address => RememberAward;
+
+    protected override int RegisterHook(GameHooks hooks)
     {
         // On the message grant route the record can live inside a transient game message (msg + 0x48),
         // so the key and text must be captured by the native hook at entry, not dereferenced later.
-        int status = hooks.Register(
+        return hooks.Register(
             RememberAward,
             1,
             3,
@@ -42,29 +45,12 @@ internal static class AwardObserver
             AwardTextOffset,
             Observe
         );
-        if (status == 0)
-            LogUtility.Info($"Award observer registered at 0x{RememberAward:X8}.");
-        else
-            LogUtility.Warn(
-                $"Award observer registration failed at 0x{RememberAward:X8}: {Describe(status)} (status {status})."
-            );
     }
-
-    private static string Describe(int status) =>
-        status switch
-        {
-            1 => "invalid capture configuration",
-            2 => "hook API unavailable or shutting down",
-            3 => "address is not hookable",
-            4 => "hook capacity exhausted",
-            5 => "RexFabric rejected the hook",
-            _ => "unknown error",
-        };
 
     /// <summary>
     /// When an award is earned, log it
     /// </summary>
-    private static void Observe(HookEvent item)
+    protected override void Observe(HookEvent item)
     {
         // A usable observation for new-award detection needs both the earned-list watch and a valid
         // entry-time key. The key is taken at hook entry only: on the message grant route the record
