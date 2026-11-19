@@ -1,14 +1,14 @@
 import csv
+from io import StringIO
+from importlib.resources import files
 from pathlib import Path
-
-# Get our path to the data directory
-DATA_DIR = Path(__file__).resolve().parent / "data"
 
 
 def load_csv(filename, key_column):
-    """Load a CSV file from the data folder and return a dictionary keyed by the specified column."""
-    with open(DATA_DIR / filename, newline="", encoding="utf-8-sig") as f:
-        return {row[key_column]: row for row in csv.DictReader(f)}
+    resource = files(__package__).joinpath("data", filename)
+    content = resource.read_text(encoding="utf-8-sig")
+
+    return {row[key_column]: row for row in csv.DictReader(StringIO(content))}
 
 
 # Maps internal species name to their display name

@@ -20,11 +20,18 @@ rank_locations = {
 award_locations = {}
 id = AWARD_CHECK_BASE_OFFSET
 for award in data.awards.values():
+    # TEMP: The "award for trapping a pinata" is ignored for now
+    if (
+        award["activity"] == "animal_resident_arctic"
+        or award["activity"] == "animal_resident_desert"
+    ):
+        continue
+
     # Determine the Activity we're getting an award for
     activity_name = None
     for activity in data.activity_map:
         if activity in award["activity"]:
-            activity_name = data.activity_map[activity]
+            activity_name = data.activity_map[activity]["display_name"]
             break
 
     # If the activity is invalid/unknown, then skip this award
@@ -39,7 +46,7 @@ for award in data.awards.values():
     target = None
     for pinata in data.species_map:
         if award["subject"] == pinata:
-            target = data.species_map[pinata]
+            target = data.species_map[pinata]["display_name"]
             break
 
     # TEMP: Ignore subjects we can't find in the species map

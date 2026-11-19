@@ -1,4 +1,4 @@
-from world.vp_tip.constants import MIN_GARDENER_LEVEL
+from .constants import MIN_GARDENER_LEVEL
 from worlds.AutoWorld import World
 from BaseClasses import Region
 from .options import TIPOptions
