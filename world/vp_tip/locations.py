@@ -39,7 +39,7 @@ for award in data.awards.values():
         continue
 
     # TEMP: We're going to ignore non-pinata checks for now!
-    if "animal" not in activity_name:
+    if not award["activity"].startswith("animal_"):
         continue
 
     # Find the target for the Award
