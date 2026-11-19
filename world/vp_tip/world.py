@@ -8,6 +8,7 @@ from rule_builder.rules import CanReachLocation
 from .locations import (
     TIPLocation,
     all_locations,
+    award_locations,
     get_rank_locations,
 )
 
@@ -37,7 +38,11 @@ class TIPWorld(World):
             goal_level = goals["reach_gardener_level"]
             enabled_rank_locations = get_rank_locations(goal_level)
 
+        # Grab all award locations
+        enabled_award_locations = award_locations
+
         garden.add_locations(enabled_rank_locations, TIPLocation)
+        garden.add_locations(enabled_award_locations, TIPLocation)
 
         menu.connect(garden)
         self.multiworld.regions.extend([menu, garden])

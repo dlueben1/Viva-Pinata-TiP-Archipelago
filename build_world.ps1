@@ -7,6 +7,7 @@ $ErrorActionPreference = 'Stop'
 $repoRoot    = $PSScriptRoot
 $worldName   = 'vp_tip'
 $worldDir    = Join-Path $repoRoot "world\$worldName"
+$dataDir     = Join-Path $repoRoot 'data'
 $distDir     = Join-Path $repoRoot 'dist'
 $outputFile  = Join-Path $distDir "$worldName.apworld"
 $tempFile    = Join-Path $distDir "$worldName.apworld.tmp"
@@ -16,6 +17,9 @@ foreach ($required in @((Join-Path $worldDir '__init__.py'), $manifestFile)) {
     if (-not (Test-Path -LiteralPath $required -PathType Leaf)) {
         throw "Required APWorld file not found: $required"
     }
+}
+if (-not (Test-Path -LiteralPath $dataDir -PathType Container)) {
+    throw "Shared data folder not found: $dataDir"
 }
 
 # Archipelago's APWorld container requires these fields in the packed
@@ -53,6 +57,16 @@ try {
             $entryName = "$worldName/$relative"
             [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
                 $archive, $file.FullName, $entryName,
+                [System.IO.Compression.CompressionLevel]::Optimal
+            ) | Out-Null
+            $fileCount++
+        }
+
+        # Include shared data directly in the archive without changing the source world.
+        foreach ($file in (Get-ChildItem -LiteralPath $dataDir -Recurse -File -Force)) {
+            $relative = $file.FullName.Substring($dataDir.Length + 1).Replace('\', '/')
+            [System.IO.Compression.ZipFileExtensions]::CreateEntryFromFile(
+                $archive, $file.FullName, "$worldName/data/$relative",
                 [System.IO.Compression.CompressionLevel]::Optimal
             ) | Out-Null
             $fileCount++
