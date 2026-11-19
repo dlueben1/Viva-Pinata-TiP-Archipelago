@@ -62,9 +62,7 @@ internal static class AwardObserver
         };
 
     /// <summary>
-    /// When an award is committed, identify it: name text plus 64-bit key, and whether the journal
-    /// actually gained it. No specific awards are acted on yet; the stream matches the rows in
-    /// .research/xp/xp_sources.csv for future location checks.
+    /// When an award is earned, log it
     /// </summary>
     private static void Observe(HookEvent item)
     {
@@ -77,9 +75,10 @@ internal static class AwardObserver
             && item.KeyBefore != 0
             && item.KeyBefore != 0xFFFFFFFFFFFFFFFF;
 
-        string name = (item.Flags & HookEventFlags.Text) != 0 && !string.IsNullOrEmpty(item.Text)
-            ? item.Text
-            : "<no text>";
+        string name =
+            (item.Flags & HookEventFlags.Text) != 0 && !string.IsNullOrEmpty(item.Text)
+                ? item.Text
+                : "<no text>";
 
         if (!keyOk)
         {
