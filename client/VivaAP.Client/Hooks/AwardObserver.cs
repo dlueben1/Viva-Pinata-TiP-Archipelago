@@ -28,6 +28,24 @@ internal sealed class AwardObserver : MemoryObserver
     protected override string Name => "Award";
     protected override uint Address => RememberAward;
 
+    private const long _archipelagoLocationIdOffset = 200;
+
+    /// <summary>
+    /// Gets the Location ID of a given award's check
+    /// </summary>
+    private long? GetAwardLocationId(string name)
+    {
+        var award = Array.FindIndex(GameUtility.Awards, a => a.EventId.Contains(name));
+        if (award == -1)
+        {
+            LogUtility.Error($"Award with ID '{name}' not found in Awards collection.");
+            return null;
+        }
+        return award + _archipelagoLocationIdOffset;
+    }
+
+    public AwardObserver() { }
+
     protected override int RegisterHook(GameHooks hooks)
     {
         // On the message grant route the record can live inside a transient game message (msg + 0x48),
@@ -76,9 +94,6 @@ internal sealed class AwardObserver : MemoryObserver
             return;
         }
 
-        // PROVISIONAL (v1 logging only): the earned-list end pointer only moves when the inserter
-        // appended the record (stride 0x78); a duplicate commit leaves it unchanged. A pointer delta
-        // is treated as new, but this can be skewed by concurrent list mutation (e.g. save imports).
         // Production must instead verify an absent-to-present transition of the award key in the
         // earned ledger (player + 0x1E48..+0x1E4C, stride 0x78, key at + 0x70); not built yet.
         bool fresh = fieldOk && item.After != item.Before;
@@ -91,7 +106,13 @@ internal sealed class AwardObserver : MemoryObserver
                     + $"{name} [0x{item.KeyBefore:X16}]."
             );
 
-        // Future work: match the observed award id against .research/xp/xp_sources.csv
-        // (native_event_award_id) and complete the matching checks via ArchipelagoClient.Session.
+        // Send the check regardless (the server should handle deduplication)
+        var locationId = GetAwardLocationId(name);
+        if (locationId == null)
+        {
+            LogUtility.Error($"Archipelago Location ID for award '{name}' not found.");
+            return;
+        }
+        ArchipelagoClient.Session?.Locations.CompleteLocationChecks(locationId.Value);
     }
 }

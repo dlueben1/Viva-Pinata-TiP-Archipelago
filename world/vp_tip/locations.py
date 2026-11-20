@@ -18,8 +18,11 @@ rank_locations = {
 
 # Load all the Award Locations
 award_locations = {}
-id = AWARD_CHECK_BASE_OFFSET
+id = AWARD_CHECK_BASE_OFFSET - 1
 for award in data.awards.values():
+    # Enumerate the ID every check, and leave skipped checks "blank" for easy consistency with the client during development
+    id += 1
+
     # TEMP: The "award for trapping a pinata" is ignored for now
     if (
         award["activity"] == "animal_resident_arctic"
@@ -55,9 +58,6 @@ for award in data.awards.values():
 
     # Build the check
     award_locations[f"{target} ({activity_name})"] = id
-
-    # Enumerate the ID every check
-    id += 1
 
 # Collection of all Locations
 all_locations = {**rank_locations, **award_locations}

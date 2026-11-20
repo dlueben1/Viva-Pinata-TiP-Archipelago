@@ -97,4 +97,12 @@
   <ItemGroup>
     <PackageReference Include="Archipelago.MultiClient.Net" Version="6.7.1" />
   </ItemGroup>
+
+  <!-- Embeds the CSV Data into the C# assembly -->
+  <ItemGroup>
+    <EmbeddedResource Include="..\..\data\*.csv">
+      <LogicalName>VivaAP.Client.Data.%(Filename)%(Extension)</LogicalName>
+      <Link>Data\%(Filename)%(Extension)</Link>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
