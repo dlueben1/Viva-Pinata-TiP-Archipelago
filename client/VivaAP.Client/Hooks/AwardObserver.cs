@@ -106,13 +106,28 @@ internal sealed class AwardObserver : MemoryObserver
                     + $"{name} [0x{item.KeyBefore:X16}]."
             );
 
-        // Send the check regardless (the server should handle deduplication)
+        // Get the Check/Location ID for this award
         var locationId = GetAwardLocationId(name);
         if (locationId == null)
         {
             LogUtility.Error($"Archipelago Location ID for award '{name}' not found.");
             return;
         }
-        ArchipelagoClient.Session?.Locations.CompleteLocationChecks(locationId.Value);
+
+        // Send the check (the server should handle deduplication if for some reason we're re-sending this check)
+        if (
+            ArchipelagoClient.Session != null
+            && ArchipelagoClient.Session!.Locations.AllMissingLocations.Contains(locationId.Value)
+        )
+        {
+            ArchipelagoClient.Session!.Locations.CompleteLocationChecks(locationId.Value);
+        }
+        // Log a warning if this didn't work - it may be for a valid reason, like the check not being in logic for this slot.
+        else
+        {
+            LogUtility.Warn(
+                $"Archipelago Location ID {locationId.Value} for award '{name}' already completed or not present in current slot."
+            );
+        }
     }
 }
