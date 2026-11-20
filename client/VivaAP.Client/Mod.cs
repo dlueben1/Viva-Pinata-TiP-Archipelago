@@ -10,6 +10,7 @@ public static class Mod
     public const int SuccessToken = 0x56495631;
     private static readonly object _lock = new();
     private static GameHooks? hooks;
+    private static PretztailRestriction? pretztailRestriction;
     private static MemoryObserver[] observers;
     private static bool initialized;
     public static string GameName => "Viva Pinata: Trouble in Paradise";
@@ -57,6 +58,8 @@ public static class Mod
                     ArchipelagoClient.ConnectAsync("127.0.0.1", 38281, "Pinata")
                 );
 
+                pretztailRestriction = PretztailRestriction.TryStart();
+
                 // Mark the managed runtime as initialized so we don't try to start it again
                 initialized = true;
                 return SuccessToken;
@@ -76,6 +79,16 @@ public static class Mod
     {
         lock (_lock)
         {
+            try
+            {
+                pretztailRestriction?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                LogUtility.Warn($"Pretztail experiment shutdown failed. {ex.Message}");
+            }
+            pretztailRestriction = null;
+
             try
             {
                 hooks?.Dispose();
