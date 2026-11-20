@@ -55,7 +55,12 @@ namespace VivaAP.Client.Utils
                     cutoffIndex != -1 ? columns[0].Substring(0, cutoffIndex) : columns[0];
 
                 // Lookup the user-friendly name for this activity
-                string activityName = ActivityLookupTable[activityShort];
+                string activityName = ActivityLookupTable.TryGetValue(
+                    activityShort,
+                    out var displayName
+                )
+                    ? displayName
+                    : activityShort;
 
                 // Lookup the user-friendly name for the award subject
                 string subjectRaw = columns[2];
