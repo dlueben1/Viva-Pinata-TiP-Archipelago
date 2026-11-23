@@ -65,6 +65,19 @@ public static class Mod
                     return 0;
                 }
 
+                LogUtility.Info(
+                    $"Launcher detected: {Environment.GetEnvironmentVariable("AP_LAUNCHED")}"
+                );
+                LogUtility.Info(
+                    $"Archipelago server: {Environment.GetEnvironmentVariable("AP_SERVER")}"
+                );
+                LogUtility.Info(
+                    $"Archipelago slot: {Environment.GetEnvironmentVariable("AP_SLOT")}"
+                );
+                LogUtility.Info(
+                    $"Save root: {Environment.GetEnvironmentVariable("REX_USER_DATA_ROOT")}"
+                );
+
                 // Launch the Archipelago Connection as a background task, so we don't block the managed entrypoint
                 apConnectTask = Task.Run(() =>
                     ArchipelagoClient.ConnectAsync(

@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 from .constants import MIN_GARDENER_LEVEL
 from worlds.AutoWorld import World
 from BaseClasses import Region
@@ -80,3 +82,19 @@ class TIPWorld(World):
             self.multiworld.itempool.append(self.create_filler())
 
     # endregion
+
+    def generate_output(self, output_directory: str) -> None:
+        """Generate the player-specific VivaAP launcher patch (.aptip) file."""
+        patch = {
+            "version": 1,
+            "seed": self.multiworld.seed_name,
+            "slot": self.multiworld.get_player_name(self.player),
+        }
+
+        filename = self.multiworld.get_out_file_name_base(self.player) + ".aptip"
+        output_path = Path(output_directory) / filename
+
+        output_path.write_text(
+            json.dumps(patch, indent=2) + "\n",
+            encoding="utf-8",
+        )

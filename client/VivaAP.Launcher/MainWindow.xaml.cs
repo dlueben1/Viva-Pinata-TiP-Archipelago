@@ -57,7 +57,7 @@ public partial class MainWindow : Window
 
             if (
                 patch is null
-                || patch.Version is null
+                || patch.Version != 1
                 || string.IsNullOrWhiteSpace(patch.Seed)
                 || string.IsNullOrWhiteSpace(patch.Slot)
             )

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
+    <AssemblyName>TiPAP</AssemblyName>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
@@ -8,4 +8,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <!-- Package only on Rebuild, not ordinary Build/F5. -->
+  <Target
+    Name="PackageVivaApLauncher"
+    AfterTargets="Rebuild"
+    Condition="'$(OS)' == 'Windows_NT'&#xD;&#xA;      and '$(DesignTimeBuild)' != 'true'"
+  >
+    <Exec Command="powershell.exe -NoProfile -ExecutionPolicy Bypass -File &quot;$(MSBuildProjectDirectory)\..\..\package_launcher.ps1&quot;" />
+  </Target>
 </Project>
