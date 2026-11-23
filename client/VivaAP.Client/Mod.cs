@@ -38,6 +38,19 @@ public static class Mod
                 LogUtility.Initialize();
                 LogUtility.Info("Managed client initialized");
 
+                // Quick Validation test
+                if (
+                    string.IsNullOrWhiteSpace(ArchipelagoClient.Host)
+                    || string.IsNullOrWhiteSpace(ArchipelagoClient.Slot)
+                    || string.IsNullOrWhiteSpace(ArchipelagoClient.Seed)
+                    || !ArchipelagoClient.Port.HasValue
+                    || ArchipelagoClient.Port.Value is < 1 or > 65535
+                )
+                {
+                    LogUtility.Error("Invalid Archipelago launch configuration.");
+                    return 0;
+                }
+
                 // Register the hooks from each feature's observer
                 hooks = new GameHooks();
                 try
@@ -50,19 +63,6 @@ public static class Mod
                 catch (Exception ex)
                 {
                     LogUtility.Warn($"Observer registration failed: {ex.Message}");
-                }
-
-                // Quick Validation test
-                if (
-                    string.IsNullOrWhiteSpace(ArchipelagoClient.Host)
-                    || string.IsNullOrWhiteSpace(ArchipelagoClient.Slot)
-                    || string.IsNullOrWhiteSpace(ArchipelagoClient.Seed)
-                    || !ArchipelagoClient.Port.HasValue
-                    || ArchipelagoClient.Port.Value is < 1 or > 65535
-                )
-                {
-                    LogUtility.Error("Invalid Archipelago launch configuration.");
-                    return 0;
                 }
 
                 LogUtility.Info(
@@ -83,7 +83,10 @@ public static class Mod
                     ArchipelagoClient.ConnectAsync(
                         ArchipelagoClient.Host,
                         ArchipelagoClient.Port.Value,
-                        ArchipelagoClient.Slot
+                        ArchipelagoClient.Slot,
+                        string.IsNullOrWhiteSpace(ArchipelagoClient.Password)
+                            ? null
+                            : ArchipelagoClient.Password
                     )
                 );
 

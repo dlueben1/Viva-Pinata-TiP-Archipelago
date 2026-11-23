@@ -15,7 +15,7 @@ namespace VivaAP.Client
         public static int? Port { get; set; }
         public static string? Slot { get; set; }
         public static string? Seed { get; set; }
-        private static string? Password { get; set; }
+        public static string? Password { get; set; }
 
         /// <summary>
         /// The Archipelago Session
