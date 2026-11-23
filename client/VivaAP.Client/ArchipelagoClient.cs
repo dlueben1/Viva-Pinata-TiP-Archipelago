@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Archipelago.MultiClient.Net;
+﻿using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.Enums;
 using VivaAP.Client.Utils;
-using static System.Collections.Specialized.BitVector32;
 
 namespace VivaAP.Client
 {
@@ -15,13 +11,33 @@ namespace VivaAP.Client
         /// </summary>
         private static readonly object _lock = new();
 
+        public static string? Host { get; set; }
+        public static int? Port { get; set; }
+        public static string? Slot { get; set; }
+        public static string? Seed { get; set; }
+        private static string? Password { get; set; }
+
         /// <summary>
         /// The Archipelago Session
         /// </summary>
         public static ArchipelagoSession? Session { get; private set; }
 
+        static ArchipelagoClient()
+        {
+            // Grab all the environmental variables that are passed in from the patch file
+            Host = Environment.GetEnvironmentVariable("AP_SERVER");
+            Port = int.TryParse(Environment.GetEnvironmentVariable("AP_PORT"), out var port)
+                ? port
+                : null;
+            Slot = Environment.GetEnvironmentVariable("AP_SLOT");
+            Seed = Environment.GetEnvironmentVariable("AP_SEED");
+            Password = Environment.GetEnvironmentVariable("AP_PASSWORD");
+        }
+
         /// <summary>
-        /// Connect to the Archipelago Server as a specific slot
+        /// Connect to the Archipelago Server as a specific slot.
+        /// Technically, all of this info is stored inside the client from the environment variables,
+        /// but I'll leave it with parameters for now in case I want to adjust the connection logic later.
         /// </summary>
         /// <param name="host">Server IP Address/Location</param>
         /// <param name="port">Server's Port Number</param>

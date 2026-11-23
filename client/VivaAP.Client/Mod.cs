@@ -52,9 +52,26 @@ public static class Mod
                     LogUtility.Warn($"Observer registration failed: {ex.Message}");
                 }
 
-                // Launch the test connection without blocking native startup
+                // Quick Validation test
+                if (
+                    string.IsNullOrWhiteSpace(ArchipelagoClient.Host)
+                    || string.IsNullOrWhiteSpace(ArchipelagoClient.Slot)
+                    || string.IsNullOrWhiteSpace(ArchipelagoClient.Seed)
+                    || !ArchipelagoClient.Port.HasValue
+                    || ArchipelagoClient.Port.Value is < 1 or > 65535
+                )
+                {
+                    LogUtility.Error("Invalid Archipelago launch configuration.");
+                    return 0;
+                }
+
+                // Launch the Archipelago Connection as a background task, so we don't block the managed entrypoint
                 apConnectTask = Task.Run(() =>
-                    ArchipelagoClient.ConnectAsync("127.0.0.1", 38281, "Pinata")
+                    ArchipelagoClient.ConnectAsync(
+                        ArchipelagoClient.Host,
+                        ArchipelagoClient.Port.Value,
+                        ArchipelagoClient.Slot
+                    )
                 );
 
                 // Mark the managed runtime as initialized so we don't try to start it again
