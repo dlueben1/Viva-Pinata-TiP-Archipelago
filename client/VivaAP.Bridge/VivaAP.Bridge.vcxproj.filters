@@ -9,9 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Source Files\SyncHooks">
-      <UniqueIdentifier>{ED4ED0C3-F10D-4008-A109-25DF922CFF64}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -29,7 +26,6 @@
     </ClInclude>
     <ClInclude Include="Logger.h"><Filter>Header Files</Filter></ClInclude>
     <ClInclude Include="GameHooks.h"><Filter>Header Files</Filter></ClInclude>
-    <ClInclude Include="SyncHooks\PretztailRestriction.h"><Filter>Source Files\SyncHooks</Filter></ClInclude>
     <ClInclude Include="ManagedHost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -55,7 +51,6 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp"><Filter>Source Files</Filter></ClCompile>
     <ClCompile Include="GameHooks.cpp"><Filter>Source Files</Filter></ClCompile>
-    <ClCompile Include="SyncHooks\PretztailRestriction.cpp"><Filter>Source Files\SyncHooks</Filter></ClCompile>
     <ClCompile Include="ManagedHost.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
