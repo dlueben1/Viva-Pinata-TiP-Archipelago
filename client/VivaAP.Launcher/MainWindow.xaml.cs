@@ -181,6 +181,7 @@ public partial class MainWindow : Window
             startInfo.Environment["AP_PASSWORD"] = PasswordInput.Password;
             startInfo.Environment["AP_PORT"] = PortTextBox.Text.Trim();
             startInfo.Environment["AP_SLOT"] = patch.Slot;
+            startInfo.Environment["AP_SEED"] = patch.Seed;
 
             Process.Start(startInfo);
         }
