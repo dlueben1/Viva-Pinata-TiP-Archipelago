@@ -68,7 +68,7 @@ class TIPWorld(World):
 
     def get_filler_item_name(self) -> str:
         """Returns the name of the filler item needed if the pool needs more items"""
-        return "Placeholder Item"
+        return "10 Coins"
 
     def create_filler(self) -> TIPItem:
         """Creates a filler item instance"""

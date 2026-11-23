@@ -1,27 +1,46 @@
 import typing
 from BaseClasses import ItemClassification, Item
+from . import data
+
 
 # Instance Data for TiP Items
 class TIPItem(Item):
     game = "Viva Pinata: Trouble in Paradise"
+
 
 # Wrapper for item definitions
 class ItemData(typing.NamedTuple):
     code: typing.Optional[int]
     classification: ItemClassification
 
-all_items = {
-    # Fertilizers
-    # "Orange Fertilizer": ItemData(10, ItemClassification.progression),
-    # "Purple Fertilizer": ItemData(11, ItemClassification.progression),
-    # "Yellow Fertilizer": ItemData(12, ItemClassification.progression),
-    # "Red Fertilizer": ItemData(13, ItemClassification.progression),
-    # "Blue Fertilizer": ItemData(14, ItemClassification.progression),
-    # "Brown Fertilizer": ItemData(15, ItemClassification.progression),
-    # "Green Fertilizer": ItemData(16, ItemClassification.progression),
 
-    # Money
-    # "10 Coins": ItemData(200000, ItemClassification.filler),
-    # "50 Coins": ItemData(200001, ItemClassification.filler),
-    "Placeholder Item": ItemData(5, ItemClassification.filler)
+# Item ID Bases
+COIN_ID_BASE = 1
+BLUEPRINT_ID_BASE = 100
+
+# Pinata Homes (Used for Romance Goal, Romance Checks, XP)
+pinata_home_blueprints = {
+    f"{name} Home Blueprints": ItemData(
+        BLUEPRINT_ID_BASE + index, ItemClassification.progression
+    )
+    for index, name in enumerate(
+        sorted(
+            name
+            for name in data.pinata_names
+            if name not in data.legendary_pinata_names
+        )
+    )
+}
+
+# Chocolate Coins (Repeatable Filler & Useful Variants)
+chocolate_coins = {
+    "10 Coins": ItemData(COIN_ID_BASE, ItemClassification.filler),
+    "500 Coins": ItemData(COIN_ID_BASE + 1, ItemClassification.useful),
+}
+
+
+# Every possible item
+all_items = {
+    **chocolate_coins,
+    **pinata_home_blueprints,
 }

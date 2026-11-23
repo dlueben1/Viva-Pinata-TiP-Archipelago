@@ -30,6 +30,13 @@ for award in data.awards.values():
     ):
         continue
 
+    # TEMP: Legendary Pinata awards are ignored for now
+    if (
+        data.species_map[award["subject"]]["display_name"]
+        in data.legendary_pinata_names
+    ):
+        continue
+
     # Determine the Activity we're getting an award for
     activity_name = None
     for activity in data.activity_map:

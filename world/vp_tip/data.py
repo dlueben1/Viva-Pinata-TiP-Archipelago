@@ -14,6 +14,12 @@ def load_csv(filename, key_column):
 # Maps internal species name to their display name
 species_map = load_csv("species_map.csv", "internal_name")
 
+# Build a collection of user-facing Pinata names
+pinata_names = {species["display_name"] for species in species_map.values()}
+
+# Names of Legendary Pinatas (lack many checks)
+legendary_pinata_names = {"Dragonache", "Choclodocus"}
+
 # Maps internal activity substring to it's display name
 activity_map = load_csv("activity_map.csv", "internal_name")
 
