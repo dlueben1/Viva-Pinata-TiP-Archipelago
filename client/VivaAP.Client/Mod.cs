@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using Archipelago.MultiClient.Net;
 using VivaAP.Client.Hooks;
 using VivaAP.Client.Interop;
 using VivaAP.Client.Utils;
@@ -79,16 +80,17 @@ public static class Mod
                 );
 
                 // Launch the Archipelago Connection as a background task, so we don't block the managed entrypoint
-                apConnectTask = Task.Run(() =>
-                    ArchipelagoClient.ConnectAsync(
+                apConnectTask = Task.Run(async () =>
+                {
+                    var result = await ArchipelagoClient.ConnectAsync(
                         ArchipelagoClient.Host,
                         ArchipelagoClient.Port.Value,
                         ArchipelagoClient.Slot,
                         string.IsNullOrWhiteSpace(ArchipelagoClient.Password)
                             ? null
                             : ArchipelagoClient.Password
-                    )
-                );
+                    );
+                });
 
                 // Mark the managed runtime as initialized so we don't try to start it again
                 initialized = true;
@@ -111,6 +113,7 @@ public static class Mod
         {
             try
             {
+                NativeStateSynchronizer.Stop();
                 hooks?.Dispose();
             }
             catch (Exception ex)

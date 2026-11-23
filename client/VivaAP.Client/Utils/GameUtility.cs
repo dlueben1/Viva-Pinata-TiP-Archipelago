@@ -17,6 +17,8 @@ namespace VivaAP.Client.Utils
         /// </summary>
         public static Dictionary<string, string> SpeciesLookupTable { get; }
 
+        public static Dictionary<string, VivaBlueprints> BlueprintLookupTable { get; }
+
         /// <summary>
         /// Gets or sets the collection of Viva awards.
         /// </summary>
@@ -24,9 +26,37 @@ namespace VivaAP.Client.Utils
 
         static GameUtility()
         {
-            // Build the lookup tables from the embedded CSVs
+            // Build the simple lookup tables from the embedded CSVs
             SpeciesLookupTable = LoadInternalNameLookupTable("species_map.csv");
             ActivityLookupTable = LoadInternalNameLookupTable("activity_map.csv");
+
+            // Build the Blueprint data
+            BlueprintLookupTable = new Dictionary<string, VivaBlueprints>();
+            var blueprintCsv = EmbeddedCsvReader.Read("blueprint_map.csv");
+            var lines = blueprintCsv.Split(
+                new[] { '\r', '\n' },
+                StringSplitOptions.RemoveEmptyEntries
+            );
+            for (int i = 1; i < lines.Length; i++)
+            {
+                var row = lines[i];
+
+                // Ignore legendary pinatas
+                if (row.Contains("Dragonache") || row.Contains("Choclodocus"))
+                    continue;
+
+                var cols = row.Split(',');
+                var pinataName = cols[1];
+                var blueprint = new VivaBlueprints
+                {
+                    DisplayName = $"{pinataName} Home Blueprints",
+                    HouseblockTag = uint.Parse(cols[4]),
+                    SourceOrdinal = uint.Parse(cols[5]),
+                    ResidentSpeciesTag = uint.Parse(cols[6]),
+                    UnlockQueueTriggerTag = uint.Parse(cols[7]),
+                };
+                BlueprintLookupTable[pinataName] = blueprint;
+            }
 
             // Build the Award data
             Awards = LoadAwards();

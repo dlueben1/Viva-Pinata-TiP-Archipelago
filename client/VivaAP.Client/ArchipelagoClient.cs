@@ -1,5 +1,6 @@
 ﻿using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.Enums;
+using VivaAP.Client.Interop;
 using VivaAP.Client.Utils;
 
 namespace VivaAP.Client
@@ -56,6 +57,9 @@ namespace VivaAP.Client
                 Session = ArchipelagoSessionFactory.CreateSession(host, port);
 
                 await Session.ConnectAsync();
+
+                // Attach the Native Event Handler before connecting, because items can flood in
+                NativeStateSynchronizer.Start();
 
                 var result = await Session.LoginAsync(
                     "Viva Pinata: Trouble in Paradise",

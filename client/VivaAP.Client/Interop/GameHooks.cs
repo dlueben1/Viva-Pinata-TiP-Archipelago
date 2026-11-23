@@ -44,7 +44,7 @@ internal static class HookEventFlags
 internal sealed class GameHooks : IDisposable
 {
     [DllImport(
-        "VivaAP.Bridge",
+        InteropConstants.NativeDLL,
         CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "VivaApHookRegister"
     )]
@@ -63,21 +63,21 @@ internal sealed class GameHooks : IDisposable
     );
 
     [DllImport(
-        "VivaAP.Bridge",
+        InteropConstants.NativeDLL,
         CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "VivaApHookUnregister"
     )]
     private static extern int UnregisterNative(ulong id);
 
     [DllImport(
-        "VivaAP.Bridge",
+        InteropConstants.NativeDLL,
         CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "VivaApHookPoll"
     )]
     private static extern int PollNative(out HookEvent item);
 
     [DllImport(
-        "VivaAP.Bridge",
+        InteropConstants.NativeDLL,
         CallingConvention = CallingConvention.Cdecl,
         EntryPoint = "VivaApHookTakeDropped"
     )]
@@ -109,8 +109,12 @@ internal sealed class GameHooks : IDisposable
     /// <summary>
     /// Hooks a guest function and watches the u32 at baseRegister + offset across the call.
     /// </summary>
-    internal int Register(uint address, uint baseRegister, uint offset, Action<HookEvent> handler) =>
-        Register(address, 1, baseRegister, offset, 0, 0, 0, 0, 0, 0, handler);
+    internal int Register(
+        uint address,
+        uint baseRegister,
+        uint offset,
+        Action<HookEvent> handler
+    ) => Register(address, 1, baseRegister, offset, 0, 0, 0, 0, 0, 0, handler);
 
     /// <summary>
     /// Hooks a guest function with up to three synchronous captures, performed on the guest thread

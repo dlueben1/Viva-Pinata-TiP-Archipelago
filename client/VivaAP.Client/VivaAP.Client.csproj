@@ -26,11 +26,7 @@
     Microsoft.NETCore.App.Host.win-x64 pack. Item globs return host pack
     version directories unordered, so they are compared as Version.
   -->
-  <UsingTask
-    TaskName="SelectLatestHostPackFile"
-    TaskFactory="RoslynCodeTaskFactory"
-    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll"
-  >
+  <UsingTask TaskName="SelectLatestHostPackFile" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
       <Candidates ParameterType="Microsoft.Build.Framework.ITaskItem[]" Required="true" />
       <Selected ParameterType="Microsoft.Build.Framework.ITaskItem[]" Output="true" />
@@ -64,11 +60,7 @@
     </Task>
   </UsingTask>
 
-  <Target
-    Name="DeployVivaApManaged"
-    AfterTargets="Build"
-    Condition="'$(OS)' == 'Windows_NT' And '$(Configuration)' == 'Debug' And Exists('$(VivaApGameDir)\retip.exe')"
-  >
+  <Target Name="DeployVivaApManaged" AfterTargets="Build" Condition="'$(OS)' == 'Windows_NT' And '$(Configuration)' == 'Debug' And Exists('$(VivaApGameDir)\retip.exe')">
     <MakeDir Directories="$(VivaApModRoot)\managed" />
     <ItemGroup>
       <VivaApManagedOutput Include="$(TargetDir)*.*" />
@@ -79,19 +71,9 @@
     <SelectLatestHostPackFile Candidates="@(VivaApNethostCandidates)">
       <Output TaskParameter="Selected" ItemName="VivaApNethostSelected" />
     </SelectLatestHostPackFile>
-    <Warning
-      Condition="'@(VivaApNethostSelected)' == ''"
-      Text="[VivaAP] No nethost.dll found in the installed .NET host packs; .NET hosting will fail at runtime."
-    />
-    <Copy
-      SourceFiles="@(VivaApManagedOutput);@(VivaApNethostSelected)"
-      DestinationFolder="$(VivaApModRoot)\managed"
-      SkipUnchangedFiles="true"
-    />
-    <Message
-      Importance="high"
-      Text="[VivaAP] Managed hosting files deployed to $(VivaApModRoot)\managed"
-    />
+    <Warning Condition="'@(VivaApNethostSelected)' == ''" Text="[VivaAP] No nethost.dll found in the installed .NET host packs; .NET hosting will fail at runtime." />
+    <Copy SourceFiles="@(VivaApManagedOutput);@(VivaApNethostSelected)" DestinationFolder="$(VivaApModRoot)\managed" SkipUnchangedFiles="true" />
+    <Message Importance="high" Text="[VivaAP] Managed hosting files deployed to $(VivaApModRoot)\managed" />
   </Target>
 
   <ItemGroup>

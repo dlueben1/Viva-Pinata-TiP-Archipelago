@@ -4,7 +4,7 @@
 #include "ManagedHost.h"
 #include "Logger.h"
 #include "GameHooks.h"
-
+#include "SyncHooks/ItemStateHooks.h"
 #include <Windows.h>
 #include <cstddef>
 #include <cwchar>
@@ -123,6 +123,7 @@ extern "C" REXFABRIC_MOD_EXPORT int RexFabricModInit(
 
     vivaap::InitializeLogger(api, mod);
     vivaap::InitializeHooks(api, mod);
+    vivaap::InitializeItemStateHooks(api, mod);
 
     vivaap::Log(
         REXFABRIC_LOG_INFO,
@@ -137,4 +138,5 @@ extern "C" REXFABRIC_MOD_EXPORT void RexFabricModShutdown()
 {
     vivaap::StopManagedRuntime();
     vivaap::ShutdownHooks();
+	vivaap::ShutdownItemStateHooks();
 }

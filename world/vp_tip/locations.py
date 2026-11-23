@@ -30,6 +30,14 @@ for award in data.awards.values():
     ):
         continue
 
+    # TEMP: We're going to ignore non-pinata checks for now!
+    if not award["activity"].startswith("animal_"):
+        continue
+
+    # TEMP: Ignore all Sour Checks for the moment (later we want Visit checks for them)
+    if "pest" in award["subject"].lower():
+        continue
+
     # TEMP: Legendary Pinata awards are ignored for now
     if (
         data.species_map[award["subject"]]["display_name"]
@@ -46,10 +54,6 @@ for award in data.awards.values():
 
     # If the activity is invalid/unknown, then skip this award
     if activity_name is None:
-        continue
-
-    # TEMP: We're going to ignore non-pinata checks for now!
-    if not award["activity"].startswith("animal_"):
         continue
 
     # Find the target for the Award

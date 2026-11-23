@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="SyncHooks">
+      <UniqueIdentifier>{c311e687-b910-4c16-864c-e4721265e4c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -24,8 +27,12 @@
     <ClInclude Include="include\rexfabric\api.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logger.h"><Filter>Header Files</Filter></ClInclude>
-    <ClInclude Include="GameHooks.h"><Filter>Header Files</Filter></ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameHooks.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="ManagedHost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -38,6 +45,9 @@
     <ClInclude Include="include\nethost\nethost.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SyncHooks\ItemStateHooks.h">
+      <Filter>SyncHooks</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -49,10 +59,17 @@
     <ClCompile Include="BridgeEntry.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Logger.cpp"><Filter>Source Files</Filter></ClCompile>
-    <ClCompile Include="GameHooks.cpp"><Filter>Source Files</Filter></ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GameHooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="ManagedHost.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SyncHooks\ItemStateHooks.cpp">
+      <Filter>SyncHooks</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

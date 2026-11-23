@@ -19,17 +19,18 @@ COIN_ID_BASE = 1
 BLUEPRINT_ID_BASE = 100
 
 # Pinata Homes (Used for Romance Goal, Romance Checks, XP)
+unique_home_names = sorted(
+    {
+        "Flutterscotch" if "Flutterscotch" in name else name
+        for name in data.pinata_names
+        if name not in data.legendary_pinata_names
+    }
+)
 pinata_home_blueprints = {
     f"{name} Home Blueprints": ItemData(
         BLUEPRINT_ID_BASE + index, ItemClassification.progression
     )
-    for index, name in enumerate(
-        sorted(
-            name
-            for name in data.pinata_names
-            if name not in data.legendary_pinata_names
-        )
-    )
+    for index, name in enumerate(unique_home_names)
 }
 
 # Chocolate Coins (Repeatable Filler & Useful Variants)

@@ -4,7 +4,7 @@ from .constants import MIN_GARDENER_LEVEL
 from worlds.AutoWorld import World
 from BaseClasses import Region
 from .options import TIPOptions
-from .items import TIPItem, all_items
+from .items import TIPItem, all_items, pinata_home_blueprints
 from rule_builder.rules import CanReachLocation
 
 from .locations import (
@@ -75,11 +75,26 @@ class TIPWorld(World):
         return self.create_item(self.get_filler_item_name())
 
     def create_items(self) -> None:
-        """Build the itempool based on user settings"""
+        """Build the itempool based on user settings."""
+
         locations = self.multiworld.get_unfilled_locations(self.player)
 
-        for _ in locations:
-            self.multiworld.itempool.append(self.create_filler())
+        # One of every home blueprint, unconditionally
+        items = [self.create_item(name) for name in pinata_home_blueprints]
+
+        # Ensure there are enough locations
+        if len(items) > len(locations):
+            raise ValueError(
+                f"Not enough locations for home blueprints: "
+                f"{len(items)} items, {len(locations)} locations."
+            )
+
+        # Fill remaining locations with coins
+        while len(items) < len(locations):
+            items.append(self.create_filler())
+
+        # Give Archipelago the completed itempool
+        self.multiworld.itempool.extend(items)
 
     # endregion
 
