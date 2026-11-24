@@ -48,6 +48,13 @@ namespace VivaAP.Client.Interop
         )]
         private static extern uint TakeDiagnosticsNative();
 
+        [DllImport(
+            InteropConstants.NativeDLL,
+            CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "VivaApHouseEnableEarlyGrants"
+        )]
+        private static extern int EnableEarlyGrantsNative(int enabled);
+
         #endregion
 
         #region Initialization

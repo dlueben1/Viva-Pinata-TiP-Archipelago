@@ -51,7 +51,7 @@ uint32_t entryCount = 0;            // Immutable once hooks are installed.
 std::mutex registrationLock;
 std::atomic<bool> active{false};
 // Mutating early publication must be enabled explicitly after a controlled test.
-std::atomic<bool> earlyGrantsEnabled{false};
+std::atomic<bool> earlyGrantsEnabled{true};
 std::atomic<uint32_t> diagnostics{0};
 thread_local bool granting = false;
 
