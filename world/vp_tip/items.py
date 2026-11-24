@@ -17,6 +17,9 @@ class ItemData(typing.NamedTuple):
 # Item ID Bases
 COIN_ID_BASE = 1
 BLUEPRINT_ID_BASE = 100
+GARDEN_ITEM_ID_BASE = 200
+PRODUCE_ITEM_ID_BASE = 300
+CANDY_ITEM_ID_BASE = 320
 
 # Pinata Homes (Used for Romance Goal, Romance Checks, XP)
 unique_home_names = sorted(
@@ -33,6 +36,50 @@ pinata_home_blueprints = {
     for index, name in enumerate(unique_home_names)
 }
 
+# Garden Items (Useful & Progression)
+garden_items = {
+    "Captains Cutlass": ItemData(GARDEN_ITEM_ID_BASE, ItemClassification.useful),
+    "Dastardos Scarer": ItemData(GARDEN_ITEM_ID_BASE + 1, ItemClassification.useful),
+    "Pirate Statue": ItemData(GARDEN_ITEM_ID_BASE + 2, ItemClassification.progression),
+    "Red Eye Rainbow": ItemData(
+        GARDEN_ITEM_ID_BASE + 3, ItemClassification.progression
+    ),
+    "Water Waiver": ItemData(GARDEN_ITEM_ID_BASE + 4, ItemClassification.useful),
+    "Moon-on-a-Stick": ItemData(
+        GARDEN_ITEM_ID_BASE + 5, ItemClassification.progression
+    ),
+    "Firebrand": ItemData(GARDEN_ITEM_ID_BASE + 6, ItemClassification.progression),
+    "Fish Fountain": ItemData(GARDEN_ITEM_ID_BASE + 7, ItemClassification.progression),
+    "Hay Bale": ItemData(GARDEN_ITEM_ID_BASE + 8, ItemClassification.progression),
+    "Milk Churn": ItemData(GARDEN_ITEM_ID_BASE + 9, ItemClassification.progression),
+    "Pile of Leaves": ItemData(
+        GARDEN_ITEM_ID_BASE + 10, ItemClassification.progression
+    ),
+    "Lantern O' Loot": ItemData(GARDEN_ITEM_ID_BASE + 11, ItemClassification.useful),
+    "Surfboard": ItemData(GARDEN_ITEM_ID_BASE + 12, ItemClassification.progression),
+    "Tombstone": ItemData(GARDEN_ITEM_ID_BASE + 13, ItemClassification.progression),
+    "Barrel": ItemData(GARDEN_ITEM_ID_BASE + 14, ItemClassification.progression),
+    "Bird and Bear Statue": ItemData(
+        GARDEN_ITEM_ID_BASE + 15, ItemClassification.progression
+    ),
+    "Birdbath": ItemData(GARDEN_ITEM_ID_BASE + 16, ItemClassification.progression),
+}
+
+# Produce
+produce_items = {
+    "Honey": ItemData(PRODUCE_ITEM_ID_BASE, ItemClassification.progression),
+    "Milk": ItemData(PRODUCE_ITEM_ID_BASE + 1, ItemClassification.progression),
+    "Bone": ItemData(PRODUCE_ITEM_ID_BASE + 2, ItemClassification.progression),
+    "Bread": ItemData(PRODUCE_ITEM_ID_BASE + 3, ItemClassification.progression),
+}
+
+# Candy
+candy_items = {
+    "Happy Candy": ItemData(CANDY_ITEM_ID_BASE, ItemClassification.useful),
+    "Joy Candy": ItemData(CANDY_ITEM_ID_BASE + 1, ItemClassification.useful),
+    "Romance Candy": ItemData(CANDY_ITEM_ID_BASE + 2, ItemClassification.useful),
+}
+
 # Chocolate Coins (Repeatable Filler & Useful Variants)
 chocolate_coins = {
     "10 Coins": ItemData(COIN_ID_BASE, ItemClassification.filler),
@@ -44,4 +91,7 @@ chocolate_coins = {
 all_items = {
     **chocolate_coins,
     **pinata_home_blueprints,
+    **garden_items,
+    **produce_items,
+    **candy_items,
 }

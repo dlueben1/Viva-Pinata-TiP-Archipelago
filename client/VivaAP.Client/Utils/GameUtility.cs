@@ -17,7 +17,15 @@ namespace VivaAP.Client.Utils
         /// </summary>
         public static Dictionary<string, string> SpeciesLookupTable { get; }
 
+        /// <summary>
+        /// Maps a Pinata's name to their home blueprints
+        /// </summary>
         public static Dictionary<string, VivaBlueprints> BlueprintLookupTable { get; }
+
+        /// <summary>
+        /// Maps an Item's Display Name to their data
+        /// </summary>
+        public static Dictionary<string, VivaShopItem> ShopLottieLookupTable { get; }
 
         /// <summary>
         /// Gets or sets the collection of Viva awards.
@@ -56,6 +64,32 @@ namespace VivaAP.Client.Utils
                     UnlockQueueTriggerTag = uint.Parse(cols[7]),
                 };
                 BlueprintLookupTable[pinataName] = blueprint;
+            }
+
+            // Build Lottie's Data
+            ShopLottieLookupTable = new Dictionary<string, VivaShopItem>();
+            var lottieCsv = EmbeddedCsvReader.Read("lottie_catalog.csv");
+            lines = lottieCsv.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 1; i < lines.Length; i++)
+            {
+                var row = lines[i];
+                var cols = row.Split(',');
+
+                // If this item isn't in the itempool, ignore it
+                if (!cols[0].Equals("1"))
+                    continue;
+
+                var itemName = cols[2];
+                var lottieItem = new VivaShopItem
+                {
+                    InternalName = cols[3],
+                    DisplayName = itemName,
+                    NativeTag = uint.Parse(cols[4]),
+                    SourceOrdinal = uint.Parse(cols[5]),
+                    ItemClass = uint.Parse(cols[19]),
+                    LevelThreshold = uint.Parse(cols[8]),
+                };
+                ShopLottieLookupTable[itemName] = lottieItem;
             }
 
             // Build the Award data

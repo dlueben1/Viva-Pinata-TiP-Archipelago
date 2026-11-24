@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -30,6 +30,18 @@ namespace VivaAP.Client.Interop
         [DllImport(
             InteropConstants.NativeDLL,
             CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "VivaApLottieRegister"
+        )]
+        private static extern int RegisterLottieNative(
+            uint tag,
+            uint sourceOrdinal,
+            uint itemClass,
+            uint levelThreshold
+        );
+
+        [DllImport(
+            InteropConstants.NativeDLL,
+            CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "VivaApHousePrepare"
         )]
         private static extern int PrepareNative();
@@ -37,9 +49,9 @@ namespace VivaAP.Client.Interop
         [DllImport(
             InteropConstants.NativeDLL,
             CallingConvention = CallingConvention.Cdecl,
-            EntryPoint = "VivaApHouseSetOwned"
+            EntryPoint = "VivaApItemSetOwned"
         )]
-        private static extern int SetOwnedNative(uint houseBlockTag, int owned);
+        private static extern int SetOwnedNative(uint tag, int owned);
 
         [DllImport(
             InteropConstants.NativeDLL,
@@ -63,6 +75,7 @@ namespace VivaAP.Client.Interop
         {
             // Register all Items with the native side, so it can start tracking them
             RegisterBlueprints();
+            RegisterLottiesItems();
 
             // Prepare the native side to start tracking state
             var result = PrepareNative();
@@ -96,9 +109,29 @@ namespace VivaAP.Client.Interop
             }
         }
 
+        private static void RegisterLottiesItems()
+        {
+            foreach (var item in GameUtility.ShopLottieLookupTable)
+            {
+                var itemData = item.Value;
+                var result = RegisterLottieNative(
+                    itemData.NativeTag,
+                    itemData.SourceOrdinal,
+                    itemData.ItemClass,
+                    itemData.LevelThreshold
+                );
+                if (result != 1)
+                {
+                    throw new InvalidOperationException(
+                        $"Failed to register {itemData.DisplayName}"
+                    );
+                }
+            }
+        }
+
         #endregion
 
-        #region Handle Items
+        #region Handle AP Items
 
         private static void OnItemReceived(ReceivedItemsHelper helper)
         {
@@ -114,45 +147,95 @@ namespace VivaAP.Client.Interop
                 );
             }
 
-            // TEMP: Handle houses, we need to generalize the Native side soon
-            if (category == APItemType.House)
+            // Handle Blueprints/Houses
+            switch (category)
             {
-                // Grab the blueprint data
-                const string suffix = " Home Blueprints";
-
-                if (!item.ItemDisplayName.EndsWith(suffix, StringComparison.Ordinal))
+                case APItemType.House:
                 {
-                    LogUtility.Error($"Unexpected blueprint: {item.ItemDisplayName}");
-                    helper.DequeueItem();
-                    return;
+                    // Grab the blueprint data
+                    const string suffix = " Home Blueprints";
+
+                    if (!item.ItemDisplayName.EndsWith(suffix, StringComparison.Ordinal))
+                    {
+                        LogUtility.Error($"Unexpected blueprint: {item.ItemDisplayName}");
+                        helper.DequeueItem();
+                        return;
+                    }
+
+                    string pinata = item.ItemDisplayName[..^suffix.Length];
+
+                    // Simple fix for the Flutterscotch shared home name
+                    if (pinata == "Flutterscotch")
+                        pinata = "White Flutterscotch";
+
+                    var blueprint = GameUtility.BlueprintLookupTable.TryGetValue(pinata, out var bp)
+                        ? bp
+                        : null;
+
+                    if (blueprint != null)
+                    {
+                        // Unlock the house on the native side
+                        SetShopItemOwned(blueprint.HouseblockTag, true);
+                    }
+                    else
+                    {
+                        // We had a problem with getting the blueprint data, so we can't handle this item
+                        LogUtility.Error(
+                            $"Could not find blueprint data for house item '{item.ItemDisplayName}' (ID: {item.ItemId})."
+                        );
+                    }
+                    break;
                 }
-
-                string pinata = item.ItemDisplayName[..^suffix.Length];
-
-                // Simple fix for the Flutterscotch shared home name
-                if (pinata == "Flutterscotch")
-                    pinata = "White Flutterscotch";
-
-                var blueprint = GameUtility.BlueprintLookupTable.TryGetValue(pinata, out var bp)
-                    ? bp
-                    : null;
-
-                if (blueprint != null)
+                case APItemType.GardenItem:
+                case APItemType.Produce:
+                case APItemType.Candy:
                 {
-                    // Unlock the house on the native side
-                    SetOwnedNative(blueprint.HouseblockTag, 1);
-                }
-                else
-                {
-                    // We had a problem with getting the blueprint data, so we can't handle this item
-                    LogUtility.Error(
-                        $"Could not find blueprint data for house item '{item.ItemDisplayName}' (ID: {item.ItemId})."
-                    );
+                    var itemData = GameUtility.ShopLottieLookupTable.TryGetValue(
+                        item.ItemDisplayName,
+                        out var lottie
+                    )
+                        ? lottie
+                        : null;
+
+                    if (itemData != null)
+                        SetShopItemOwned(itemData.NativeTag, true);
+                    else
+                        LogUtility.Error(
+                            $"Could not find Lottie Shop ItemData for item '{item.ItemDisplayName}' (ID: {item.ItemId})."
+                        );
+                    break;
                 }
             }
 
             // Finally, dequeue the item since we've successfully handled it
             helper.DequeueItem();
+        }
+
+        #endregion
+
+        #region API - Lottie Items
+
+        /// <summary>
+        /// Registers a verified, ordinary Lottie item before Start prepares the hooks.
+        /// Its source row must be level-only (queue 1, pending mask 0x2); pass
+        /// the retail class, source ordinal and original level threshold.
+        /// </summary>
+        public static void RegisterLottieItem(
+            uint tag,
+            uint sourceOrdinal,
+            uint itemClass,
+            uint levelThreshold
+        )
+        {
+            if (RegisterLottieNative(tag, sourceOrdinal, itemClass, levelThreshold) != 1)
+                throw new InvalidOperationException($"Failed to register Lottie item {tag}.");
+        }
+
+        /// <summary>Publishes independent AP ownership for any registered shop item.</summary>
+        public static void SetShopItemOwned(uint tag, bool owned)
+        {
+            if (SetOwnedNative(tag, owned ? 1 : 0) != 1)
+                throw new InvalidOperationException($"Shop item {tag} is not registered.");
         }
 
         #endregion

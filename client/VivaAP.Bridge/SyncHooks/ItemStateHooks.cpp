@@ -14,6 +14,7 @@ namespace {
 // RETAIL guest addresses. Do not use with another recomp/runtime until revalidated.
 constexpr uint32_t kReelBuilder       = 0x823652A8;
 constexpr uint32_t kPlacementValidate = 0x822D6E00;
+constexpr uint32_t kSelectItem        = 0x823673F0;
 constexpr uint32_t kShopRefresh       = 0x825B3688;
 constexpr uint32_t kPublisher         = 0x825B1990;
 constexpr uint32_t kHasMembership     = 0x825B2508;
@@ -23,10 +24,9 @@ constexpr uint32_t kLocalPlayer       = 0x83DBED50;
 constexpr uint32_t kModeFlags         = 0x83DBED7C;
 constexpr uint32_t kLiveSlots[]       = {0x82C4A4EC, 0x82C4A4F0, 0x82C4A4F4};
 
-constexpr uint32_t kWilly = 4, kHouseClass = 0x13;
+constexpr uint32_t kLottie = 0, kWilly = 4, kHouseClass = 0x13;
 constexpr uint32_t kHouseRowSize = 0x24, kPointerRowSize = 4;
-constexpr uint32_t kMaxRows = 1024, kMaxBlueprints = 160;
-constexpr uint32_t kQ5Mask = 0x20;
+constexpr uint32_t kMaxRows = 1024, kMaxEntries = 629;
 
 enum Diagnostic : uint32_t {
     SoldOutApplied = 1, PlacementDenied = 2, GrantConfirmed = 4,
@@ -37,7 +37,10 @@ enum Diagnostic : uint32_t {
 struct Entry {
     uint32_t tag = 0;
     uint32_t ordinal = 0;
-    uint32_t species = 0;
+    uint32_t itemClass = 0;
+    uint32_t shop = 0;
+    uint32_t queue = 0;
+    uint32_t trigger = 0;
     std::atomic<bool> owned{false};
     // A destructive publication must not be repeated if it failed midway.
     std::atomic<uint32_t> attemptedManager{0};
@@ -45,12 +48,12 @@ struct Entry {
 
 const RexFabricApi* api = nullptr;
 RexFabricMod* mod = nullptr;
-RexFabricHookId reelHook = 0, placementHook = 0, refreshHook = 0;
-std::array<Entry, kMaxBlueprints> entries;
+RexFabricHookId reelHook = 0, placementHook = 0, refreshHook = 0, selectionHook = 0;
+std::array<Entry, kMaxEntries> entries;
 uint32_t entryCount = 0;            // Immutable once hooks are installed.
 std::mutex registrationLock;
 std::atomic<bool> active{false};
-// Mutating early publication must be enabled explicitly after a controlled test.
+// Early publication follows AP ownership at the next matching shop refresh.
 std::atomic<bool> earlyGrantsEnabled{true};
 std::atomic<uint32_t> diagnostics{0};
 thread_local bool granting = false;
@@ -139,13 +142,14 @@ bool ReadPlayerManager(uint32_t& manager, uint32_t& local) {
 }
 
 // The shop/reel/catalog are separate 0x24-byte lists. Do not edit canonical records.
-bool FindHouse(const List& list, const Entry& entry, uint32_t& match) {
+bool FindRecord(const List& list, const Entry& entry, uint32_t& match) {
     match = 0;
     for (uint32_t row = list.begin; row < list.end; row += kHouseRowSize) {
         const auto* data = list.rows + (row - list.begin);
         if (Word(data) != entry.tag) continue;
-        if (match || Word(data, 4) != kHouseClass || Word(data, 8) != 0 ||
-            Word(data, 0x10) != entry.ordinal || Word(data, 0x14) != 0)
+        if (match || Word(data, 4) != entry.itemClass || Word(data, 8) != 0 ||
+            Word(data, 0x10) != entry.ordinal ||
+            (entry.shop == kWilly && Word(data, 0x14) != 0))
             return false;
         match = row;
     }
@@ -154,19 +158,19 @@ bool FindHouse(const List& list, const Entry& entry, uint32_t& match) {
 
 struct Shop { uint32_t buyer{}, catalogAddress{}, workspace{}; List catalog, canonical; };
 
-bool QualifyShop(RexFabricCall* call, uint32_t controller, Shop& shop) {
+bool QualifyShop(RexFabricCall* call, uint32_t controller, uint32_t expectedShop, Shop& shop) {
     uint32_t shopId = 0, local = 0, state = 0, manager = 0, component = 0;
-    if (!OrdinarySinglePlayer() || !Read(controller, 0x348, shopId) || shopId != kWilly ||
+    if (!OrdinarySinglePlayer() || !Read(controller, 0x348, shopId) || shopId != expectedShop ||
         !Read(controller, 0xa8, shop.buyer) || !Read(kLocalPlayer, 0, local) ||
         !local || shop.buyer != local) return false;
 
     const uint32_t garden = GuestAddress(api->call_guest(call, kTopGarden, nullptr, 0));
-    constexpr uint32_t willyCatalogOffset = 0x4c0c + kWilly * 0x28;
+    const uint32_t catalogOffset = 0x4c0c + expectedShop * 0x28;
     if (!Read(garden, 0x4a00, shop.workspace) ||
         !Read(shop.workspace, 0x8e4, component) || !component ||
-        component > UINT32_MAX - willyCatalogOffset ||
+        component > UINT32_MAX - catalogOffset ||
         !Read(controller, 0x358, shop.catalogAddress) ||
-        shop.catalogAddress != component + willyCatalogOffset ||
+        shop.catalogAddress != component + catalogOffset ||
         !Read(local, 0x1e70, state) || !Read(state, 0x2d4, manager)) return false;
 
     return ReadList(shop.catalogAddress, kHouseRowSize, shop.catalog) &&
@@ -177,8 +181,11 @@ bool QualifyShop(RexFabricCall* call, uint32_t controller, Shop& shop) {
 // Called AFTER the original reel builder. The shop's ordinary selection path
 // reads row+0x18 and renders native Sold Out when it is zero.
 void OnReelBuilt(RexFabricCall* call, void*) {
-    const bool inspect = active.load(std::memory_order_acquire) &&
-        api->get_gpr(call, 4) == kHouseClass;
+    const uint32_t itemClass = static_cast<uint32_t>(api->get_gpr(call, 4));
+    bool inspect = false;
+    if (active.load(std::memory_order_acquire))
+        for (uint32_t i = 0; i < entryCount; ++i)
+            inspect |= entries[i].itemClass == itemClass;
     const uint32_t avatar = inspect ? GuestAddress(api->get_gpr(call, 3)) : 0;
     api->call_next(call);
     if (!avatar || !active.load(std::memory_order_acquire)) return;
@@ -186,13 +193,13 @@ void OnReelBuilt(RexFabricCall* call, void*) {
     uint32_t callback = 0, controller = 0, shopId = 0, backLink = 0, avatarCatalog = 0;
     if (!Read(avatar, 0x1728, callback) || callback != kWillyCallback ||
         !Read(avatar, 0x172c, controller) || !Read(controller, 0x348, shopId) ||
-        shopId != kWilly) return;
+        (shopId != kWilly && shopId != kLottie)) return;
 
     Shop shop;
     List reel;
     if (!Read(controller, 0x1e4, backLink) || backLink != avatar ||
         !Read(avatar, 0xecc, avatarCatalog) ||
-        !QualifyShop(call, controller, shop) ||
+        !QualifyShop(call, controller, shopId, shop) ||
         avatarCatalog != shop.catalogAddress ||
         avatar > UINT32_MAX - 0xee4 ||
         !ReadList(avatar + 0xee4, kHouseRowSize, reel) ||
@@ -204,16 +211,17 @@ void OnReelBuilt(RexFabricCall* call, void*) {
     // No managed callback on the game thread: a C# worker publishes owned bits.
     for (uint32_t i = 0; i < entryCount; ++i) {
         auto& entry = entries[i];
-        if (entry.owned.load(std::memory_order_acquire)) continue;
+        if (entry.shop != shopId || entry.itemClass != itemClass ||
+            entry.owned.load(std::memory_order_acquire)) continue;
 
         uint32_t reelRow = 0, catalogRow = 0, canonicalRow = 0;
-        if (!FindHouse(reel, entry, reelRow) ||
-            !FindHouse(shop.catalog, entry, catalogRow) ||
-            !FindHouse(shop.canonical, entry, canonicalRow)) {
+        if (!FindRecord(reel, entry, reelRow) ||
+            !FindRecord(shop.catalog, entry, catalogRow) ||
+            !FindRecord(shop.canonical, entry, canonicalRow)) {
             diagnostics.fetch_or(ReelUnqualified, std::memory_order_relaxed);
             continue;
         }
-        // If vanilla has not unlocked the house, it is absent from the reel.
+        // An item not yet unlocked by vanilla is absent from the reel.
         if (!reelRow) continue;
         const auto* data = reel.rows + (reelRow - reel.begin);
         if (!catalogRow || !canonicalRow || Word(data, 0x20) != catalogRow ||
@@ -231,10 +239,10 @@ void OnReelBuilt(RexFabricCall* call, void*) {
 bool ShouldDenyPlacement(RexFabricCall* call) {
     const uint32_t preview = GuestAddress(api->get_gpr(call, 4));
     uint32_t tag = 0, itemClass = 0;
-    if (!Read(preview, 0x84, tag) || !Read(preview, 0x88, itemClass) ||
-        itemClass != kHouseClass) return false;
+    if (!Read(preview, 0x84, tag) || !Read(preview, 0x88, itemClass)) return false;
     Entry* entry = FindEntry(tag);
-    if (!entry || entry->owned.load(std::memory_order_acquire)) return false;
+    if (!entry || entry->itemClass != itemClass ||
+        entry->owned.load(std::memory_order_acquire)) return false;
 
     const uint32_t control = GuestAddress(api->get_gpr(call, 3));
     uint32_t mode = 0, tagInCursor = 0, buyer = 0, controller = 0;
@@ -244,11 +252,11 @@ bool ShouldDenyPlacement(RexFabricCall* call) {
     const bool qualified = Read(control, 0, mode) && mode == 9 &&
         Read(control, 0x354, tagInCursor) && tagInCursor == tag &&
         Read(control, 0x130, buyer) && Read(control, 0x134, controller) &&
-        QualifyShop(call, controller, shop) && buyer == shop.buyer &&
+        QualifyShop(call, controller, entry->shop, shop) && buyer == shop.buyer &&
         Read(control, 8, cursor) && Read(shop.workspace, 0x8fc, localCursor) &&
         cursor == localCursor && Read(cursor, 0xe0, cursorControl) &&
-        cursorControl == control && FindHouse(shop.catalog, *entry, catalogRow) &&
-        catalogRow && FindHouse(shop.canonical, *entry, canonicalRow) && canonicalRow;
+        cursorControl == control && FindRecord(shop.catalog, *entry, catalogRow) &&
+        catalogRow && FindRecord(shop.canonical, *entry, canonicalRow) && canonicalRow;
     if (!qualified) diagnostics.fetch_or(PlacementUnqualified, std::memory_order_relaxed);
     return qualified;
 }
@@ -263,43 +271,96 @@ void OnPlacement(RexFabricCall* call, void*) {
     api->call_next(call);
 }
 
-// Validate a live, single q5 pending registration before side-effect publication.
-// This intentionally skips unusual/multi-queue house rows, rather than guessing.
-bool FindQ5PendingRow(uint32_t manager, const Entry& entry, uint32_t& mask) {
-    uint32_t queues = 0, queue5 = 0, type = 0;
+// Guard selection itself, before immediate one-time purchase side effects and
+// before the controller opens a placement cursor. Only actual Lottie reel rows
+// are eligible; class/category navigation and every unregistered row pass on.
+void OnSelectItem(RexFabricCall* call, void*) {
+    const uint32_t avatar = GuestAddress(api->get_gpr(call, 3));
+    uint32_t mode = 0, callback = 0, controller = 0, backLink = 0, catalog = 0;
+    uint32_t major = 0, minor = 0;
+    Shop shop;
+    List reel;
+    if (active.load(std::memory_order_acquire) &&
+        Read(avatar, 0xec4, mode) && mode == 2 &&
+        Read(avatar, 0x1728, callback) && callback == kWillyCallback &&
+        Read(avatar, 0x172c, controller) &&
+        Read(controller, 0x1e4, backLink) && backLink == avatar &&
+        Read(avatar, 0xecc, catalog) &&
+        QualifyShop(call, controller, kLottie, shop) && catalog == shop.catalogAddress &&
+        avatar <= UINT32_MAX - 0xee4 && ReadList(avatar + 0xee4, kHouseRowSize, reel) &&
+        Disjoint(reel, shop.catalog) && Disjoint(reel, shop.canonical) &&
+        Read(avatar, 0xf18, major) && Read(avatar, 0xf1c, minor)) {
+        const uint64_t index = static_cast<uint64_t>(major) * 4 + minor;
+        const uint64_t count = (reel.end - reel.begin) / kHouseRowSize;
+        if (index < count) {
+            const auto* row = reel.rows + static_cast<size_t>(index) * kHouseRowSize;
+            Entry* entry = FindEntry(Word(row));
+            uint32_t reelRow = 0, catalogRow = 0, canonicalRow = 0;
+            if (entry && entry->shop == kLottie &&
+                !entry->owned.load(std::memory_order_acquire) &&
+                FindRecord(reel, *entry, reelRow) && reelRow == reel.begin + index * kHouseRowSize &&
+                FindRecord(shop.catalog, *entry, catalogRow) && catalogRow &&
+                FindRecord(shop.canonical, *entry, canonicalRow) && canonicalRow &&
+                Word(row, 0x20) == catalogRow &&
+                !entry->owned.load(std::memory_order_acquire)) {
+                diagnostics.fetch_or(PlacementDenied, std::memory_order_relaxed);
+                return;
+            }
+        }
+    }
+    api->call_next(call);
+}
+
+// Validate a unique registration with exactly the expected single queue.
+bool FindPendingRow(uint32_t manager, const Entry& entry, uint32_t& mask) {
+    uint32_t queues = 0, queue = 0, type = 0;
     if (!Read(manager, 0x1c, queues) ||
-        !Read(queues, 4 * 4, queue5) || !Read(queue5, 0, type) || type != 5)
+        !Read(queues, (entry.queue - 1) * 4, queue) ||
+        !Read(queue, 0, type) || type != entry.queue)
         return false;
     List pending;
-    if (!ReadList(queue5 + 4, kPointerRowSize, pending)) return false;
+    if (!ReadList(queue + 4, kPointerRowSize, pending)) return false;
     bool found = false;
     for (uint32_t p = pending.begin; p < pending.end; p += 4) {
         const uint32_t row = Word(pending.rows + (p - pending.begin));
-        uint32_t tag = 0, ordinal = 0, species = 0, currentMask = 0;
+        uint32_t tag = 0, ordinal = 0, trigger = 0, currentMask = 0;
         if (!Read(row, 4, tag) || !Read(row, 0x28, ordinal) ||
-            !Read(row, 0x18, species) || !Read(row, 0x2c, currentMask))
+            !Read(row, 4 + entry.queue * 4, trigger) || !Read(row, 0x2c, currentMask))
             return false;
         if (tag != entry.tag) continue;
-        if (found || ordinal != entry.ordinal || species != entry.species ||
-            currentMask != kQ5Mask) return false;
+        if (found || ordinal != entry.ordinal || trigger != entry.trigger ||
+            currentMask != (1u << entry.queue)) return false;
         mask = currentMask;
         found = true;
     }
     return found;
 }
 
-// Called BEFORE vanilla shop refresh so newly published houses can appear in
+// Called BEFORE vanilla shop refresh so newly published items can appear in
 // its normal derived catalog. The only guest-thread mutation is call_guest.
 void OnShopRefresh(RexFabricCall* call, void*) {
     if (active.load(std::memory_order_acquire) &&
         earlyGrantsEnabled.load(std::memory_order_acquire) && !granting &&
-        api->get_gpr(call, 4) == kWilly) {
+        (api->get_gpr(call, 4) == kWilly || api->get_gpr(call, 4) == kLottie)) {
+        const uint32_t refreshShop = static_cast<uint32_t>(api->get_gpr(call, 4));
         uint32_t manager = 0, local = 0;
-        if (ReadPlayerManager(manager, local)) {
+        bool refreshQualified = false;
+        for (uint32_t i = 0; i < entryCount; ++i)
+            refreshQualified |= entries[i].shop == refreshShop;
+        if (refreshQualified && refreshShop == kLottie) {
+            const uint32_t params = GuestAddress(api->get_gpr(call, 3));
+            const uint32_t garden = GuestAddress(api->call_guest(call, kTopGarden, nullptr, 0));
+            uint32_t workspace = 0, component = 0;
+            refreshQualified = Read(garden, 0x4a00, workspace) &&
+                Read(workspace, 0x8e4, component) && component >= 0x10000 &&
+                component <= UINT32_MAX - 0x4c0c && params == component + 0x4c0c;
+        }
+        if (refreshQualified && ReadPlayerManager(manager, local)) {
             granting = true;
             for (uint32_t i = 0; i < entryCount; ++i) {
                 auto& entry = entries[i];
-                if (!entry.owned.load(std::memory_order_acquire) ||
+                if (entry.shop != refreshShop ||
+                    !entry.owned.load(std::memory_order_acquire) ||
                     entry.attemptedManager.load(std::memory_order_acquire) == manager)
                     continue;
 
@@ -308,7 +369,7 @@ void OnShopRefresh(RexFabricCall* call, void*) {
                     continue;
 
                 uint32_t liveMask = 0;
-                if (!FindQ5PendingRow(manager, entry, liveMask)) {
+                if (!FindPendingRow(manager, entry, liveMask)) {
                     diagnostics.fetch_or(GrantDeferred, std::memory_order_relaxed);
                     continue;
                 }
@@ -338,9 +399,10 @@ void ShutdownItemStateHooks() {
     earlyGrantsEnabled.store(false, std::memory_order_release);
     active.store(false, std::memory_order_release);
     if (refreshHook) api->unhook(refreshHook);
+    if (selectionHook) api->unhook(selectionHook);
     if (placementHook) api->unhook(placementHook);
     if (reelHook) api->unhook(reelHook);
-    refreshHook = placementHook = reelHook = 0;
+    refreshHook = selectionHook = placementHook = reelHook = 0;
 }
 }
 
@@ -348,11 +410,34 @@ extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApHouseRegister(
     uint32_t tag, uint32_t ordinal, uint32_t species) {
     std::lock_guard lock(registrationLock);
     if (active.load() || !api || !tag || !species || ordinal >= 629) return 0;
-    if (FindEntry(tag) || entryCount == kMaxBlueprints) return 0;
+    if (FindEntry(tag) || entryCount == kMaxEntries) return 0;
     auto& entry = entries[entryCount++];
     entry.tag = tag;
     entry.ordinal = ordinal;
-    entry.species = species;
+    entry.itemClass = kHouseClass;
+    entry.shop = kWilly;
+    entry.queue = 5;
+    entry.trigger = species;
+    entry.owned.store(false);
+    entry.attemptedManager.store(0);
+    return 1;
+}
+
+extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApLottieRegister(
+    uint32_t tag, uint32_t ordinal, uint32_t itemClass, uint32_t level) {
+    std::lock_guard lock(registrationLock);
+    // The caller supplies verified GeneralStore metadata for an in-scope item.
+    // The pending-row check enforces a single ordinary level condition.
+    if (active.load() || !api || !tag || ordinal >= 629 || level <= 1 ||
+        itemClass >= 45 || itemClass == kHouseClass ||
+        FindEntry(tag) || entryCount == kMaxEntries) return 0;
+    auto& entry = entries[entryCount++];
+    entry.tag = tag;
+    entry.ordinal = ordinal;
+    entry.itemClass = itemClass;
+    entry.shop = kLottie;
+    entry.queue = 1;
+    entry.trigger = level;
     entry.owned.store(false);
     entry.attemptedManager.store(0);
     return 1;
@@ -366,8 +451,12 @@ extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApHousePrepare() {
         !api->is_hookable || !api->hook || !api->unhook || !api->call_next ||
         !api->get_gpr || !api->set_gpr || !api->call_guest || !api->guest_pointer ||
         !api->read_u32 || !api->write_u32) return 0;
+    bool hasLottie = false;
+    for (uint32_t i = 0; i < entryCount; ++i)
+        hasLottie |= entries[i].shop == kLottie;
     if (!api->is_hookable(kReelBuilder) ||
         !api->is_hookable(kPlacementValidate) ||
+        (hasLottie && !api->is_hookable(kSelectItem)) ||
         !api->is_hookable(kShopRefresh) ||
         !api->is_hookable(kPublisher) ||
         !api->is_hookable(kHasMembership) || !api->is_hookable(kTopGarden)) return 0;
@@ -376,6 +465,11 @@ extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApHousePrepare() {
     if (!reelHook) return 0;
     placementHook = api->hook(mod, kPlacementValidate, OnPlacement, nullptr);
     if (!placementHook) {
+        vivaap::ShutdownItemStateHooks();
+        return 0;
+    }
+    if (hasLottie) selectionHook = api->hook(mod, kSelectItem, OnSelectItem, nullptr);
+    if (hasLottie && !selectionHook) {
         vivaap::ShutdownItemStateHooks();
         return 0;
     }
@@ -394,12 +488,15 @@ extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApHouseEnableEarlyGrants(int32_t ena
     return 1;
 }
 
-extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApHouseSetOwned(uint32_t tag, int32_t owned) {
+extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApItemSetOwned(uint32_t tag, int32_t owned) {
     if (owned != 0 && owned != 1) return 0;
     Entry* entry = FindEntry(tag);
     if (!entry) return 0;
     entry->owned.store(owned == 1, std::memory_order_release);
     return 1;
+}
+extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApHouseSetOwned(uint32_t tag, int32_t owned) {
+    return VivaApItemSetOwned(tag, owned);
 }
 extern "C" REXFABRIC_MOD_EXPORT uint32_t VivaApHouseTakeDiagnostics() {
     return diagnostics.exchange(0, std::memory_order_relaxed);

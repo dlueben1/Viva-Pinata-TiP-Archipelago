@@ -4,7 +4,14 @@ from .constants import MIN_GARDENER_LEVEL
 from worlds.AutoWorld import World
 from BaseClasses import Region
 from .options import TIPOptions
-from .items import TIPItem, all_items, pinata_home_blueprints
+from .items import (
+    TIPItem,
+    all_items,
+    pinata_home_blueprints,
+    candy_items,
+    produce_items,
+    garden_items,
+)
 from rule_builder.rules import CanReachLocation
 
 from .locations import (
@@ -81,6 +88,9 @@ class TIPWorld(World):
 
         # One of every home blueprint, unconditionally
         items = [self.create_item(name) for name in pinata_home_blueprints]
+        items.extend([self.create_item(name) for name in candy_items])
+        items.extend([self.create_item(name) for name in garden_items])
+        items.extend([self.create_item(name) for name in produce_items])
 
         # Ensure there are enough locations
         if len(items) > len(locations):
