@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ItemStateHooks.h"
+#include "../Logger.h"
 
 #include <Windows.h>
 #include <array>
@@ -15,16 +16,20 @@ namespace {
 constexpr uint32_t kReelBuilder       = 0x823652A8;
 constexpr uint32_t kPlacementValidate = 0x822D6E00;
 constexpr uint32_t kSelectItem        = 0x823673F0;
+constexpr uint32_t kAccessoryColours  = 0x82365DD8;
+constexpr uint32_t kShopAction        = 0x824027F8;
 constexpr uint32_t kShopRefresh       = 0x825B3688;
 constexpr uint32_t kPublisher         = 0x825B1990;
 constexpr uint32_t kHasMembership     = 0x825B2508;
 constexpr uint32_t kTopGarden         = 0x824E1158;
+constexpr uint32_t kHostPlayer        = 0x8252ECD0;
 constexpr uint32_t kWillyCallback     = 0x824027A8;
 constexpr uint32_t kLocalPlayer       = 0x83DBED50;
 constexpr uint32_t kModeFlags         = 0x83DBED7C;
 constexpr uint32_t kLiveSlots[]       = {0x82C4A4EC, 0x82C4A4F0, 0x82C4A4F4};
 
-constexpr uint32_t kLottie = 0, kWilly = 4, kHouseClass = 0x13;
+constexpr uint32_t kLottie = 0, kWilly = 4, kPaperPets = 5;
+constexpr uint32_t kHouseClass = 0x13, kAccessoryClass = 4;
 constexpr uint32_t kHouseRowSize = 0x24, kPointerRowSize = 4;
 constexpr uint32_t kMaxRows = 1024, kMaxEntries = 629;
 
@@ -44,11 +49,14 @@ struct Entry {
     std::atomic<bool> owned{false};
     // A destructive publication must not be repeated if it failed midway.
     std::atomic<uint32_t> attemptedManager{0};
+    std::atomic<uint32_t> deferredManager{0};
+    std::atomic<uint32_t> warnings{0};
 };
 
 const RexFabricApi* api = nullptr;
 RexFabricMod* mod = nullptr;
 RexFabricHookId reelHook = 0, placementHook = 0, refreshHook = 0, selectionHook = 0;
+RexFabricHookId colourHook = 0, actionHook = 0;
 std::array<Entry, kMaxEntries> entries;
 uint32_t entryCount = 0;            // Immutable once hooks are installed.
 std::mutex registrationLock;
@@ -56,7 +64,13 @@ std::atomic<bool> active{false};
 // Early publication follows AP ownership at the next matching shop refresh.
 std::atomic<bool> earlyGrantsEnabled{true};
 std::atomic<uint32_t> diagnostics{0};
+std::atomic<uint32_t> reportedPaperPetsWarnings{0};
 thread_local bool granting = false;
+
+void WarnPaperPetsOnce(uint32_t bit, const char* message) {
+    if ((reportedPaperPetsWarnings.fetch_or(bit, std::memory_order_relaxed) & bit) == 0)
+        vivaap::Log(REXFABRIC_LOG_WARN, message);
+}
 
 uint32_t GuestAddress(uint64_t value) {
     return value >= 0x10000 && value <= UINT32_MAX ? static_cast<uint32_t>(value) : 0;
@@ -193,7 +207,7 @@ void OnReelBuilt(RexFabricCall* call, void*) {
     uint32_t callback = 0, controller = 0, shopId = 0, backLink = 0, avatarCatalog = 0;
     if (!Read(avatar, 0x1728, callback) || callback != kWillyCallback ||
         !Read(avatar, 0x172c, controller) || !Read(controller, 0x348, shopId) ||
-        (shopId != kWilly && shopId != kLottie)) return;
+        (shopId != kWilly && shopId != kLottie && shopId != kPaperPets)) return;
 
     Shop shop;
     List reel;
@@ -205,6 +219,8 @@ void OnReelBuilt(RexFabricCall* call, void*) {
         !ReadList(avatar + 0xee4, kHouseRowSize, reel) ||
         !Disjoint(reel, shop.catalog) || !Disjoint(reel, shop.canonical)) {
         diagnostics.fetch_or(ReelUnqualified, std::memory_order_relaxed);
+        if (shopId == kPaperPets)
+            WarnPaperPetsOnce(1, "Paper Pets reel qualification failed; access restrictions require a matching local shop.");
         return;
     }
 
@@ -219,6 +235,9 @@ void OnReelBuilt(RexFabricCall* call, void*) {
             !FindRecord(shop.catalog, entry, catalogRow) ||
             !FindRecord(shop.canonical, entry, canonicalRow)) {
             diagnostics.fetch_or(ReelUnqualified, std::memory_order_relaxed);
+            if (entry.shop == kPaperPets &&
+                (entry.warnings.fetch_or(2, std::memory_order_relaxed) & 2) == 0)
+                vivaap::Log(REXFABRIC_LOG_WARN, "Accessory reel record qualification failed for tag " + std::to_string(entry.tag));
             continue;
         }
         // An item not yet unlocked by vanilla is absent from the reel.
@@ -227,6 +246,9 @@ void OnReelBuilt(RexFabricCall* call, void*) {
         if (!catalogRow || !canonicalRow || Word(data, 0x20) != catalogRow ||
             !Map(reelRow + 0x18, 4, true)) {
             diagnostics.fetch_or(ReelUnqualified, std::memory_order_relaxed);
+            if (entry.shop == kPaperPets &&
+                (entry.warnings.fetch_or(2, std::memory_order_relaxed) & 2) == 0)
+                vivaap::Log(REXFABRIC_LOG_WARN, "Accessory reel record qualification failed for tag " + std::to_string(entry.tag));
             continue;
         }
         if (!entry.owned.load(std::memory_order_acquire) && Word(data, 0x18) != 0) {
@@ -234,6 +256,142 @@ void OnReelBuilt(RexFabricCall* call, void*) {
             diagnostics.fetch_or(SoldOutApplied, std::memory_order_relaxed);
         }
     }
+}
+
+// Colour choices are copies of one accessory row, so duplicate tags in this
+// particular reel are expected. Catalog and canonical records remain unique.
+void OnAccessoryColours(RexFabricCall* call, void*) {
+    const uint32_t avatar = GuestAddress(api->get_gpr(call, 3));
+    api->call_next(call);
+    if (!active.load(std::memory_order_acquire) || !avatar) return;
+
+    uint32_t callback = 0, controller = 0, shopId = 0, backLink = 0, catalog = 0;
+    if (!Read(avatar, 0x1728, callback) || callback != kWillyCallback ||
+        !Read(avatar, 0x172c, controller) || !Read(controller, 0x348, shopId) ||
+        shopId != kPaperPets) return;
+
+    Shop shop;
+    List reel;
+    if (!Read(controller, 0x1e4, backLink) || backLink != avatar ||
+        !Read(avatar, 0xecc, catalog) || !QualifyShop(call, controller, kPaperPets, shop) ||
+        catalog != shop.catalogAddress || avatar > UINT32_MAX - 0xee4 ||
+        !ReadList(avatar + 0xee4, kHouseRowSize, reel) ||
+        !Disjoint(reel, shop.catalog) || !Disjoint(reel, shop.canonical)) {
+        diagnostics.fetch_or(ReelUnqualified, std::memory_order_relaxed);
+        WarnPaperPetsOnce(2, "Paper Pets colour reel qualification failed.");
+        return;
+    }
+
+    for (uint32_t i = 0; i < entryCount; ++i) {
+        auto& entry = entries[i];
+        if (entry.shop != kPaperPets || entry.owned.load(std::memory_order_acquire)) continue;
+        uint32_t catalogRow = 0, canonicalRow = 0;
+        bool found = false, valid = true;
+        for (uint32_t row = reel.begin; row < reel.end; row += kHouseRowSize) {
+            const auto* data = reel.rows + (row - reel.begin);
+            if (Word(data) != entry.tag) continue;
+            found = true;
+            if (Word(data, 4) != entry.itemClass || Word(data, 8) != 0 ||
+                Word(data, 0x10) != entry.ordinal || !Map(row + 0x18, 4, true))
+                valid = false;
+        }
+        if (!found) continue;
+        if (!valid || !FindRecord(shop.catalog, entry, catalogRow) || !catalogRow ||
+            !FindRecord(shop.canonical, entry, canonicalRow) || !canonicalRow) {
+            diagnostics.fetch_or(ReelUnqualified, std::memory_order_relaxed);
+            if ((entry.warnings.fetch_or(4, std::memory_order_relaxed) & 4) == 0)
+                vivaap::Log(REXFABRIC_LOG_WARN, "Accessory colour record qualification failed for tag " + std::to_string(entry.tag));
+            continue;
+        }
+        for (uint32_t row = reel.begin; row < reel.end; row += kHouseRowSize) {
+            const auto* data = reel.rows + (row - reel.begin);
+            if (Word(data) == entry.tag && Word(data, 0x20) != catalogRow) valid = false;
+        }
+        if (!valid) {
+            diagnostics.fetch_or(ReelUnqualified, std::memory_order_relaxed);
+            if ((entry.warnings.fetch_or(4, std::memory_order_relaxed) & 4) == 0)
+                vivaap::Log(REXFABRIC_LOG_WARN, "Accessory colour record qualification failed for tag " + std::to_string(entry.tag));
+            continue;
+        }
+        for (uint32_t row = reel.begin; row < reel.end; row += kHouseRowSize) {
+            const auto* data = reel.rows + (row - reel.begin);
+            if (Word(data) == entry.tag && Word(data, 0x18) != 0 &&
+                !entry.owned.load(std::memory_order_acquire)) {
+                api->write_u32(row + 0x18, 0);
+                diagnostics.fetch_or(SoldOutApplied, std::memory_order_relaxed);
+            }
+        }
+    }
+}
+
+// The controller receives the selected reel row in r5, including for colour
+// variants. Verify the selected address, rather than requiring a unique tag.
+bool QualifyAccessoryAction(RexFabricCall* call, uint32_t controller,
+                            uint32_t selected, const Entry& entry) {
+    uint32_t avatar = 0, callback = 0, owner = 0, catalog = 0, mode = 0;
+    uint32_t major = 0, minor = 0, catalogRow = 0, canonicalRow = 0;
+    Shop shop;
+    List reel;
+    if (!Read(controller, 0x1e4, avatar) || !avatar ||
+        !Read(avatar, 0x1728, callback) || callback != kWillyCallback ||
+        !Read(avatar, 0x172c, owner) || owner != controller ||
+        !Read(avatar, 0xec4, mode) || mode != 2 ||
+        !Read(avatar, 0xecc, catalog) || !QualifyShop(call, controller, kPaperPets, shop) ||
+        catalog != shop.catalogAddress || avatar > UINT32_MAX - 0xee4 ||
+        !ReadList(avatar + 0xee4, kHouseRowSize, reel) ||
+        !Disjoint(reel, shop.catalog) || !Disjoint(reel, shop.canonical) ||
+        !Read(avatar, 0xf18, major) || !Read(avatar, 0xf1c, minor)) return false;
+
+    const uint64_t index = static_cast<uint64_t>(major) * 4 + minor;
+    if (index >= (reel.end - reel.begin) / kHouseRowSize ||
+        selected != reel.begin + index * kHouseRowSize) return false;
+    const auto* row = reel.rows + static_cast<size_t>(index) * kHouseRowSize;
+    return Word(row) == entry.tag && Word(row, 4) == kAccessoryClass &&
+        Word(row, 8) == 0 && Word(row, 0x10) == entry.ordinal &&
+        FindRecord(shop.catalog, entry, catalogRow) && catalogRow &&
+        FindRecord(shop.canonical, entry, canonicalRow) && canonicalRow &&
+        Word(row, 0x20) == catalogRow;
+}
+
+void OnShopAction(RexFabricCall* call, void*) {
+    const uint32_t action = static_cast<uint32_t>(api->get_gpr(call, 4));
+    if (!active.load(std::memory_order_acquire) || (action != 0x2e && action != 0x30)) {
+        api->call_next(call);
+        return;
+    }
+    const uint32_t controller = GuestAddress(api->get_gpr(call, 3));
+    const uint32_t selected = GuestAddress(api->get_gpr(call, 5));
+    uint32_t shopId = 0, tag = 0;
+    if (!Read(controller, 0x348, shopId) || shopId != kPaperPets) {
+        api->call_next(call);
+        return;
+    }
+    if (!Read(selected, 0, tag)) {
+        // An unreadable transaction row cannot safely be passed to the game.
+        diagnostics.fetch_or(PlacementUnqualified, std::memory_order_relaxed);
+        WarnPaperPetsOnce(16, "Paper Pets acquisition denied: the selected row could not be read.");
+        api->set_gpr(call, 3, 0);
+        return;
+    }
+    Entry* entry = FindEntry(tag);
+    if (!entry || entry->shop != kPaperPets || entry->owned.load(std::memory_order_acquire)) {
+        api->call_next(call);
+        return;
+    }
+
+    if (!QualifyAccessoryAction(call, controller, selected, *entry)) {
+        diagnostics.fetch_or(PlacementUnqualified, std::memory_order_relaxed);
+        if ((entry->warnings.fetch_or(1, std::memory_order_relaxed) & 1) == 0)
+            vivaap::Log(REXFABRIC_LOG_WARN, "Accessory transaction qualification failed for tag " + std::to_string(tag));
+    }
+    // Fail closed for a known unreceived accessory even if provenance could not
+    // be fully verified. Confirmation cleanup is performed by the caller.
+    if (!entry->owned.load(std::memory_order_acquire)) {
+        api->set_gpr(call, 3, 0);
+        diagnostics.fetch_or(PlacementDenied, std::memory_order_relaxed);
+        return;
+    }
+    api->call_next(call);
 }
 
 bool ShouldDenyPlacement(RexFabricCall* call) {
@@ -341,21 +499,30 @@ bool FindPendingRow(uint32_t manager, const Entry& entry, uint32_t& mask) {
 void OnShopRefresh(RexFabricCall* call, void*) {
     if (active.load(std::memory_order_acquire) &&
         earlyGrantsEnabled.load(std::memory_order_acquire) && !granting &&
-        (api->get_gpr(call, 4) == kWilly || api->get_gpr(call, 4) == kLottie)) {
+        (api->get_gpr(call, 4) == kWilly || api->get_gpr(call, 4) == kLottie ||
+         api->get_gpr(call, 4) == kPaperPets)) {
         const uint32_t refreshShop = static_cast<uint32_t>(api->get_gpr(call, 4));
         uint32_t manager = 0, local = 0;
         bool refreshQualified = false;
         for (uint32_t i = 0; i < entryCount; ++i)
             refreshQualified |= entries[i].shop == refreshShop;
-        if (refreshQualified && refreshShop == kLottie) {
+        if (refreshQualified && (refreshShop == kLottie || refreshShop == kPaperPets)) {
             const uint32_t params = GuestAddress(api->get_gpr(call, 3));
             const uint32_t garden = GuestAddress(api->call_guest(call, kTopGarden, nullptr, 0));
             uint32_t workspace = 0, component = 0;
+            const uint32_t offset = 0x4c0c + refreshShop * 0x28;
             refreshQualified = Read(garden, 0x4a00, workspace) &&
                 Read(workspace, 0x8e4, component) && component >= 0x10000 &&
-                component <= UINT32_MAX - 0x4c0c && params == component + 0x4c0c;
+                component <= UINT32_MAX - offset && params == component + offset;
         }
         if (refreshQualified && ReadPlayerManager(manager, local)) {
+            if (refreshShop == kPaperPets &&
+                GuestAddress(api->call_guest(call, kHostPlayer, nullptr, 0)) != local) {
+                diagnostics.fetch_or(GrantDeferred, std::memory_order_relaxed);
+                WarnPaperPetsOnce(4, "Paper Pets publication deferred: the local and host player do not match.");
+                api->call_next(call);
+                return;
+            }
             granting = true;
             for (uint32_t i = 0; i < entryCount; ++i) {
                 auto& entry = entries[i];
@@ -371,6 +538,9 @@ void OnShopRefresh(RexFabricCall* call, void*) {
                 uint32_t liveMask = 0;
                 if (!FindPendingRow(manager, entry, liveMask)) {
                     diagnostics.fetch_or(GrantDeferred, std::memory_order_relaxed);
+                    if (entry.shop == kPaperPets &&
+                        entry.deferredManager.exchange(manager, std::memory_order_relaxed) != manager)
+                        vivaap::Log(REXFABRIC_LOG_WARN, "Accessory publication deferred for tag " + std::to_string(entry.tag) + ": pending row did not match.");
                     continue;
                 }
 
@@ -378,12 +548,20 @@ void OnShopRefresh(RexFabricCall* call, void*) {
                 entry.attemptedManager.store(manager, std::memory_order_release);
                 const uint64_t grantArgs[4] = {manager, entry.tag, liveMask, entry.ordinal};
                 api->call_guest(call, kPublisher, grantArgs, 4);
-                if (api->call_guest(call, kHasMembership, membershipArgs, 2) != 0)
+                if (api->call_guest(call, kHasMembership, membershipArgs, 2) != 0) {
                     diagnostics.fetch_or(GrantConfirmed, std::memory_order_relaxed);
-                else
+                    if (entry.shop == kPaperPets)
+                        vivaap::Log(REXFABRIC_LOG_INFO, "Native accessory unlock published for tag " + std::to_string(entry.tag));
+                } else {
                     diagnostics.fetch_or(GrantAttemptFailed, std::memory_order_relaxed);
+                    if (entry.shop == kPaperPets)
+                        vivaap::Log(REXFABRIC_LOG_ERROR, "Native accessory publication failed for tag " + std::to_string(entry.tag) + "; not retrying for this manager.");
+                }
             }
             granting = false;
+        }
+        else if (refreshShop == kPaperPets) {
+            WarnPaperPetsOnce(8, "Paper Pets publication deferred: shop or player manager qualification failed.");
         }
     }
     api->call_next(call);
@@ -399,10 +577,12 @@ void ShutdownItemStateHooks() {
     earlyGrantsEnabled.store(false, std::memory_order_release);
     active.store(false, std::memory_order_release);
     if (refreshHook) api->unhook(refreshHook);
+    if (actionHook) api->unhook(actionHook);
+    if (colourHook) api->unhook(colourHook);
     if (selectionHook) api->unhook(selectionHook);
     if (placementHook) api->unhook(placementHook);
     if (reelHook) api->unhook(reelHook);
-    refreshHook = selectionHook = placementHook = reelHook = 0;
+    refreshHook = actionHook = colourHook = selectionHook = placementHook = reelHook = 0;
 }
 }
 
@@ -443,6 +623,26 @@ extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApLottieRegister(
     return 1;
 }
 
+extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApAccessoryRegister(
+    uint32_t tag, uint32_t ordinal, uint32_t itemClass, uint32_t level, uint32_t mask) {
+    std::lock_guard lock(registrationLock);
+    if (active.load() || !api || !tag || ordinal >= 629 || level <= 1 ||
+        itemClass != kAccessoryClass || mask != 0x2 ||
+        FindEntry(tag) || entryCount == kMaxEntries) return 0;
+    auto& entry = entries[entryCount++];
+    entry.tag = tag;
+    entry.ordinal = ordinal;
+    entry.itemClass = itemClass;
+    entry.shop = kPaperPets;
+    entry.queue = 1;
+    entry.trigger = level;
+    entry.owned.store(false);
+    entry.attemptedManager.store(0);
+    entry.deferredManager.store(0);
+    entry.warnings.store(0);
+    return 1;
+}
+
 extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApHousePrepare() {
     std::lock_guard lock(registrationLock);
     if (active.load()) return 1;
@@ -451,12 +651,16 @@ extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApHousePrepare() {
         !api->is_hookable || !api->hook || !api->unhook || !api->call_next ||
         !api->get_gpr || !api->set_gpr || !api->call_guest || !api->guest_pointer ||
         !api->read_u32 || !api->write_u32) return 0;
-    bool hasLottie = false;
-    for (uint32_t i = 0; i < entryCount; ++i)
+    bool hasLottie = false, hasPaperPets = false;
+    for (uint32_t i = 0; i < entryCount; ++i) {
         hasLottie |= entries[i].shop == kLottie;
+        hasPaperPets |= entries[i].shop == kPaperPets;
+    }
     if (!api->is_hookable(kReelBuilder) ||
         !api->is_hookable(kPlacementValidate) ||
         (hasLottie && !api->is_hookable(kSelectItem)) ||
+        (hasPaperPets && (!api->is_hookable(kAccessoryColours) ||
+                          !api->is_hookable(kShopAction) || !api->is_hookable(kHostPlayer))) ||
         !api->is_hookable(kShopRefresh) ||
         !api->is_hookable(kPublisher) ||
         !api->is_hookable(kHasMembership) || !api->is_hookable(kTopGarden)) return 0;
@@ -472,6 +676,18 @@ extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApHousePrepare() {
     if (hasLottie && !selectionHook) {
         vivaap::ShutdownItemStateHooks();
         return 0;
+    }
+    if (hasPaperPets) {
+        colourHook = api->hook(mod, kAccessoryColours, OnAccessoryColours, nullptr);
+        if (!colourHook) {
+            vivaap::ShutdownItemStateHooks();
+            return 0;
+        }
+        actionHook = api->hook(mod, kShopAction, OnShopAction, nullptr);
+        if (!actionHook) {
+            vivaap::ShutdownItemStateHooks();
+            return 0;
+        }
     }
     refreshHook = api->hook(mod, kShopRefresh, OnShopRefresh, nullptr);
     if (!refreshHook) {

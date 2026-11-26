@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.VisualBasic.FileIO;
 using VivaAP.Client.Models;
 
 namespace VivaAP.Client.Utils
@@ -26,6 +27,9 @@ namespace VivaAP.Client.Utils
         /// Maps an Item's Display Name to their data
         /// </summary>
         public static Dictionary<string, VivaShopItem> ShopLottieLookupTable { get; }
+
+        /// <summary>Maps Paper Pets AP item names to their native accessory definitions.</summary>
+        public static Dictionary<string, VivaAccessoryItem> ShopPaperPetsLookupTable { get; }
 
         /// <summary>
         /// Gets or sets the collection of Viva awards.
@@ -92,8 +96,89 @@ namespace VivaAP.Client.Utils
                 ShopLottieLookupTable[itemName] = lottieItem;
             }
 
+            ShopPaperPetsLookupTable = LoadAccessories();
+
             // Build the Award data
             Awards = LoadAwards();
+        }
+
+        private static Dictionary<string, VivaAccessoryItem> LoadAccessories()
+        {
+            const string filename = "paperpets_catalog.csv";
+            var accessories = new Dictionary<string, VivaAccessoryItem>(StringComparer.Ordinal);
+            var tags = new HashSet<uint>();
+            using var reader = new StringReader(EmbeddedCsvReader.Read(filename));
+            using var parser = new TextFieldParser(reader) { TextFieldType = FieldType.Delimited };
+            parser.SetDelimiters(",");
+            parser.HasFieldsEnclosedInQuotes = true;
+            parser.TrimWhiteSpace = false;
+
+            string[] headers = parser.ReadFields()
+                ?? throw new InvalidDataException($"{filename} has no header.");
+            var columns = new Dictionary<string, int>(StringComparer.Ordinal);
+            for (int i = 0; i < headers.Length; i++)
+            {
+                if (!columns.TryAdd(headers[i], i))
+                    throw new InvalidDataException($"Duplicate column '{headers[i]}' in {filename}.");
+            }
+
+            string[] requiredColumns =
+            {
+                "ap_control", "display_name", "internal_name", "native_tag", "source_ordinal",
+                "native_class", "unlock_level", "expected_pending_mask", "unlock_type"
+            };
+            foreach (string column in requiredColumns)
+            {
+                if (!columns.ContainsKey(column))
+                    throw new InvalidDataException($"Missing column '{column}' in {filename}.");
+            }
+
+            while (!parser.EndOfData)
+            {
+                long line = parser.LineNumber;
+                string[] fields = parser.ReadFields()
+                    ?? throw new InvalidDataException($"Missing row at {filename}:{line}.");
+                if (fields.Length != headers.Length)
+                    throw new InvalidDataException($"Invalid column count at {filename}:{line}.");
+
+                string Value(string column) => fields[columns[column]];
+                string Required(string column) => !string.IsNullOrWhiteSpace(Value(column))
+                    ? Value(column)
+                    : throw new InvalidDataException($"Missing '{column}' at {filename}:{line}.");
+                uint Number(string column) => uint.TryParse(
+                    Required(column),
+                    System.Globalization.NumberStyles.None,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out uint value
+                ) ? value : throw new InvalidDataException($"Invalid '{column}' at {filename}:{line}.");
+
+                string controlled = Required("ap_control");
+                if (controlled == "0")
+                    continue;
+                if (controlled != "1")
+                    throw new InvalidDataException($"Invalid 'ap_control' at {filename}:{line}.");
+
+                var accessory = new VivaAccessoryItem
+                {
+                    DisplayName = Required("display_name"),
+                    InternalName = Required("internal_name"),
+                    NativeTag = Number("native_tag"),
+                    SourceOrdinal = Number("source_ordinal"),
+                    ItemClass = Number("native_class"),
+                    LevelThreshold = Number("unlock_level"),
+                    ExpectedPendingMask = Number("expected_pending_mask"),
+                };
+                if (accessory.NativeTag == 0 || accessory.ItemClass != 4 ||
+                    accessory.SourceOrdinal >= 629 || accessory.LevelThreshold <= 1 ||
+                    accessory.ExpectedPendingMask != 0x2 || Value("unlock_type") != "level")
+                    throw new InvalidDataException($"Invalid accessory metadata at {filename}:{line}.");
+                if (!tags.Add(accessory.NativeTag) || !accessories.TryAdd(accessory.DisplayName, accessory))
+                    throw new InvalidDataException($"Duplicate accessory name or tag at {filename}:{line}.");
+            }
+
+            if (accessories.Count == 0)
+                throw new InvalidDataException($"No AP-controlled accessories in {filename}.");
+            return accessories;
         }
 
         private static VivaAward[] LoadAwards()

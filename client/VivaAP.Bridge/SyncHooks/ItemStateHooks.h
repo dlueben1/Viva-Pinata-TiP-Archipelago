@@ -17,6 +17,10 @@ extern "C" {
     // source row with only the level condition (queue 1, mask 0x2).
     REXFABRIC_MOD_EXPORT int32_t VivaApLottieRegister(uint32_t tag,
         uint32_t sourceOrdinal, uint32_t itemClass, uint32_t levelThreshold);
+    // Register a Paper Pets class-4 item with exactly one level condition.
+    REXFABRIC_MOD_EXPORT int32_t VivaApAccessoryRegister(uint32_t tag,
+        uint32_t sourceOrdinal, uint32_t itemClass, uint32_t levelThreshold,
+        uint32_t expectedPendingMask);
     REXFABRIC_MOD_EXPORT int32_t VivaApHousePrepare();
     // Enable or disable early publication at a matching shop refresh. Defaults on.
     REXFABRIC_MOD_EXPORT int32_t VivaApHouseEnableEarlyGrants(int32_t enabled);

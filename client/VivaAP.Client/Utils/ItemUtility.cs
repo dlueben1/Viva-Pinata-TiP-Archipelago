@@ -17,7 +17,8 @@ namespace VivaAP.Client.Utils
         House = 100,
         GardenItem = 200,
         Produce = 300,
-        Candy = 320
+        Candy = 320,
+        Accessory = 500
     }
 
     public static class ItemUtility
