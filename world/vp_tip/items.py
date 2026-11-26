@@ -20,6 +20,7 @@ BLUEPRINT_ID_BASE = 100
 GARDEN_ITEM_ID_BASE = 200
 PRODUCE_ITEM_ID_BASE = 300
 CANDY_ITEM_ID_BASE = 320
+ACCESSORY_ITEM_ID_BASE = 500
 
 # Pinata Homes (Used for Romance Goal, Romance Checks, XP)
 unique_home_names = sorted(
@@ -34,6 +35,12 @@ pinata_home_blueprints = {
         BLUEPRINT_ID_BASE + index, ItemClassification.progression
     )
     for index, name in enumerate(unique_home_names)
+}
+
+# Paper Pets Accessories (Used for Romance Goals)
+paperpet_items = {
+    name: ItemData(ACCESSORY_ITEM_ID_BASE + index, ItemClassification.progression)
+    for index, name in enumerate(data.catalog_paperpets)
 }
 
 # Garden Items (Useful & Progression)
@@ -94,4 +101,5 @@ all_items = {
     **garden_items,
     **produce_items,
     **candy_items,
+    **paperpet_items,
 }

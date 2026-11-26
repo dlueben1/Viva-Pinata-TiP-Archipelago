@@ -11,6 +11,7 @@ from .items import (
     candy_items,
     produce_items,
     garden_items,
+    paperpet_items,
 )
 from rule_builder.rules import CanReachLocation
 
@@ -91,6 +92,7 @@ class TIPWorld(World):
         items.extend([self.create_item(name) for name in candy_items])
         items.extend([self.create_item(name) for name in garden_items])
         items.extend([self.create_item(name) for name in produce_items])
+        items.extend([self.create_item(name) for name in paperpet_items])
 
         # Ensure there are enough locations
         if len(items) > len(locations):

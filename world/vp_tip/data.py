@@ -25,3 +25,6 @@ activity_map = load_csv("activity_map.csv", "internal_name")
 
 # Collection of in-game awards
 awards = load_csv("awards.csv", "native_event_award_id")
+
+# All items offered by Paper Pets (why I didn't do this for Lottie's idk, but I'm not unnecessarily revisiting that step lol)
+catalog_paperpets = load_csv("catalog_paperpets.csv", "display_name")
