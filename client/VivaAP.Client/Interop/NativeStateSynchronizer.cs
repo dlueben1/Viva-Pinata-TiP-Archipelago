@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
-using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.Helpers;
 using Archipelago.MultiClient.Net.Models;
 using VivaAP.Client.Utils;
@@ -15,11 +14,6 @@ namespace VivaAP.Client.Interop
     /// </summary>
     public static class NativeStateSynchronizer
     {
-        private static readonly object syncLock = new();
-        private static ArchipelagoSession? subscribedSession;
-        private static bool definitionsRegistered;
-        private static bool registered;
-
         #region Native Functions
 
         [DllImport(
@@ -92,48 +86,20 @@ namespace VivaAP.Client.Interop
 
         public static void Start()
         {
-            lock (syncLock)
+            // Register all Items with the native side, so it can start tracking them
+            RegisterBlueprints();
+            RegisterLottiesItems();
+            RegisterAccessories();
+
+            // Prepare the native side to start tracking state
+            var result = PrepareNative();
+            if (result != 1)
             {
-                var session = ArchipelagoClient.Session
-                    ?? throw new InvalidOperationException("No Archipelago session is available.");
-                if (ReferenceEquals(session, subscribedSession))
-                    return;
-
-                if (!registered)
-                {
-                    if (!definitionsRegistered)
-                    {
-                        RegisterBlueprints();
-                        RegisterLottiesItems();
-                        RegisterAccessories();
-                        definitionsRegistered = true;
-                    }
-                    if (PrepareNative() != 1)
-                        throw new InvalidOperationException("Failed to prepare native item hooks.");
-                    if (EnableEarlyGrantsNative(1) != 1)
-                        throw new InvalidOperationException("Failed to enable native shop grants.");
-                    registered = true;
-                }
-
-                if (subscribedSession != null)
-                    subscribedSession.Items.ItemReceived -= OnItemReceived;
-
-                // Native membership is not AP ownership. Rebuild permission from this session's receipts.
-                foreach (var blueprint in GameUtility.BlueprintLookupTable.Values.DistinctBy(x => x.HouseblockTag))
-                    SetShopItemOwned(blueprint.HouseblockTag, false);
-                foreach (var item in GameUtility.ShopLottieLookupTable.Values)
-                    SetShopItemOwned(item.NativeTag, false);
-                foreach (var item in GameUtility.ShopPaperPetsLookupTable.Values)
-                    SetShopItemOwned(item.NativeTag, false);
-
-                subscribedSession = session;
-                session.Items.ItemReceived += OnItemReceived;
-                // A reattached session can have receipts that were already dequeued.
-                foreach (var item in session.Items.AllItemsReceived)
-                    ProcessReceivedItem(item);
-                // Start normally runs before login, but also handle items already queued by the session.
-                ProcessReceivedItems(session.Items);
+                throw new InvalidOperationException("Failed to prepare native item hooks.");
             }
+
+            // Listen for Archipelago Items
+            ArchipelagoClient.Session!.Items.ItemReceived += OnItemReceived;
         }
 
         private static void RegisterBlueprints()
@@ -179,14 +145,23 @@ namespace VivaAP.Client.Interop
 
         private static void RegisterAccessories()
         {
-            foreach (var item in GameUtility.ShopPaperPetsLookupTable.Values)
+            foreach (var item in GameUtility.ShopPaperPetsLookupTable)
             {
-                if (RegisterAccessoryNative(
-                    item.NativeTag, item.SourceOrdinal, item.ItemClass,
-                    item.LevelThreshold, item.ExpectedPendingMask) != 1)
-                    throw new InvalidOperationException($"Failed to register accessory '{item.DisplayName}' (tag {item.NativeTag}).");
+                var itemData = item.Value;
+                var result = RegisterAccessoryNative(
+                    itemData.NativeTag,
+                    itemData.SourceOrdinal,
+                    itemData.ItemClass,
+                    itemData.LevelThreshold,
+                    itemData.ExpectedPendingMask
+                );
+                if (result != 1)
+                {
+                    throw new InvalidOperationException(
+                        $"Failed to register {itemData.DisplayName}"
+                    );
+                }
             }
-            LogUtility.Info($"Registered {GameUtility.ShopPaperPetsLookupTable.Count} Paper Pets accessories.");
         }
 
         #endregion
@@ -195,26 +170,8 @@ namespace VivaAP.Client.Interop
 
         private static void OnItemReceived(ReceivedItemsHelper helper)
         {
-            lock (syncLock)
-            {
-                if (subscribedSession != null && ReferenceEquals(subscribedSession.Items, helper))
-                    ProcessReceivedItems(helper);
-            }
-        }
-
-        private static void ProcessReceivedItems(IReceivedItemsHelper helper)
-        {
-            while (helper.Any())
-            {
-                if (!ProcessReceivedItem(helper.PeekItem()))
-                    return;
-                helper.DequeueItem();
-            }
-        }
-
-        private static bool ProcessReceivedItem(ItemInfo item)
-        {
             // Determine what category the item is from
+            ItemInfo item = helper.PeekItem();
             APItemType? category = ItemUtility.ClassifyItem(item);
 
             // If somehow we don't know what category this item is, we can't handle it
@@ -236,7 +193,8 @@ namespace VivaAP.Client.Interop
                     if (!item.ItemDisplayName.EndsWith(suffix, StringComparison.Ordinal))
                     {
                         LogUtility.Error($"Unexpected blueprint: {item.ItemDisplayName}");
-                        return true;
+                        helper.DequeueItem();
+                        return;
                     }
 
                     string pinata = item.ItemDisplayName[..^suffix.Length];
@@ -284,27 +242,25 @@ namespace VivaAP.Client.Interop
                 }
                 case APItemType.Accessory:
                 {
-                    if (!GameUtility.ShopPaperPetsLookupTable.TryGetValue(item.ItemDisplayName, out var accessory))
-                    {
-                        LogUtility.Error($"Could not find Paper Pets accessory '{item.ItemDisplayName}' (ID: {item.ItemId}); receipt was not applied.");
-                        return false;
-                    }
+                    var itemData = GameUtility.ShopPaperPetsLookupTable.TryGetValue(
+                        item.ItemDisplayName,
+                        out var accessory
+                    )
+                        ? accessory
+                        : null;
 
-                    try
-                    {
-                        SetShopItemOwned(accessory.NativeTag, true);
-                        LogUtility.Info($"Received accessory '{accessory.DisplayName}' (tag {accessory.NativeTag}).");
-                    }
-                    catch (Exception ex)
-                    {
-                        LogUtility.Error($"Could not synchronize accessory '{accessory.DisplayName}' (tag {accessory.NativeTag}); receipt was not applied: {ex.Message}");
-                        return false;
-                    }
+                    if (itemData != null)
+                        SetShopItemOwned(itemData.NativeTag, true);
+                    else
+                        LogUtility.Error(
+                            $"Could not find Paper Pets ItemData for item '{item.ItemDisplayName}' (ID: {item.ItemId})."
+                        );
                     break;
                 }
             }
 
-            return true;
+            // Finally, dequeue the item since we've successfully handled it
+            helper.DequeueItem();
         }
 
         #endregion
@@ -340,11 +296,9 @@ namespace VivaAP.Client.Interop
 
         public static void Stop()
         {
-            lock (syncLock)
+            if (ArchipelagoClient.Session != null)
             {
-                if (subscribedSession != null)
-                    subscribedSession.Items.ItemReceived -= OnItemReceived;
-                subscribedSession = null;
+                ArchipelagoClient.Session.Items.ItemReceived -= OnItemReceived;
             }
         }
 
