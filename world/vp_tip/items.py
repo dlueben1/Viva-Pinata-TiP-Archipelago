@@ -53,8 +53,10 @@ seed_items = {
         SEED_ITEM_ID_BASE + index,
         ItemClassification.progression,
     )
-    for index, (name, row) in enumerate(lottie_catalog_rows)
-    if row["ap_control"] == "1" and row["shop_section"] == "Seed"
+    for index, (name, row) in enumerate(
+        (entry for entry in lottie_catalog_rows
+         if entry[1]["ap_control"] == "1" and entry[1]["shop_section"] == "Seed")
+    )
 }
 
 # Garden Items (Useful & Progression)
@@ -67,8 +69,10 @@ garden_items = {
             else ItemClassification.progression
         ),
     )
-    for index, (name, row) in enumerate(lottie_catalog_rows)
-    if row["ap_control"] == "1" and row["shop_section"] == "Garden Items"
+    for index, (name, row) in enumerate(
+        (entry for entry in lottie_catalog_rows
+         if entry[1]["ap_control"] == "1" and entry[1]["shop_section"] == "Garden Items")
+    )
 }
 
 # Produce
@@ -77,8 +81,10 @@ produce_items = {
         PRODUCE_ITEM_ID_BASE + index,
         ItemClassification.progression,
     )
-    for index, (name, row) in enumerate(lottie_catalog_rows)
-    if row["ap_control"] == "1" and row["shop_section"] == "Produce"
+    for index, (name, row) in enumerate(
+        (entry for entry in lottie_catalog_rows
+         if entry[1]["ap_control"] == "1" and entry[1]["shop_section"] == "Produce")
+    )
 }
 
 # Candy

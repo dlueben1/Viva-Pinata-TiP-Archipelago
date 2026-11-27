@@ -84,26 +84,29 @@ namespace VivaAP.Client.Utils
                 if (!cols[0].Equals("1"))
                     continue;
 
-                var itemName = cols[2];
+                // Seeds need additional native registration support and are not
+                // part of the ordinary Lottie lookup yet.
+                if (cols[2].Equals("Seed"))
+                    continue;
+
+                var itemName = cols[3];
                 var lottieItem = new VivaShopItem
                 {
-                    InternalName = cols[3],
+                    InternalName = cols[4],
                     DisplayName = itemName,
-                    NativeTag = uint.Parse(cols[4]),
-                    SourceOrdinal = uint.Parse(cols[5]),
-                    ItemClass = uint.Parse(cols[19]),
-                    LevelThreshold = uint.Parse(cols[8]),
+                    NativeTag = uint.Parse(cols[5]),
+                    SourceOrdinal = uint.Parse(cols[6]),
+                    ItemClass = uint.Parse(cols[20]),
+                    LevelThreshold = uint.Parse(cols[9]),
                 };
                 ShopLottieLookupTable[itemName] = lottieItem;
             }
 
-            // Build Paper Pets' data using the same catalog columns as Lottie's
+            // Build Paper Pets' data using its own catalog schema
             ShopPaperPetsLookupTable = new Dictionary<string, VivaAccessoryItem>();
             var accessoryTags = new HashSet<uint>();
             var paperPetsCsv = EmbeddedCsvReader.Read("paperpets_catalog.csv");
             lines = paperPetsCsv.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            if (lines.Length == 0 || lines[0] != lottieCsv.Split('\n')[0].TrimEnd('\r'))
-                throw new InvalidDataException("Paper Pets catalog must use the Lottie catalog columns.");
 
             for (int i = 1; i < lines.Length; i++)
             {
