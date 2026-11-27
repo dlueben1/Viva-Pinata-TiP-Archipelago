@@ -21,6 +21,11 @@ extern "C" {
     REXFABRIC_MOD_EXPORT int32_t VivaApAccessoryRegister(uint32_t tag,
         uint32_t sourceOrdinal, uint32_t itemClass, uint32_t levelThreshold,
         uint32_t expectedPendingMask);
+    // Original class-28 metadata: shared q1/q2 row (mask 0x6), or the two
+    // initially available seeds (mask 0). Does not change native conditions.
+    REXFABRIC_MOD_EXPORT int32_t VivaApSeedRegister(uint32_t tag,
+        uint32_t sourceOrdinal, uint32_t itemClass, uint32_t levelThreshold,
+        uint32_t acquisitionTriggerTag, uint32_t expectedPendingMask);
     REXFABRIC_MOD_EXPORT int32_t VivaApHousePrepare();
     // Enable or disable early publication at a matching shop refresh. Defaults on.
     REXFABRIC_MOD_EXPORT int32_t VivaApHouseEnableEarlyGrants(int32_t enabled);

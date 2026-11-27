@@ -27,6 +27,9 @@ namespace VivaAP.Client.Utils
         /// </summary>
         public static Dictionary<string, VivaShopItem> ShopLottieLookupTable { get; }
 
+        /// <summary>Maps pluralized AP seed names to their original native metadata.</summary>
+        public static Dictionary<string, VivaSeedItem> ShopSeedLookupTable { get; }
+
         /// <summary>
         /// Maps a Paper Pets item's display name to its accessory data
         /// </summary>
@@ -73,6 +76,7 @@ namespace VivaAP.Client.Utils
 
             // Build Lottie's Data
             ShopLottieLookupTable = new Dictionary<string, VivaShopItem>();
+            ShopSeedLookupTable = new Dictionary<string, VivaSeedItem>();
             var lottieCsv = EmbeddedCsvReader.Read("lottie_catalog.csv");
             lines = lottieCsv.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 1; i < lines.Length; i++)
@@ -84,10 +88,23 @@ namespace VivaAP.Client.Utils
                 if (!cols[0].Equals("1"))
                     continue;
 
-                // Seeds need additional native registration support and are not
-                // part of the ordinary Lottie lookup yet.
+                // Match APWorld's f"{name}s" exactly, including names without "Seed".
                 if (cols[2].Equals("Seed"))
+                {
+                    var seed = new VivaSeedItem
+                    {
+                        InternalName = cols[4],
+                        DisplayName = $"{cols[3]}s",
+                        NativeTag = uint.Parse(cols[5]),
+                        SourceOrdinal = uint.Parse(cols[6]),
+                        ItemClass = uint.Parse(cols[20]),
+                        LevelThreshold = uint.Parse(cols[12]),
+                        AcquisitionTriggerTag = uint.Parse(cols[13]),
+                        ExpectedPendingMask = uint.Parse(cols[11]),
+                    };
+                    ShopSeedLookupTable.Add(seed.DisplayName, seed);
                     continue;
+                }
 
                 var itemName = cols[3];
                 var lottieItem = new VivaShopItem

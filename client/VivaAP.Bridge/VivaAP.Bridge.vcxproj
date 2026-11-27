@@ -202,6 +202,7 @@ echo [VivaAP] Native bridge deployed successfully to $(VivaApModRoot).</Command>
     <ClInclude Include="ManagedHost.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="GameHooks.h" />
+    <ClInclude Include="NativePatchApplicator.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="SyncHooks\ItemStateHooks.h" />
   </ItemGroup>
@@ -211,6 +212,7 @@ echo [VivaAP] Native bridge deployed successfully to $(VivaApModRoot).</Command>
     <ClCompile Include="ManagedHost.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="GameHooks.cpp" />
+    <ClCompile Include="NativePatchApplicator.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

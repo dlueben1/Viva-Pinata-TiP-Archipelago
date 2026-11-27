@@ -29,7 +29,7 @@ constexpr uint32_t kModeFlags         = 0x83DBED7C;
 constexpr uint32_t kLiveSlots[]       = {0x82C4A4EC, 0x82C4A4F0, 0x82C4A4F4};
 
 constexpr uint32_t kLottie = 0, kWilly = 4, kPaperPets = 5;
-constexpr uint32_t kHouseClass = 0x13, kAccessoryClass = 4;
+constexpr uint32_t kHouseClass = 0x13, kAccessoryClass = 4, kSeedClass = 28;
 constexpr uint32_t kHouseRowSize = 0x24, kPointerRowSize = 4;
 constexpr uint32_t kMaxRows = 1024, kMaxEntries = 629;
 
@@ -46,6 +46,8 @@ struct Entry {
     uint32_t shop = 0;
     uint32_t queue = 0;
     uint32_t trigger = 0;
+    uint32_t acquisitionTrigger = 0;
+    uint32_t expectedPendingMask = 0;
     std::atomic<bool> owned{false};
     // A destructive publication must not be repeated if it failed midway.
     std::atomic<uint32_t> attemptedManager{0};
@@ -469,7 +471,37 @@ void OnSelectItem(RexFabricCall* call, void*) {
     api->call_next(call);
 }
 
+// Seeds use the same mutable metadata pointer in q1 and q2. Check all eight
+// queues so no duplicate pointer, alternative row or unexplained registration
+// can reach the destructive publisher. Mask 0 is also used after publication.
+bool SeedQueuesMatch(uint32_t manager, const Entry& entry, uint32_t mask, uint32_t& metadata) {
+    uint32_t queues = 0;
+    if (!Read(manager, 0x1c, queues)) return false;
+    for (uint32_t q = 1; q <= 8; ++q) {
+        uint32_t queue = 0, type = 0, matches = 0;
+        List pending;
+        if (!Read(queues, (q - 1) * 4, queue) || !Read(queue, 0, type) || type != q ||
+            !ReadList(queue + 4, kPointerRowSize, pending)) return false;
+        for (uint32_t p = pending.begin; p < pending.end; p += 4) {
+            const uint32_t row = Word(pending.rows + (p - pending.begin));
+            uint32_t tag = 0;
+            if (!Read(row, 4, tag)) return false;
+            if (tag != entry.tag) continue;
+            uint32_t ordinal = 0, level = 0, acquisition = 0, liveMask = 0;
+            if (++matches > 1 || (metadata && metadata != row) ||
+                !Read(row, 0x28, ordinal) || ordinal != entry.ordinal ||
+                !Read(row, 8, level) || level != entry.trigger ||
+                !Read(row, 0xc, acquisition) || acquisition != entry.acquisitionTrigger ||
+                !Read(row, 0x2c, liveMask) || liveMask != mask) return false;
+            metadata = row;
+        }
+        if (matches != ((mask & (1u << q)) ? 1u : 0u)) return false;
+    }
+    return metadata != 0;
+}
+
 // Validate a unique registration with exactly the expected single queue.
+// Keep this contract unchanged for houses, ordinary Lottie items and accessories.
 bool FindPendingRow(uint32_t manager, const Entry& entry, uint32_t& mask) {
     uint32_t queues = 0, queue = 0, type = 0;
     if (!Read(manager, 0x1c, queues) ||
@@ -535,8 +567,15 @@ void OnShopRefresh(RexFabricCall* call, void*) {
                 if (api->call_guest(call, kHasMembership, membershipArgs, 2) != 0)
                     continue;
 
-                uint32_t liveMask = 0;
-                if (!FindPendingRow(manager, entry, liveMask)) {
+                uint32_t liveMask = 0, seedMetadata = 0;
+                const bool seed = entry.itemClass == kSeedClass;
+                if (seed) liveMask = entry.expectedPendingMask;
+                // Default seeds should already be canonical. Without membership
+                // and valid pending alternatives, defer rather than fabricate a row.
+                const bool pendingValid = seed
+                    ? liveMask == 0x6 && SeedQueuesMatch(manager, entry, liveMask, seedMetadata)
+                    : FindPendingRow(manager, entry, liveMask);
+                if (!pendingValid) {
                     diagnostics.fetch_or(GrantDeferred, std::memory_order_relaxed);
                     if (entry.shop == kPaperPets &&
                         entry.deferredManager.exchange(manager, std::memory_order_relaxed) != manager)
@@ -548,7 +587,16 @@ void OnShopRefresh(RexFabricCall* call, void*) {
                 entry.attemptedManager.store(manager, std::memory_order_release);
                 const uint64_t grantArgs[4] = {manager, entry.tag, liveMask, entry.ordinal};
                 api->call_guest(call, kPublisher, grantArgs, 4);
-                if (api->call_guest(call, kHasMembership, membershipArgs, 2) != 0) {
+                bool confirmed = api->call_guest(call, kHasMembership, membershipArgs, 2) != 0;
+                if (seed && confirmed) {
+                    uint32_t remaining = 0, canonicalRow = 0;
+                    List canonical;
+                    confirmed = Read(seedMetadata, 0x2c, remaining) && remaining == 0 &&
+                        SeedQueuesMatch(manager, entry, 0, seedMetadata) &&
+                        ReadList(manager + 8, kHouseRowSize, canonical) &&
+                        FindRecord(canonical, entry, canonicalRow) && canonicalRow;
+                }
+                if (confirmed) {
                     diagnostics.fetch_or(GrantConfirmed, std::memory_order_relaxed);
                     if (entry.shop == kPaperPets)
                         vivaap::Log(REXFABRIC_LOG_INFO, "Native accessory unlock published for tag " + std::to_string(entry.tag));
@@ -609,7 +657,7 @@ extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApLottieRegister(
     // The caller supplies verified GeneralStore metadata for an in-scope item.
     // The pending-row check enforces a single ordinary level condition.
     if (active.load() || !api || !tag || ordinal >= 629 || level <= 1 ||
-        itemClass >= 45 || itemClass == kHouseClass ||
+        itemClass >= 45 || itemClass == kHouseClass || itemClass == kSeedClass ||
         FindEntry(tag) || entryCount == kMaxEntries) return 0;
     auto& entry = entries[entryCount++];
     entry.tag = tag;
@@ -640,6 +688,31 @@ extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApAccessoryRegister(
     entry.attemptedManager.store(0);
     entry.deferredManager.store(0);
     entry.warnings.store(0);
+    return 1;
+}
+
+extern "C" REXFABRIC_MOD_EXPORT int32_t VivaApSeedRegister(
+    uint32_t tag, uint32_t ordinal, uint32_t itemClass, uint32_t level,
+    uint32_t acquisition, uint32_t mask) {
+    std::lock_guard lock(registrationLock);
+    const bool defaultSeed = ((tag == 441 && ordinal == 46) ||
+                              (tag == 442 && ordinal == 45)) &&
+        level == 0 && acquisition == 1 && mask == 0;
+    const bool pendingSeed = level > 1 && acquisition == tag && mask == 0x6;
+    if (active.load() || !api || !tag || ordinal >= kMaxEntries ||
+        itemClass != kSeedClass || (!defaultSeed && !pendingSeed) ||
+        FindEntry(tag) || entryCount == kMaxEntries) return 0;
+    auto& entry = entries[entryCount++];
+    entry.tag = tag;
+    entry.ordinal = ordinal;
+    entry.itemClass = itemClass;
+    entry.shop = kLottie;
+    entry.queue = 1;
+    entry.trigger = level;
+    entry.acquisitionTrigger = acquisition;
+    entry.expectedPendingMask = mask;
+    entry.owned.store(false);
+    entry.attemptedManager.store(0);
     return 1;
 }
 

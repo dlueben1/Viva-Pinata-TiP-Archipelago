@@ -1,5 +1,6 @@
 ﻿using Archipelago.MultiClient.Net;
 using Archipelago.MultiClient.Net.Enums;
+using Archipelago.MultiClient.Net.Models;
 using VivaAP.Client.Interop;
 using VivaAP.Client.Utils;
 
@@ -21,7 +22,15 @@ namespace VivaAP.Client
         /// <summary>
         /// The Archipelago Session
         /// </summary>
-        public static ArchipelagoSession? Session { get; private set; }
+        private static volatile ArchipelagoSession? session;
+        public static ArchipelagoSession? Session => session;
+
+        // The AP library publishes a read-only copy when a receipt batch changes its history.
+        public static IReadOnlyList<ItemInfo> ReceivedItems =>
+            Session?.Items.AllItemsReceived ?? (IReadOnlyList<ItemInfo>)Array.Empty<ItemInfo>();
+
+        public static bool HasReceivedItem(long itemId) =>
+            ReceivedItems.Any(item => item.ItemId == itemId);
 
         static ArchipelagoClient()
         {
@@ -54,14 +63,14 @@ namespace VivaAP.Client
         {
             try
             {
-                Session = ArchipelagoSessionFactory.CreateSession(host, port);
+                session = ArchipelagoSessionFactory.CreateSession(host, port);
 
-                await Session.ConnectAsync();
+                await session.ConnectAsync();
 
                 // Attach the Native Event Handler before connecting, because items can flood in
                 NativeStateSynchronizer.Start();
 
-                var result = await Session.LoginAsync(
+                var result = await session.LoginAsync(
                     "Viva Pinata: Trouble in Paradise",
                     slot,
                     ItemsHandlingFlags.AllItems,

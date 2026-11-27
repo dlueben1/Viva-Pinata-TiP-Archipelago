@@ -3,6 +3,8 @@ using Archipelago.MultiClient.Net;
 using VivaAP.Client.Hooks;
 using VivaAP.Client.Interop;
 using VivaAP.Client.Utils;
+using VivaAP.Client.Patches;
+using VivaAP.Client.Patches.Seedos;
 
 namespace VivaAP.Client;
 
@@ -52,6 +54,8 @@ public static class Mod
                     return 0;
                 }
 
+                PatchManager.Start(SeedosPatches.Create(), SeedosPatches.Dependencies);
+
                 // Register the hooks from each feature's observer
                 hooks = new GameHooks();
                 try
@@ -98,6 +102,7 @@ public static class Mod
             }
             catch (Exception ex)
             {
+                PatchManager.Stop();
                 hooks?.Dispose();
                 hooks = null;
                 LogUtility.Error($"Managed startup failed: {ex.Message}");
@@ -113,6 +118,7 @@ public static class Mod
         {
             try
             {
+                PatchManager.Stop();
                 NativeStateSynchronizer.Stop();
                 hooks?.Dispose();
             }

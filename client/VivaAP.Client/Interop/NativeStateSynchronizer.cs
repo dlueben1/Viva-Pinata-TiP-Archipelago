@@ -55,6 +55,20 @@ namespace VivaAP.Client.Interop
         [DllImport(
             InteropConstants.NativeDLL,
             CallingConvention = CallingConvention.Cdecl,
+            EntryPoint = "VivaApSeedRegister"
+        )]
+        private static extern int RegisterSeedNative(
+            uint tag,
+            uint sourceOrdinal,
+            uint itemClass,
+            uint levelThreshold,
+            uint acquisitionTriggerTag,
+            uint expectedPendingMask
+        );
+
+        [DllImport(
+            InteropConstants.NativeDLL,
+            CallingConvention = CallingConvention.Cdecl,
             EntryPoint = "VivaApHousePrepare"
         )]
         private static extern int PrepareNative();
@@ -90,6 +104,7 @@ namespace VivaAP.Client.Interop
             RegisterBlueprints();
             RegisterLottiesItems();
             RegisterAccessories();
+            RegisterSeeds();
 
             // Prepare the native side to start tracking state
             var result = PrepareNative();
@@ -153,6 +168,28 @@ namespace VivaAP.Client.Interop
                     itemData.SourceOrdinal,
                     itemData.ItemClass,
                     itemData.LevelThreshold,
+                    itemData.ExpectedPendingMask
+                );
+                if (result != 1)
+                {
+                    throw new InvalidOperationException(
+                        $"Failed to register {itemData.DisplayName}"
+                    );
+                }
+            }
+        }
+
+        private static void RegisterSeeds()
+        {
+            foreach (var item in GameUtility.ShopSeedLookupTable)
+            {
+                var itemData = item.Value;
+                var result = RegisterSeedNative(
+                    itemData.NativeTag,
+                    itemData.SourceOrdinal,
+                    itemData.ItemClass,
+                    itemData.LevelThreshold,
+                    itemData.AcquisitionTriggerTag,
                     itemData.ExpectedPendingMask
                 );
                 if (result != 1)
@@ -237,6 +274,23 @@ namespace VivaAP.Client.Interop
                     else
                         LogUtility.Error(
                             $"Could not find Lottie Shop ItemData for item '{item.ItemDisplayName}' (ID: {item.ItemId})."
+                        );
+                    break;
+                }
+                case APItemType.Seed:
+                {
+                    var itemData = GameUtility.ShopSeedLookupTable.TryGetValue(
+                        item.ItemDisplayName,
+                        out var seed
+                    )
+                        ? seed
+                        : null;
+
+                    if (itemData != null)
+                        SetShopItemOwned(itemData.NativeTag, true);
+                    else
+                        LogUtility.Error(
+                            $"Could not find Seed ItemData for item '{item.ItemDisplayName}' (ID: {item.ItemId})."
                         );
                     break;
                 }

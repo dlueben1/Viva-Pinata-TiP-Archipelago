@@ -18,6 +18,7 @@ namespace VivaAP.Client.Utils
         GardenItem = 200,
         Produce = 300,
         Candy = 320,
+        Seed = 400,
         Accessory = 500
     }
 
