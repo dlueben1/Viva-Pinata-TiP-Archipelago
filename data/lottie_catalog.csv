@@ -1,245 +1,245 @@
-﻿ap_control,shop_section,display_name,internal_name,native_tag,source_ordinal,original_unlock_conditions,unlock_type,unlock_level,unlock_trigger_tags,expected_pending_mask,q1_level,q2_tag,q3_tag,q4_tag,q5_tag,q6_numeric,q7_numeric,q8_numeric,native_class,native_class_name,localization_id,localization_key,base_price
-0,Candy,Amber Golf Candy,Sweet_golfamber,1378,99,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,35,Sweet,aid_loctext_pinata_text_avatar_sweet_26,sweet__name,5
-0,Candy,Blue Golf Candy,Sweet_golfblue,1377,98,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,35,Sweet,aid_loctext_pinata_text_avatar_sweet_25,sweet__name,5
-0,Candy,Green Golf Candy,Sweet_golfgreen,1376,97,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,35,Sweet,aid_loctext_pinata_text_avatar_sweet_24,sweet__name,5
-1,Candy,Happy Candy,Sweet_happy,1370,94,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,35,Sweet,aid_loctext_pinata_text_avatar_sweet_18,sweet__name,200
-1,Candy,Joy Candy,Sweet_joyous,1371,95,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,35,Sweet,aid_loctext_pinata_text_avatar_sweet_19,sweet__name,500
-0,Candy,Red Golf Candy,Sweet_golfred,1375,96,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,35,Sweet,aid_loctext_pinata_text_avatar_sweet_23,sweet__name,5
-1,Candy,Romance Candy,Sweet_romance,1373,93,Gardener Level >= 3,level,3,,2,3,1,1,1,1,4,23,7,35,Sweet,aid_loctext_pinata_text_avatar_sweet_21,sweet__name,100
-0,Fence,Birdproof Fence,Fence_birdproof,986,138,Gardener Level >= 16,level,16,,2,16,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_14,fence__name,99
-0,Fence,Birdproof Gate,Fence_birdproofgate,987,139,Gardener Level >= 16,level,16,,2,16,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_15,fence__name,111
-0,Fence,Hedge,Fence_hedge,975,137,Gardener Level >= 14,level,14,,2,14,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_3,fence__name,50
-0,Fence,Iron Gate,Fence_irongate,978,141,Gardener Level >= 18,level,18,,2,18,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_6,fence__name,105
-0,Fence,Iron Railings,Fence_iron,982,140,Gardener Level >= 18,level,18,,2,18,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_10,fence__name,75
-0,Fence,Oak Gate,Fence_oakgate,979,143,Gardener Level >= 22,level,22,,2,22,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_7,fence__name,140
-0,Fence,Stone Wall,Fence_stone,977,142,Gardener Level >= 22,level,22,,2,22,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_5,fence__name,105
-0,Fence,Wire Fence,Fence_wire,981,133,Gardener Level >= 2,level,2,,2,2,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_9,fence__name,5
-0,Fence,Wooden Fence,Fence_twobar,973,134,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_1,fence__name,15
-0,Fence,Wooden Gate,Fence_twobargate,974,135,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_2,fence__name,30
-0,Fence,Wooden Picket Fence,Fence_picket,980,136,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_8,fence__name,30
-0,Fertilizer,Blue,Fertiliser_blue,1847,7,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_3,fertiliser__name,30
-0,Fertilizer,Brown,Fertiliser_brown,1851,8,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_7,fertiliser__name,45
-0,Fertilizer,Green,Fertiliser_green,1848,9,Gardener Level >= 14,level,14,,2,14,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_4,fertiliser__name,63
-0,Fertilizer,Orange,Fertiliser_orange,1850,3,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_6,fertiliser__name,3
-0,Fertilizer,Purple,Fertiliser_purple,1849,4,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_5,fertiliser__name,9
-0,Fertilizer,Red,Fertiliser_red,1845,6,Gardener Level >= 9,level,9,,2,9,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_1,fertiliser__name,18
-0,Fertilizer,Special Mix Fertilizer,Fertiliser_beggarsmix,1853,10,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_9,fertiliser__name,63
-0,Fertilizer,Yellow,Fertiliser_yellow,1846,5,Gardener Level >= 9,level,9,,2,9,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_2,fertiliser__name,3
-0,Fruit,Acorn,Fruit_acorn,332,117,kind14 acquisition/appearance tag == 332 (Fruit_acorn),acquisition/appearance,,332:Fruit_acorn,4,0,332,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_1,fruit__name,110
-0,Fruit,Apple,Fruit_apple,333,101,kind14 acquisition/appearance tag == 333 (Fruit_apple),acquisition/appearance,,333:Fruit_apple,4,0,333,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_2,fruit__name,6
-0,Fruit,Banana,Fruit_banana,334,110,kind14 acquisition/appearance tag == 334 (Fruit_banana),acquisition/appearance,,334:Fruit_banana,4,0,334,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_3,fruit__name,56
-0,Fruit,Blackberry,Fruit_blackberry,346,102,kind14 acquisition/appearance tag == 346 (Fruit_blackberry),acquisition/appearance,,346:Fruit_blackberry,4,0,346,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_15,fruit__name,12
-0,Fruit,Blue Gem,Fruit_bluegem,350,112,kind14 acquisition/appearance tag == 350 (Fruit_bluegem),acquisition/appearance,,350:Fruit_bluegem,4,0,350,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_19,fruit__name,72
-0,Fruit,Blueberry,Fruit_zz3blueberry,358,106,kind14 acquisition/appearance tag == 358 (Fruit_zz3blueberry),acquisition/appearance,,358:Fruit_zz3blueberry,4,0,358,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_27,fruit__name,30
-0,Fruit,Coconut,Fruit_zz3coconut,355,116,kind14 acquisition/appearance tag == 355 (Fruit_zz3coconut),acquisition/appearance,,355:Fruit_zz3coconut,4,0,355,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_24,fruit__name,90
-0,Fruit,Fir Cone,Fruit_fircone,338,105,kind14 acquisition/appearance tag == 338 (Fruit_fircone),acquisition/appearance,,338:Fruit_fircone,4,0,338,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_7,fruit__name,20
-0,Fruit,Gooseberry,Fruit_gooseberry,347,104,kind14 acquisition/appearance tag == 347 (Fruit_gooseberry),acquisition/appearance,,347:Fruit_gooseberry,4,0,347,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_16,fruit__name,20
-0,Fruit,Green Gem,Fruit_greengem,351,113,kind14 acquisition/appearance tag == 351 (Fruit_greengem),acquisition/appearance,,351:Fruit_greengem,4,0,351,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_20,fruit__name,72
-0,Fruit,Hazelnut,Fruit_hazelnut,340,103,kind14 acquisition/appearance tag == 340 (Fruit_hazelnut),acquisition/appearance,,340:Fruit_hazelnut,4,0,340,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_9,fruit__name,12
-0,Fruit,Holly Berry,Fruit_zz1hollyberry,345,100,Gardener Level >= 2 OR kind14 acquisition/appearance tag == 345 (Fruit_zz1hollyberry),level OR acquisition/appearance,2,345:Fruit_zz1hollyberry,6,2,345,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_14,fruit__name,6
-0,Fruit,Monkeynut,Fruit_monkeynut,342,109,kind14 acquisition/appearance tag == 342 (Fruit_monkeynut),acquisition/appearance,,342:Fruit_monkeynut,4,0,342,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_11,fruit__name,42
-0,Fruit,Nightshade Berry,Fruit_deadlynightshade,337,108,kind14 acquisition/appearance tag == 337 (Fruit_deadlynightshade),acquisition/appearance,,337:Fruit_deadlynightshade,4,0,337,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_6,fruit__name,42
-0,Fruit,Orange,Fruit_zz2orange,343,107,kind14 acquisition/appearance tag == 343 (Fruit_zz2orange),acquisition/appearance,,343:Fruit_zz2orange,4,0,343,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_12,fruit__name,30
-0,Fruit,Purple Gem,Fruit_purplegem,352,115,kind14 acquisition/appearance tag == 352 (Fruit_purplegem),acquisition/appearance,,352:Fruit_purplegem,4,0,352,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_21,fruit__name,72
-0,Fruit,Red Gem,Fruit_redgem,353,111,kind14 acquisition/appearance tag == 353 (Fruit_redgem),acquisition/appearance,,353:Fruit_redgem,4,0,353,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_22,fruit__name,72
-0,Fruit,Yellow Gem,Fruit_yellowgem,354,114,kind14 acquisition/appearance tag == 354 (Fruit_yellowgem),acquisition/appearance,,354:Fruit_yellowgem,4,0,354,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_23,fruit__name,72
-1,Garden Items,Barrel,Prop_barrel,755,201,Gardener Level >= 29,level,29,,2,29,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_26,prop__name,300
-1,Garden Items,Bird and Bear Statue,Prop_banjostatue,736,190,Gardener Level >= 17,level,17,,2,17,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_7,prop__name,200
-1,Garden Items,Birdbath,Prop_birdbath1,739,200,Gardener Level >= 28,level,28,,2,28,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_10,prop__name,250
-0,Garden Items,Bolt,Prop_indbolt,892,165,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_163,prop__name,40
-0,Garden Items,Bonboon Block,Prop_totemmandrill,863,229,Gardener Level >= 40,level,40,,2,40,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_134,prop__name,7500
-0,Garden Items,Box 'O' Booty Island,Prop_pirisland,915,207,Gardener Level >= 30,level,30,,2,30,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_186,prop__name,500
-1,Garden Items,Captains Cutlass,Prop_sword,757,193,Gardener Level >= 35,level,35,,2,35,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_28,prop__name,10000
-0,Garden Items,Cartwheel,Prop_cartwheel,759,156,Gardener Level >= 2,level,2,,2,2,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_30,prop__name,20
-0,Garden Items,Catwalk Footlights,Prop_faslight,912,146,Gardener Level >= 19,level,19,,2,19,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_183,prop__name,200
-0,Garden Items,Cocoadile Block,Prop_totemcrocodile,861,227,Gardener Level >= 34,level,34,,2,34,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_132,prop__name,4000
-0,Garden Items,Crowla Block,Prop_totemcrow,862,223,Gardener Level >= 22,level,22,,2,22,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_133,prop__name,3000
-0,Garden Items,Danger Lights,Prop_spalights,923,154,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,27,Prop,aid_loctext_pinata_text_avatar_prop_194,prop__name,650
-1,Garden Items,Dastardos Scarer,Prop_mumbostatue,820,191,Gardener Level >= 40,level,40,,2,40,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_91,prop__name,2100
-0,Garden Items,Decoy Piñata,Prop_fakepinata,871,210,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_142,prop__name,750
-0,Garden Items,Deep Space Detector Array,Prop_spadish,922,213,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,27,Prop,aid_loctext_pinata_text_avatar_prop_193,prop__name,600
-0,Garden Items,Disco speakers,Prop_discocontrol,767,171,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_38,prop__name,500
-0,Garden Items,Fallin' Rocks,Prop_pirrocks,916,208,Gardener Level >= 31,level,31,,2,31,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_187,prop__name,600
-0,Garden Items,Fir Tree Log,Prop_firtreelog,821,159,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_92,prop__name,30
-1,Garden Items,Firebrand,Prop_lantern,730,144,Gardener Level >= 3,level,3,,2,3,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_1,prop__name,100
-1,Garden Items,Fish Fountain,Prop_fountain1,749,185,Gardener Level >= 14,level,14,,2,14,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_20,prop__name,150
-0,Garden Items,Flower Carving,Prop_woodenflower,758,175,Gardener Level >= 9 OR kind17 value == 2 (queue8; gameplay meaning unresolved),level OR queue8,9,,258,9,1,1,1,1,4,23,2,27,Prop,aid_loctext_pinata_text_avatar_prop_29,prop__name,200
-0,Garden Items,Gallows Lantern,Prop_pirlantern,919,150,Gardener Level >= 33,level,33,,2,33,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_190,prop__name,650
-0,Garden Items,Glow Rocks,Prop_glowrock,751,176,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_22,prop__name,100
-0,Garden Items,Glum Roger,Prop_pirjollyroger,918,209,Gardener Level >= 32,level,32,,2,32,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_189,prop__name,600
-0,Garden Items,Golf Flag,Prop_golfflag,807,174,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,27,Prop,aid_loctext_pinata_text_avatar_prop_78,prop__name,400
-1,Garden Items,Hay Bale,Prop_haybail,745,188,Gardener Level >= 16,level,16,,2,16,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_16,prop__name,110
-0,Garden Items,Hollow Log,Prop_appletreelog,823,158,Gardener Level >= 4,level,4,,2,4,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_94,prop__name,30
-0,Garden Items,Jade Statue,Prop_orijadestatue,888,206,Gardener Level >= 43,level,43,,2,43,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_159,prop__name,900
-0,Garden Items,Jake 'O' Lighting,Prop_spolight,925,155,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,27,Prop,aid_loctext_pinata_text_avatar_prop_196,prop__name,650
-0,Garden Items,Jar 'o' Light,Prop_jamjar,830,145,Gardener Level >= 15,level,15,,2,15,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_101,prop__name,130
-1,Garden Items,Lantern O' Loot,Prop_minerslantern,772,196,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_43,prop__name,160
-0,Garden Items,Lemmoning Block,Prop_totemlemming,801,220,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_72,prop__name,2000
-0,Garden Items,Limeoceros Block,Prop_totemrhino,800,230,Gardener Level >= 43,level,43,,2,43,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_71,prop__name,7500
-0,Garden Items,Lipstick,Prop_faslipstick,908,179,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_179,prop__name,120
-0,Garden Items,Macaraccoon Block,Prop_totemraccoon,865,226,Gardener Level >= 31,level,31,,2,31,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_136,prop__name,4000
-0,Garden Items,Mallowolf Block,Prop_totemwolf,867,228,Gardener Level >= 37,level,37,,2,37,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_138,prop__name,6000
-1,Garden Items,Milk Churn,Prop_milkchurn,746,197,Gardener Level >= 24,level,24,,2,24,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_17,prop__name,210
-0,Garden Items,Mirror,Prop_fasmirror,909,181,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_180,prop__name,190
-1,Garden Items,Moon-on-a-Stick,Prop_moonlantern,764,152,Gardener Level >= 39,level,39,,2,39,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_35,prop__name,700
-0,Garden Items,Mummy's Turntable,Prop_turntable,732,172,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_3,prop__name,500
-0,Garden Items,Music Stand,Prop_musstand,899,199,Gardener Level >= 28,level,28,,2,28,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_170,prop__name,320
-0,Garden Items,Oil Lamp,Prop_oillmap,831,148,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_102,prop__name,230
-0,Garden Items,Oriental Gateway,Prop_origateway,884,204,Gardener Level >= 41,level,41,,2,41,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_155,prop__name,800
-0,Garden Items,Ornamental Stones,Prop_housestones,742,160,Gardener Level >= 4,level,4,,2,4,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_13,prop__name,20
-0,Garden Items,Paper Lantern,Prop_orilantern,885,151,Gardener Level >= 36,level,36,,2,36,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_156,prop__name,750
-0,Garden Items,Paper Screen,Prop_oriscreen,887,202,Gardener Level >= 29,level,29,,2,29,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_158,prop__name,500
-1,Garden Items,Pile of Leaves,Prop_leafpile,753,161,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_24,prop__name,20
-0,Garden Items,Pipework,Prop_indpipe,893,167,Gardener Level >= 8,level,8,,2,8,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_164,prop__name,50
-1,Garden Items,Pirate Statue,Prop_statue,731,189,Gardener Level >= 24,level,24,,2,24,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_2,prop__name,240
-0,Garden Items,Profitamole Block,Prop_totemmole,864,222,Gardener Level >= 19,level,19,,2,19,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_135,prop__name,3000
-1,Garden Items,Red Eye Rainbow,Prop_rainbow,822,177,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_93,prop__name,560
-0,Garden Items,Ruins of the Lost City of Gumbolia,Prop_advruin,845,212,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,27,Prop,aid_loctext_pinata_text_avatar_prop_116,prop__name,1000
-0,Garden Items,S'morepion Block,Prop_totemscorpion,802,224,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_73,prop__name,3000
-0,Garden Items,Saucer of Peril,Prop_spaufo,921,214,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,27,Prop,aid_loctext_pinata_text_avatar_prop_192,prop__name,800
-0,Garden Items,Scary Burning Torch,Prop_advlight,844,153,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,27,Prop,aid_loctext_pinata_text_avatar_prop_115,prop__name,750
-0,Garden Items,Scissors,Prop_fasscissors,910,183,Gardener Level >= 23,level,23,,2,23,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_181,prop__name,230
-0,Garden Items,Shellybean Block,Prop_totemsnail,866,219,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_137,prop__name,1200
-0,Garden Items,Sherbat Block,Prop_totembat,860,221,Gardener Level >= 16,level,16,,2,16,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_131,prop__name,2000
-0,Garden Items,Shoe Statue,Prop_fasshoe,911,182,Gardener Level >= 21,level,21,,2,21,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_182,prop__name,210
-0,Garden Items,Smelba Block,Prop_totemskunk,799,225,Gardener Level >= 28,level,28,,2,28,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_70,prop__name,4000
-0,Garden Items,Spanner,Prop_indspanner,896,169,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_167,prop__name,120
-0,Garden Items,Stage Light,Prop_muslight,903,149,Gardener Level >= 26,level,26,,2,26,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_174,prop__name,240
-0,Garden Items,Stove,Prop_indstove,894,164,Gardener Level >= 4,level,4,,2,4,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_165,prop__name,60
-0,Garden Items,Sundial,Prop_sundial1,769,184,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_40,prop__name,130
-1,Garden Items,Surfboard,Prop_surfboard,743,187,Gardener Level >= 15,level,15,,2,15,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_14,prop__name,170
-0,Garden Items,Swan Fountain,Prop_fountain2,750,186,Gardener Level >= 27,level,27,,2,27,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_21,prop__name,250
-0,Garden Items,Sword Mk2,Prop_sword2,834,192,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_105,prop__name,140
-0,Garden Items,The Resting Dead,Prop_spogravestone,924,216,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,27,Prop,aid_loctext_pinata_text_avatar_prop_195,prop__name,600
-0,Garden Items,The Silver Dart,Prop_advplane,847,211,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,27,Prop,aid_loctext_pinata_text_avatar_prop_118,prop__name,800
-0,Garden Items,The Wealthy Dead,Prop_spotomb,926,217,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,27,Prop,aid_loctext_pinata_text_avatar_prop_197,prop__name,800
-1,Garden Items,Tombstone,Prop_tombstone,765,215,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_36,prop__name,170
-0,Garden Items,Toxic Drum,Prop_toxicbarrel,768,170,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_39,prop__name,40
-0,Garden Items,Vase,Prop_vase,832,178,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_103,prop__name,150
-0,Garden Items,Vent,Prop_indvent,897,168,Gardener Level >= 9,level,9,,2,9,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_168,prop__name,60
-1,Garden Items,Water Waiver,Prop_flag1,766,173,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_37,prop__name,720
-0,Garden Items,Wind chime Mk1,Prop_windchime,744,194,Gardener Level >= 19,level,19,,2,19,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_15,prop__name,160
-0,Garden Items,Wind chime Mk2,Prop_windchime2,833,195,Gardener Level >= 26,level,26,,2,26,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_104,prop__name,240
-0,Garden Items,Wishing Well,Prop_wishingwell,798,218,kind17 value == 1 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,1,27,Prop,aid_loctext_pinata_text_avatar_prop_69,prop__name,500
-0,Packet,Long Grass Packet,Packet_grasslong,952,15,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,23,Packet,aid_loctext_pinata_text_avatar_packet_2,packet__name,1125
-0,Paving, Showbiz,Paving_hollywood,1426,40,kind17 value == 3 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,3,24,Paving,aid_loctext_pinata_text_avatar_paving_9,paving__name,105
-0,Paving,Bendy Track,Paving_trackcorner,1429,29,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_12,paving__name,50
-0,Paving,Block Paving,Paving_block,1420,26,Gardener Level >= 8,level,8,,2,8,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_3,paving__name,30
-0,Paving,Ceramic Paving,Paving_oripaving,1422,39,Gardener Level >= 37,level,37,,2,37,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_5,paving__name,30
-0,Paving,Cobblestones,Paving_cobble,1423,17,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_6,paving__name,15
-0,Paving,Crazy Paving,Paving_crazy,1421,35,Gardener Level >= 14,level,14,,2,14,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_4,paving__name,50
-0,Paving,Disco Paving,Paving_discoblue,1441,18,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
-0,Paving,Disco Paving,Paving_discored,1442,19,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
-0,Paving,Disco Paving,Paving_discogreen,1443,20,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
-0,Paving,Disco Paving,Paving_discoyellow,1444,22,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
-0,Paving,Disco Paving,Paving_discowhite,1445,21,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
-0,Paving,Disco Paving,Paving_discopink,1446,23,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
-0,Paving,Flagstones of Fear,Paving_spopaving,1424,43,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,24,Paving,aid_loctext_pinata_text_avatar_paving_7,paving__name,30
-0,Paving,Golden Paving,Paving_golden,1447,44,Gardener Level >= 26,level,26,,2,26,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_30,paving__name,15
-0,Paving,Junction Track,Paving_trackcross,1431,31,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_14,paving__name,50
-0,Paving,Moon Walk,Paving_spapaving,1440,42,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,24,Paving,aid_loctext_pinata_text_avatar_paving_23,paving__name,30
-0,Paving,Octagonal Paving,Paving_octagonal,1427,36,Gardener Level >= 17,level,17,,2,17,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_10,paving__name,75
-0,Paving,Polished Catwalk,Paving_faspaving,1434,33,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_17,paving__name,30
-0,Paving,Pressed Steel,Paving_indpaving,1436,24,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_19,paving__name,30
-0,Paving,Red Carpet,Paving_fasredcarpet,1435,34,Gardener Level >= 18,level,18,,2,18,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_18,paving__name,30
-0,Paving,Relic Tiles,Paving_advpaving,1433,41,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,24,Paving,aid_loctext_pinata_text_avatar_paving_16,paving__name,30
-0,Paving,Riveted Panels,Paving_indrivetpaving,1437,25,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_20,paving__name,30
-0,Paving,Shivverme Timbers,Paving_pirpaving,1425,38,Gardener Level >= 34,level,34,,2,34,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_8,paving__name,30
-0,Paving,Slab Paving,Paving_slab,1418,27,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_1,paving__name,15
-0,Paving,Stone Paving,Paving_stone,1419,16,Gardener Level >= 2,level,2,,2,2,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_2,paving__name,5
-0,Paving,Stone Score,Paving_muspaving,1438,37,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_21,paving__name,30
-0,Paving,Straight Track,Paving_trackstraight,1428,28,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_11,paving__name,50
-0,Paving,T-Junction Track,Paving_trackjunction,1430,30,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_13,paving__name,50
-0,Paving,Turntable Track,Paving_trackturntable,1432,32,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_15,paving__name,50
-1,Produce,Bone,Produce_bone,705,128,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_26,produce__name,100
-1,Produce,Bread,Produce_bread,691,127,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_12,produce__name,60
-1,Produce,Honey,Produce_honey,680,129,Gardener Level >= 3,level,3,,2,3,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_1,produce__name,100
-1,Produce,Milk,Produce_milk,681,131,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_2,produce__name,280
-0,Produce,Red Bone,Produce_dinoredbone,720,132,Gardener Level >= 45,level,45,,2,45,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_41,produce__name,100
-0,Produce,Wool,Produce_wool,682,130,Gardener Level >= 9,level,9,,2,9,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_3,produce__name,210
-0,Seed,Apple Seed,Seed_apple,478,57,Gardener Level >= 11 OR kind14 acquisition/appearance tag == 478 (Seed_apple),level OR acquisition/appearance,11,478:Seed_apple,6,11,478,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_48,seed__name,6
-0,Seed,Banana Seed,Seed_banana,483,85,Gardener Level >= 37 OR kind14 acquisition/appearance tag == 483 (Seed_banana),level OR acquisition/appearance,37,483:Seed_banana,6,37,483,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_53,seed__name,56
-0,Seed,Bird of Paradise,Seed_birdofparadiseplant,448,87,Gardener Level >= 40 OR kind14 acquisition/appearance tag == 448 (Seed_birdofparadiseplant),level OR acquisition/appearance,40,448:Seed_birdofparadiseplant,6,40,448,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_18,seed__name,72
-0,Seed,Blackberry Seed,Seed_blackberrybush,482,59,Gardener Level >= 12 OR kind14 acquisition/appearance tag == 482 (Seed_blackberrybush),level OR acquisition/appearance,12,482:Seed_blackberrybush,6,12,482,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_52,seed__name,12
-0,Seed,Bluebell Seed,Seed_bluebell,443,51,Gardener Level >= 7 OR kind14 acquisition/appearance tag == 443 (Seed_bluebell),level OR acquisition/appearance,7,443:Seed_bluebell,6,7,443,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_13,seed__name,6
-0,Seed,Blueberry Bush Seed,Seed_zz3blueberrybush,490,70,Gardener Level >= 19 OR kind14 acquisition/appearance tag == 490 (Seed_zz3blueberrybush),level OR acquisition/appearance,19,490:Seed_zz3blueberrybush,6,19,490,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_60,seed__name,30
-0,Seed,Bullrush Seed,Seed_bulrush,462,84,Gardener Level >= 36 OR kind14 acquisition/appearance tag == 462 (Seed_bulrush),level OR acquisition/appearance,36,462:Seed_bulrush,6,36,462,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_32,seed__name,56
-0,Seed,Buttercup Seed,Seed_buttercup,442,45,Immediate publication at source initialization (zero pending mask),initial,,,0,0,1,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_12,seed__name,2
-0,Seed,Cactus Seed,Seed_zz2cactus,452,86,Gardener Level >= 38 OR kind14 acquisition/appearance tag == 452 (Seed_zz2cactus),level OR acquisition/appearance,38,452:Seed_zz2cactus,6,38,452,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_22,seed__name,72
-0,Seed,Carrot Seed,Seed_carrot,431,47,Gardener Level >= 4 OR kind14 acquisition/appearance tag == 431 (Seed_carrot),level OR acquisition/appearance,4,431:Seed_carrot,6,4,431,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_1,seed__name,2
-0,Seed,Chili Seed,Seed_chilli,435,66,Gardener Level >= 14 OR kind14 acquisition/appearance tag == 435 (Seed_chilli),level OR acquisition/appearance,14,435:Seed_chilli,6,14,435,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_5,seed__name,20
-0,Seed,Corn Seed,Seed_maize,438,56,Gardener Level >= 10 OR kind14 acquisition/appearance tag == 438 (Seed_maize),level OR acquisition/appearance,10,438:Seed_maize,6,10,438,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_8,seed__name,6
-0,Seed,Daisy Seed,Seed_daisy,441,46,Immediate publication at source initialization (zero pending mask),initial,,,0,0,1,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_11,seed__name,2
-0,Seed,Dandelion Seed,Seed_zz3dandelion,474,58,Gardener Level >= 11 OR kind14 acquisition/appearance tag == 474 (Seed_zz3dandelion),level OR acquisition/appearance,11,474:Seed_zz3dandelion,6,11,474,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_44,seed__name,12
-0,Seed,Fir Seed,Seed_fir,481,69,Gardener Level >= 18 OR kind14 acquisition/appearance tag == 481 (Seed_fir),level OR acquisition/appearance,18,481:Seed_fir,6,18,481,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_51,seed__name,20
-0,Seed,Fireweed Seed,Seed_zz1fireweed,472,68,Gardener Level >= 16 OR kind14 acquisition/appearance tag == 472 (Seed_zz1fireweed),level OR acquisition/appearance,16,472:Seed_zz1fireweed,6,16,472,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_42,seed__name,20
-0,Seed,Garlic Seed,Seed_zz3garlic,433,65,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 433 (Seed_zz3garlic),level OR acquisition/appearance,13,433:Seed_zz3garlic,6,13,433,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_3,seed__name,20
-0,Seed,Gem Seed,Seed_gem,485,88,Gardener Level >= 42 OR kind14 acquisition/appearance tag == 485 (Seed_gem),level OR acquisition/appearance,42,485:Seed_gem,6,42,485,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_55,seed__name,72
-0,Seed,Gooseberry Seed,Seed_gooseberrybush,484,67,Gardener Level >= 15 OR kind14 acquisition/appearance tag == 484 (Seed_gooseberrybush),level OR acquisition/appearance,15,484:Seed_gooseberrybush,6,15,484,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_54,seed__name,20
-0,Seed,Hazelnut Seed,Seed_hazelnut,479,61,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 479 (Seed_hazelnut),level OR acquisition/appearance,13,479:Seed_hazelnut,6,13,479,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_49,seed__name,12
-0,Seed,Hemlock Seed,Seed_zz3hemlock,473,74,Gardener Level >= 25 OR kind14 acquisition/appearance tag == 473 (Seed_zz3hemlock),level OR acquisition/appearance,25,473:Seed_zz3hemlock,6,25,473,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_43,seed__name,22
-0,Seed,Holly Bush Seed,Seed_zz1hollybush,491,52,Gardener Level >= 7 OR kind14 acquisition/appearance tag == 491 (Seed_zz1hollybush),level OR acquisition/appearance,7,491:Seed_zz1hollybush,6,7,491,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_61,seed__name,6
-0,Seed,Monkeynut Seed,Seed_monkeynut,487,82,Gardener Level >= 34 OR kind14 acquisition/appearance tag == 487 (Seed_monkeynut),level OR acquisition/appearance,34,487:Seed_monkeynut,6,34,487,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_57,seed__name,42
-0,Seed,Nightshade Seed,Seed_nightshadebush,488,78,Gardener Level >= 30 OR kind14 acquisition/appearance tag == 488 (Seed_nightshadebush),level OR acquisition/appearance,30,488:Seed_nightshadebush,6,30,488,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_58,seed__name,42
-0,Seed,Oak Seed,Seed_oak,480,91,Gardener Level >= 48 OR kind14 acquisition/appearance tag == 480 (Seed_oak),level OR acquisition/appearance,48,480:Seed_oak,6,48,480,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_50,seed__name,275
-0,Seed,Orange Tree Seed,Seed_zz2orange,492,76,Gardener Level >= 27 OR kind14 acquisition/appearance tag == 492 (Seed_zz2orange),level OR acquisition/appearance,27,492:Seed_zz2orange,6,27,492,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_62,seed__name,30
-0,Seed,Orchid Seed,Seed_orchid,449,90,Gardener Level >= 46 OR kind14 acquisition/appearance tag == 449 (Seed_orchid),level OR acquisition/appearance,46,449:Seed_orchid,6,46,449,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_19,seed__name,90
-0,Seed,Palm Seed,Seed_zz3palmtree,493,89,Gardener Level >= 45 OR kind14 acquisition/appearance tag == 493 (Seed_zz3palmtree),level OR acquisition/appearance,45,493:Seed_zz3palmtree,6,45,493,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_63,seed__name,90
-0,Seed,Pea Seed,Seed_zz3pea,466,75,Gardener Level >= 26 OR kind14 acquisition/appearance tag == 466 (Seed_zz3pea),level OR acquisition/appearance,26,466:Seed_zz3pea,6,26,466,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_36,seed__name,30
-0,Seed,Poison Ivy Seed,Seed_poisonivy,468,63,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 468 (Seed_poisonivy),level OR acquisition/appearance,13,468:Seed_poisonivy,6,13,468,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_38,seed__name,12
-0,Seed,Poppy Seed,Seed_poppy,444,55,Gardener Level >= 10 OR kind14 acquisition/appearance tag == 444 (Seed_poppy),level OR acquisition/appearance,10,444:Seed_poppy,6,10,444,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_14,seed__name,6
-0,Seed,Prickly Pear Seed,Seed_zz2pricklypear,471,80,Gardener Level >= 32 OR kind14 acquisition/appearance tag == 471 (Seed_zz2pricklypear),level OR acquisition/appearance,32,471:Seed_zz2pricklypear,6,32,471,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_41,seed__name,42
-0,Seed,Pumpkin Seed,Seed_pumpkin,434,60,Gardener Level >= 12 OR kind14 acquisition/appearance tag == 434 (Seed_pumpkin),level OR acquisition/appearance,12,434:Seed_pumpkin,6,12,434,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_4,seed__name,12
-0,Seed,Radish Seed,Seed_zz1radish,439,54,Gardener Level >= 8 OR kind14 acquisition/appearance tag == 439 (Seed_zz1radish),level OR acquisition/appearance,8,439:Seed_zz1radish,6,8,439,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_9,seed__name,12
-0,Seed,Rose Seed,Seed_zz3rose,454,83,Gardener Level >= 35 OR kind14 acquisition/appearance tag == 454 (Seed_zz3rose),level OR acquisition/appearance,35,454:Seed_zz3rose,6,35,454,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_24,seed__name,56
-0,Seed,Snapdragon Seed,Seed_snapdragon,447,79,Gardener Level >= 31 OR kind14 acquisition/appearance tag == 447 (Seed_snapdragon),level OR acquisition/appearance,31,447:Seed_snapdragon,6,31,447,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_17,seed__name,42
-0,Seed,Snowdrop Seed,Seed_zz1snowdrop,451,53,Gardener Level >= 8 OR kind14 acquisition/appearance tag == 451 (Seed_zz1snowdrop),level OR acquisition/appearance,8,451:Seed_zz1snowdrop,6,8,451,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_21,seed__name,12
-0,Seed,Sunflower Seed,Seed_sunflower,445,64,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 445 (Seed_sunflower),level OR acquisition/appearance,13,445:Seed_sunflower,6,13,445,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_15,seed__name,20
-0,Seed,Thistle Seed,Seed_thistle,467,49,Gardener Level >= 6 OR kind14 acquisition/appearance tag == 467 (Seed_thistle),level OR acquisition/appearance,6,467:Seed_thistle,6,6,467,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_37,seed__name,6
-0,Seed,Tiger Lily Seed,Seed_zz3tigerlily,453,81,Gardener Level >= 33 OR kind14 acquisition/appearance tag == 453 (Seed_zz3tigerlily),level OR acquisition/appearance,33,453:Seed_zz3tigerlily,6,33,453,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_23,seed__name,42
-0,Seed,Toadstool Seed,Seed_toadstool,469,71,Gardener Level >= 20 OR kind14 acquisition/appearance tag == 469 (Seed_toadstool),level OR acquisition/appearance,20,469:Seed_toadstool,6,20,469,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_39,seed__name,20
-0,Seed,Tulip Seed,Seed_tulip,446,72,Gardener Level >= 22 OR kind14 acquisition/appearance tag == 446 (Seed_tulip),level OR acquisition/appearance,22,446:Seed_tulip,6,22,446,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_16,seed__name,30
-0,Seed,Turnip Seed,Seed_turnip,432,48,Gardener Level >= 4 OR kind14 acquisition/appearance tag == 432 (Seed_turnip),level OR acquisition/appearance,4,432:Seed_turnip,6,4,432,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_2,seed__name,2
-0,Seed,Venus Piñata Trap,Seed_venusflytrap,470,77,Gardener Level >= 28 OR kind14 acquisition/appearance tag == 470 (Seed_venusflytrap),level OR acquisition/appearance,28,470:Seed_venusflytrap,6,28,470,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_40,seed__name,30
-0,Seed,Water Lily Seed,Seed_waterlily,461,73,Gardener Level >= 24 OR kind14 acquisition/appearance tag == 461 (Seed_waterlily),level OR acquisition/appearance,24,461:Seed_waterlily,6,24,461,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_31,seed__name,30
-0,Seed,Watercress Seed,Seed_watercress,460,62,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 460 (Seed_watercress),level OR acquisition/appearance,13,460:Seed_watercress,6,13,460,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_30,seed__name,12
-0,Seed,Yam Seed,Seed_zz2yam,440,50,Gardener Level >= 6 OR kind14 acquisition/appearance tag == 440 (Seed_zz2yam),level OR acquisition/appearance,6,440:Seed_zz2yam,6,6,440,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_10,seed__name,6
-0,Spade Part,Chocolate Sniffer,SpadePart_extra1,1156,233,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,33,SpadePart,aid_loctext_pinata_text_avatar_spadepart_46,spadepart__name,450
-0,Spade Part,Dastardos Head,SpadePart_head5,1116,231,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,33,SpadePart,aid_loctext_pinata_text_avatar_spadepart_6,spadepart__name,2100
-0,Spade Part,Platinum Shovel Handle,SpadePart_handle6,1139,232,Gardener Level >= 30,level,30,,2,30,1,1,1,1,4,23,7,33,SpadePart,aid_loctext_pinata_text_avatar_spadepart_29,spadepart__name,1125
-0,Toys,Battle Ready Armor,ZZToy_tank,2229,610,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_6,zztoy__name,700
-0,Toys,Chew Chew Train,ZZToy_sweettrain,2234,612,Gardener Level >= 35,level,35,,2,35,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_11,zztoy__name,800
-0,Toys,Conveyer,ZZToy_indconveyer,2237,617,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_14,zztoy__name,200
-0,Toys,Fashion SLR,ZZToy_fascamera,2242,618,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_19,zztoy__name,300
-0,Toys,Furraree,ZZToy_sportscar,2231,608,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_8,zztoy__name,550
-0,Toys,Gong,ZZToy_origong,2243,624,Gardener Level >= 29,level,29,,2,29,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_20,zztoy__name,550
-0,Toys,Kettle Drum,ZZToy_muskettle,2248,623,Gardener Level >= 35,level,35,,2,35,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_25,zztoy__name,360
-0,Toys,Mine Cart,ZZToy_minecart,2249,614,Gardener Level >= 26,level,26,,2,26,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_26,zztoy__name,500
-0,Toys,Piano,ZZToy_muspiano,2244,620,Gardener Level >= 23,level,23,,2,23,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_21,zztoy__name,310
-0,Toys,Pink Princess-Devil o' the 7 Seas,ZZToy_pirclock,2240,625,Gardener Level >= 32,level,32,,2,32,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_17,zztoy__name,650
-0,Toys,Poised Pengum,ZZToy_plane,2236,615,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_13,zztoy__name,1200
-0,Toys,Spectral Locomotive,ZZToy_ghosttrain,2235,616,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_12,zztoy__name,1000
-0,Toys,Station,ZZToy_station,2225,604,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_2,zztoy__name,150
-0,Toys,Statue of the Great Gobstobbler,ZZToy_advsign,2239,627,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_16,zztoy__name,1100
-0,Toys,Stop Sign,ZZToy_stopsign,2226,605,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_3,zztoy__name,110
-0,Toys,The Intrepid Voyager,ZZToy_sparocket,2238,626,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_15,zztoy__name,1000
-0,Toys,The Restless Dead,ZZToy_spocoffin,2241,628,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_18,zztoy__name,900
-0,Toys,The Road Hog,ZZToy_dragster,2232,613,Gardener Level >= 40,level,40,,2,40,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_9,zztoy__name,1000
-0,Toys,Trumpet,ZZToy_mustrumpet,2246,622,Gardener Level >= 29,level,29,,2,29,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_23,zztoy__name,330
-0,Toys,Urny's Milk Float,ZZToy_milkfloat,2233,609,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_10,zztoy__name,600
-0,Toys,Wild Cat Fulldozer,ZZToy_bulldozer,2230,611,Gardener Level >= 30,level,30,,2,30,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_7,zztoy__name,750
-0,Toys,Woo Two Train,ZZToy_train2,2228,607,Gardener Level >= 15,level,15,,2,15,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_5,zztoy__name,300
-0,Toys,Woo Woo Train,ZZToy_steamtrain,2224,606,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_1,zztoy__name,250
-0,Vegetable,Carrot,Vegetable_carrot,1649,118,kind14 acquisition/appearance tag == 1649 (Vegetable_carrot),acquisition/appearance,,1649:Vegetable_carrot,4,0,1649,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_1,vegetable__name,10
-0,Vegetable,Chili,Vegetable_chilli,1653,125,kind14 acquisition/appearance tag == 1653 (Vegetable_chilli),acquisition/appearance,,1653:Vegetable_chilli,4,0,1653,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_5,vegetable__name,100
-0,Vegetable,Corn,Vegetable_maize,1656,122,kind14 acquisition/appearance tag == 1656 (Vegetable_maize),acquisition/appearance,,1656:Vegetable_maize,4,0,1656,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_8,vegetable__name,30
-0,Vegetable,Garlic,Vegetable_zz3garlic,1651,124,kind14 acquisition/appearance tag == 1651 (Vegetable_zz3garlic),acquisition/appearance,,1651:Vegetable_zz3garlic,4,0,1651,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_3,vegetable__name,100
-0,Vegetable,Pea,Vegetable_zz3pea,1655,126,kind14 acquisition/appearance tag == 1655 (Vegetable_zz3pea),acquisition/appearance,,1655:Vegetable_zz3pea,4,0,1655,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_7,vegetable__name,100
-0,Vegetable,Pumpkin,Vegetable_pumpkin,1652,123,kind14 acquisition/appearance tag == 1652 (Vegetable_pumpkin),acquisition/appearance,,1652:Vegetable_pumpkin,4,0,1652,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_4,vegetable__name,60
-0,Vegetable,Radish,Vegetable_zz1radish,1657,121,kind14 acquisition/appearance tag == 1657 (Vegetable_zz1radish),acquisition/appearance,,1657:Vegetable_zz1radish,4,0,1657,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_9,vegetable__name,60
-0,Vegetable,Turnip,Vegetable_turnip,1650,119,kind14 acquisition/appearance tag == 1650 (Vegetable_turnip),acquisition/appearance,,1650:Vegetable_turnip,4,0,1650,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_2,vegetable__name,10
-0,Vegetable,Yam,Vegetable_zz2yam,1658,120,Immediate publication at source initialization (zero pending mask),initial,,,0,0,1,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_10,vegetable__name,30
-0,Watering Can,Everpour 5000 Watering Can,WateringCan_5,933,13,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,37,WateringCan,aid_loctext_pinata_text_avatar_wateringcan_5,wateringcan__name,2700
-0,Watering Can,Glass Watering Can,WateringCan_4,932,12,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,37,WateringCan,aid_loctext_pinata_text_avatar_wateringcan_4,wateringcan__name,1575
-0,Watering Can,Gold Watering Can,WateringCan_3,931,11,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,37,WateringCan,aid_loctext_pinata_text_avatar_wateringcan_3,wateringcan__name,750
-0,Watering Can,One Pour Wonder,WateringCan_6,934,14,Gardener Level >= 30,level,30,,2,30,1,1,1,1,4,23,7,37,WateringCan,aid_loctext_pinata_text_avatar_wateringcan_6,wateringcan__name,4125
+﻿ap_control,ap_item_type,shop_section,display_name,internal_name,native_tag,source_ordinal,original_unlock_conditions,unlock_type,unlock_level,unlock_trigger_tags,expected_pending_mask,q1_level,q2_tag,q3_tag,q4_tag,q5_tag,q6_numeric,q7_numeric,q8_numeric,native_class,native_class_name,localization_id,localization_key,base_price
+0,,Candy,Amber Golf Candy,Sweet_golfamber,1378,99,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,35,Sweet,aid_loctext_pinata_text_avatar_sweet_26,sweet__name,5
+0,,Candy,Blue Golf Candy,Sweet_golfblue,1377,98,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,35,Sweet,aid_loctext_pinata_text_avatar_sweet_25,sweet__name,5
+0,,Candy,Green Golf Candy,Sweet_golfgreen,1376,97,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,35,Sweet,aid_loctext_pinata_text_avatar_sweet_24,sweet__name,5
+1,useful,Candy,Happy Candy,Sweet_happy,1370,94,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,35,Sweet,aid_loctext_pinata_text_avatar_sweet_18,sweet__name,200
+1,useful,Candy,Joy Candy,Sweet_joyous,1371,95,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,35,Sweet,aid_loctext_pinata_text_avatar_sweet_19,sweet__name,500
+0,,Candy,Red Golf Candy,Sweet_golfred,1375,96,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,35,Sweet,aid_loctext_pinata_text_avatar_sweet_23,sweet__name,5
+1,useful,Candy,Romance Candy,Sweet_romance,1373,93,Gardener Level >= 3,level,3,,2,3,1,1,1,1,4,23,7,35,Sweet,aid_loctext_pinata_text_avatar_sweet_21,sweet__name,100
+0,,Fence,Birdproof Fence,Fence_birdproof,986,138,Gardener Level >= 16,level,16,,2,16,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_14,fence__name,99
+0,,Fence,Birdproof Gate,Fence_birdproofgate,987,139,Gardener Level >= 16,level,16,,2,16,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_15,fence__name,111
+0,,Fence,Hedge,Fence_hedge,975,137,Gardener Level >= 14,level,14,,2,14,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_3,fence__name,50
+0,,Fence,Iron Gate,Fence_irongate,978,141,Gardener Level >= 18,level,18,,2,18,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_6,fence__name,105
+0,,Fence,Iron Railings,Fence_iron,982,140,Gardener Level >= 18,level,18,,2,18,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_10,fence__name,75
+0,,Fence,Oak Gate,Fence_oakgate,979,143,Gardener Level >= 22,level,22,,2,22,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_7,fence__name,140
+0,,Fence,Stone Wall,Fence_stone,977,142,Gardener Level >= 22,level,22,,2,22,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_5,fence__name,105
+0,,Fence,Wire Fence,Fence_wire,981,133,Gardener Level >= 2,level,2,,2,2,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_9,fence__name,5
+0,,Fence,Wooden Fence,Fence_twobar,973,134,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_1,fence__name,15
+0,,Fence,Wooden Gate,Fence_twobargate,974,135,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_2,fence__name,30
+0,,Fence,Wooden Picket Fence,Fence_picket,980,136,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,13,Fence,aid_loctext_pinata_text_avatar_fence_8,fence__name,30
+0,,Fertilizer,Blue,Fertiliser_blue,1847,7,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_3,fertiliser__name,30
+0,,Fertilizer,Brown,Fertiliser_brown,1851,8,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_7,fertiliser__name,45
+0,,Fertilizer,Green,Fertiliser_green,1848,9,Gardener Level >= 14,level,14,,2,14,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_4,fertiliser__name,63
+0,,Fertilizer,Orange,Fertiliser_orange,1850,3,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_6,fertiliser__name,3
+0,,Fertilizer,Purple,Fertiliser_purple,1849,4,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_5,fertiliser__name,9
+0,,Fertilizer,Red,Fertiliser_red,1845,6,Gardener Level >= 9,level,9,,2,9,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_1,fertiliser__name,18
+0,,Fertilizer,Special Mix Fertilizer,Fertiliser_beggarsmix,1853,10,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_9,fertiliser__name,63
+0,,Fertilizer,Yellow,Fertiliser_yellow,1846,5,Gardener Level >= 9,level,9,,2,9,1,1,1,1,4,23,7,14,Fertiliser,aid_loctext_pinata_text_avatar_fertiliser_2,fertiliser__name,3
+0,,Fruit,Acorn,Fruit_acorn,332,117,kind14 acquisition/appearance tag == 332 (Fruit_acorn),acquisition/appearance,,332:Fruit_acorn,4,0,332,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_1,fruit__name,110
+0,,Fruit,Apple,Fruit_apple,333,101,kind14 acquisition/appearance tag == 333 (Fruit_apple),acquisition/appearance,,333:Fruit_apple,4,0,333,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_2,fruit__name,6
+0,,Fruit,Banana,Fruit_banana,334,110,kind14 acquisition/appearance tag == 334 (Fruit_banana),acquisition/appearance,,334:Fruit_banana,4,0,334,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_3,fruit__name,56
+0,,Fruit,Blackberry,Fruit_blackberry,346,102,kind14 acquisition/appearance tag == 346 (Fruit_blackberry),acquisition/appearance,,346:Fruit_blackberry,4,0,346,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_15,fruit__name,12
+0,,Fruit,Blue Gem,Fruit_bluegem,350,112,kind14 acquisition/appearance tag == 350 (Fruit_bluegem),acquisition/appearance,,350:Fruit_bluegem,4,0,350,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_19,fruit__name,72
+0,,Fruit,Blueberry,Fruit_zz3blueberry,358,106,kind14 acquisition/appearance tag == 358 (Fruit_zz3blueberry),acquisition/appearance,,358:Fruit_zz3blueberry,4,0,358,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_27,fruit__name,30
+0,,Fruit,Coconut,Fruit_zz3coconut,355,116,kind14 acquisition/appearance tag == 355 (Fruit_zz3coconut),acquisition/appearance,,355:Fruit_zz3coconut,4,0,355,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_24,fruit__name,90
+0,,Fruit,Fir Cone,Fruit_fircone,338,105,kind14 acquisition/appearance tag == 338 (Fruit_fircone),acquisition/appearance,,338:Fruit_fircone,4,0,338,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_7,fruit__name,20
+0,,Fruit,Gooseberry,Fruit_gooseberry,347,104,kind14 acquisition/appearance tag == 347 (Fruit_gooseberry),acquisition/appearance,,347:Fruit_gooseberry,4,0,347,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_16,fruit__name,20
+0,,Fruit,Green Gem,Fruit_greengem,351,113,kind14 acquisition/appearance tag == 351 (Fruit_greengem),acquisition/appearance,,351:Fruit_greengem,4,0,351,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_20,fruit__name,72
+0,,Fruit,Hazelnut,Fruit_hazelnut,340,103,kind14 acquisition/appearance tag == 340 (Fruit_hazelnut),acquisition/appearance,,340:Fruit_hazelnut,4,0,340,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_9,fruit__name,12
+0,,Fruit,Holly Berry,Fruit_zz1hollyberry,345,100,Gardener Level >= 2 OR kind14 acquisition/appearance tag == 345 (Fruit_zz1hollyberry),level OR acquisition/appearance,2,345:Fruit_zz1hollyberry,6,2,345,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_14,fruit__name,6
+0,,Fruit,Monkeynut,Fruit_monkeynut,342,109,kind14 acquisition/appearance tag == 342 (Fruit_monkeynut),acquisition/appearance,,342:Fruit_monkeynut,4,0,342,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_11,fruit__name,42
+0,,Fruit,Nightshade Berry,Fruit_deadlynightshade,337,108,kind14 acquisition/appearance tag == 337 (Fruit_deadlynightshade),acquisition/appearance,,337:Fruit_deadlynightshade,4,0,337,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_6,fruit__name,42
+0,,Fruit,Orange,Fruit_zz2orange,343,107,kind14 acquisition/appearance tag == 343 (Fruit_zz2orange),acquisition/appearance,,343:Fruit_zz2orange,4,0,343,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_12,fruit__name,30
+0,,Fruit,Purple Gem,Fruit_purplegem,352,115,kind14 acquisition/appearance tag == 352 (Fruit_purplegem),acquisition/appearance,,352:Fruit_purplegem,4,0,352,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_21,fruit__name,72
+0,,Fruit,Red Gem,Fruit_redgem,353,111,kind14 acquisition/appearance tag == 353 (Fruit_redgem),acquisition/appearance,,353:Fruit_redgem,4,0,353,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_22,fruit__name,72
+0,,Fruit,Yellow Gem,Fruit_yellowgem,354,114,kind14 acquisition/appearance tag == 354 (Fruit_yellowgem),acquisition/appearance,,354:Fruit_yellowgem,4,0,354,1,1,1,4,23,7,17,Fruit,aid_loctext_pinata_text_avatar_fruit_23,fruit__name,72
+1,progression,Garden Items,Barrel,Prop_barrel,755,201,Gardener Level >= 29,level,29,,2,29,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_26,prop__name,300
+1,progression,Garden Items,Bird and Bear Statue,Prop_banjostatue,736,190,Gardener Level >= 17,level,17,,2,17,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_7,prop__name,200
+1,progression,Garden Items,Birdbath,Prop_birdbath1,739,200,Gardener Level >= 28,level,28,,2,28,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_10,prop__name,250
+0,,Garden Items,Bolt,Prop_indbolt,892,165,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_163,prop__name,40
+0,,Garden Items,Bonboon Block,Prop_totemmandrill,863,229,Gardener Level >= 40,level,40,,2,40,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_134,prop__name,7500
+0,,Garden Items,Box 'O' Booty Island,Prop_pirisland,915,207,Gardener Level >= 30,level,30,,2,30,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_186,prop__name,500
+1,useful,Garden Items,Captains Cutlass,Prop_sword,757,193,Gardener Level >= 35,level,35,,2,35,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_28,prop__name,10000
+0,,Garden Items,Cartwheel,Prop_cartwheel,759,156,Gardener Level >= 2,level,2,,2,2,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_30,prop__name,20
+0,,Garden Items,Catwalk Footlights,Prop_faslight,912,146,Gardener Level >= 19,level,19,,2,19,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_183,prop__name,200
+0,,Garden Items,Cocoadile Block,Prop_totemcrocodile,861,227,Gardener Level >= 34,level,34,,2,34,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_132,prop__name,4000
+0,,Garden Items,Crowla Block,Prop_totemcrow,862,223,Gardener Level >= 22,level,22,,2,22,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_133,prop__name,3000
+0,,Garden Items,Danger Lights,Prop_spalights,923,154,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,27,Prop,aid_loctext_pinata_text_avatar_prop_194,prop__name,650
+1,useful,Garden Items,Dastardos Scarer,Prop_mumbostatue,820,191,Gardener Level >= 40,level,40,,2,40,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_91,prop__name,2100
+0,,Garden Items,Decoy Piñata,Prop_fakepinata,871,210,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_142,prop__name,750
+0,,Garden Items,Deep Space Detector Array,Prop_spadish,922,213,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,27,Prop,aid_loctext_pinata_text_avatar_prop_193,prop__name,600
+0,,Garden Items,Disco speakers,Prop_discocontrol,767,171,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_38,prop__name,500
+0,,Garden Items,Fallin' Rocks,Prop_pirrocks,916,208,Gardener Level >= 31,level,31,,2,31,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_187,prop__name,600
+0,,Garden Items,Fir Tree Log,Prop_firtreelog,821,159,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_92,prop__name,30
+1,progression,Garden Items,Firebrand,Prop_lantern,730,144,Gardener Level >= 3,level,3,,2,3,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_1,prop__name,100
+1,progression,Garden Items,Fish Fountain,Prop_fountain1,749,185,Gardener Level >= 14,level,14,,2,14,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_20,prop__name,150
+0,,Garden Items,Flower Carving,Prop_woodenflower,758,175,Gardener Level >= 9 OR kind17 value == 2 (queue8; gameplay meaning unresolved),level OR queue8,9,,258,9,1,1,1,1,4,23,2,27,Prop,aid_loctext_pinata_text_avatar_prop_29,prop__name,200
+0,,Garden Items,Gallows Lantern,Prop_pirlantern,919,150,Gardener Level >= 33,level,33,,2,33,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_190,prop__name,650
+0,,Garden Items,Glow Rocks,Prop_glowrock,751,176,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_22,prop__name,100
+0,,Garden Items,Glum Roger,Prop_pirjollyroger,918,209,Gardener Level >= 32,level,32,,2,32,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_189,prop__name,600
+0,,Garden Items,Golf Flag,Prop_golfflag,807,174,kind17 value == 5 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,5,27,Prop,aid_loctext_pinata_text_avatar_prop_78,prop__name,400
+1,progression,Garden Items,Hay Bale,Prop_haybail,745,188,Gardener Level >= 16,level,16,,2,16,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_16,prop__name,110
+0,,Garden Items,Hollow Log,Prop_appletreelog,823,158,Gardener Level >= 4,level,4,,2,4,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_94,prop__name,30
+0,,Garden Items,Jade Statue,Prop_orijadestatue,888,206,Gardener Level >= 43,level,43,,2,43,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_159,prop__name,900
+0,,Garden Items,Jake 'O' Lighting,Prop_spolight,925,155,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,27,Prop,aid_loctext_pinata_text_avatar_prop_196,prop__name,650
+0,,Garden Items,Jar 'o' Light,Prop_jamjar,830,145,Gardener Level >= 15,level,15,,2,15,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_101,prop__name,130
+1,useful,Garden Items,Lantern O' Loot,Prop_minerslantern,772,196,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_43,prop__name,160
+0,,Garden Items,Lemmoning Block,Prop_totemlemming,801,220,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_72,prop__name,2000
+0,,Garden Items,Limeoceros Block,Prop_totemrhino,800,230,Gardener Level >= 43,level,43,,2,43,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_71,prop__name,7500
+0,,Garden Items,Lipstick,Prop_faslipstick,908,179,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_179,prop__name,120
+0,,Garden Items,Macaraccoon Block,Prop_totemraccoon,865,226,Gardener Level >= 31,level,31,,2,31,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_136,prop__name,4000
+0,,Garden Items,Mallowolf Block,Prop_totemwolf,867,228,Gardener Level >= 37,level,37,,2,37,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_138,prop__name,6000
+1,progression,Garden Items,Milk Churn,Prop_milkchurn,746,197,Gardener Level >= 24,level,24,,2,24,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_17,prop__name,210
+0,,Garden Items,Mirror,Prop_fasmirror,909,181,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_180,prop__name,190
+1,progression,Garden Items,Moon-on-a-Stick,Prop_moonlantern,764,152,Gardener Level >= 39,level,39,,2,39,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_35,prop__name,700
+0,,Garden Items,Mummy's Turntable,Prop_turntable,732,172,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_3,prop__name,500
+0,,Garden Items,Music Stand,Prop_musstand,899,199,Gardener Level >= 28,level,28,,2,28,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_170,prop__name,320
+0,,Garden Items,Oil Lamp,Prop_oillmap,831,148,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_102,prop__name,230
+0,,Garden Items,Oriental Gateway,Prop_origateway,884,204,Gardener Level >= 41,level,41,,2,41,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_155,prop__name,800
+0,,Garden Items,Ornamental Stones,Prop_housestones,742,160,Gardener Level >= 4,level,4,,2,4,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_13,prop__name,20
+0,,Garden Items,Paper Lantern,Prop_orilantern,885,151,Gardener Level >= 36,level,36,,2,36,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_156,prop__name,750
+0,,Garden Items,Paper Screen,Prop_oriscreen,887,202,Gardener Level >= 29,level,29,,2,29,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_158,prop__name,500
+1,progression,Garden Items,Pile of Leaves,Prop_leafpile,753,161,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_24,prop__name,20
+0,,Garden Items,Pipework,Prop_indpipe,893,167,Gardener Level >= 8,level,8,,2,8,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_164,prop__name,50
+1,progression,Garden Items,Pirate Statue,Prop_statue,731,189,Gardener Level >= 24,level,24,,2,24,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_2,prop__name,240
+0,,Garden Items,Profitamole Block,Prop_totemmole,864,222,Gardener Level >= 19,level,19,,2,19,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_135,prop__name,3000
+1,progression,Garden Items,Red Eye Rainbow,Prop_rainbow,822,177,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_93,prop__name,560
+0,,Garden Items,Ruins of the Lost City of Gumbolia,Prop_advruin,845,212,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,27,Prop,aid_loctext_pinata_text_avatar_prop_116,prop__name,1000
+0,,Garden Items,S'morepion Block,Prop_totemscorpion,802,224,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_73,prop__name,3000
+0,,Garden Items,Saucer of Peril,Prop_spaufo,921,214,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,27,Prop,aid_loctext_pinata_text_avatar_prop_192,prop__name,800
+0,,Garden Items,Scary Burning Torch,Prop_advlight,844,153,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,27,Prop,aid_loctext_pinata_text_avatar_prop_115,prop__name,750
+0,,Garden Items,Scissors,Prop_fasscissors,910,183,Gardener Level >= 23,level,23,,2,23,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_181,prop__name,230
+0,,Garden Items,Shellybean Block,Prop_totemsnail,866,219,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_137,prop__name,1200
+0,,Garden Items,Sherbat Block,Prop_totembat,860,221,Gardener Level >= 16,level,16,,2,16,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_131,prop__name,2000
+0,,Garden Items,Shoe Statue,Prop_fasshoe,911,182,Gardener Level >= 21,level,21,,2,21,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_182,prop__name,210
+0,,Garden Items,Smelba Block,Prop_totemskunk,799,225,Gardener Level >= 28,level,28,,2,28,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_70,prop__name,4000
+0,,Garden Items,Spanner,Prop_indspanner,896,169,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_167,prop__name,120
+0,,Garden Items,Stage Light,Prop_muslight,903,149,Gardener Level >= 26,level,26,,2,26,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_174,prop__name,240
+0,,Garden Items,Stove,Prop_indstove,894,164,Gardener Level >= 4,level,4,,2,4,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_165,prop__name,60
+0,,Garden Items,Sundial,Prop_sundial1,769,184,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_40,prop__name,130
+1,progression,Garden Items,Surfboard,Prop_surfboard,743,187,Gardener Level >= 15,level,15,,2,15,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_14,prop__name,170
+0,,Garden Items,Swan Fountain,Prop_fountain2,750,186,Gardener Level >= 27,level,27,,2,27,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_21,prop__name,250
+0,,Garden Items,Sword Mk2,Prop_sword2,834,192,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_105,prop__name,140
+0,,Garden Items,The Resting Dead,Prop_spogravestone,924,216,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,27,Prop,aid_loctext_pinata_text_avatar_prop_195,prop__name,600
+0,,Garden Items,The Silver Dart,Prop_advplane,847,211,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,27,Prop,aid_loctext_pinata_text_avatar_prop_118,prop__name,800
+0,,Garden Items,The Wealthy Dead,Prop_spotomb,926,217,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,27,Prop,aid_loctext_pinata_text_avatar_prop_197,prop__name,800
+1,progression,Garden Items,Tombstone,Prop_tombstone,765,215,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_36,prop__name,170
+0,,Garden Items,Toxic Drum,Prop_toxicbarrel,768,170,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_39,prop__name,40
+0,,Garden Items,Vase,Prop_vase,832,178,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_103,prop__name,150
+0,,Garden Items,Vent,Prop_indvent,897,168,Gardener Level >= 9,level,9,,2,9,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_168,prop__name,60
+1,useful,Garden Items,Water Waiver,Prop_flag1,766,173,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_37,prop__name,720
+0,,Garden Items,Wind chime Mk1,Prop_windchime,744,194,Gardener Level >= 19,level,19,,2,19,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_15,prop__name,160
+0,,Garden Items,Wind chime Mk2,Prop_windchime2,833,195,Gardener Level >= 26,level,26,,2,26,1,1,1,1,4,23,7,27,Prop,aid_loctext_pinata_text_avatar_prop_104,prop__name,240
+0,,Garden Items,Wishing Well,Prop_wishingwell,798,218,kind17 value == 1 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,1,27,Prop,aid_loctext_pinata_text_avatar_prop_69,prop__name,500
+0,,Packet,Long Grass Packet,Packet_grasslong,952,15,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,23,Packet,aid_loctext_pinata_text_avatar_packet_2,packet__name,1125
+0,,Paving, Showbiz,Paving_hollywood,1426,40,kind17 value == 3 (queue8; gameplay meaning unresolved),queue8,,,256,0,1,1,1,1,4,23,3,24,Paving,aid_loctext_pinata_text_avatar_paving_9,paving__name,105
+0,,Paving,Bendy Track,Paving_trackcorner,1429,29,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_12,paving__name,50
+0,,Paving,Block Paving,Paving_block,1420,26,Gardener Level >= 8,level,8,,2,8,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_3,paving__name,30
+0,,Paving,Ceramic Paving,Paving_oripaving,1422,39,Gardener Level >= 37,level,37,,2,37,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_5,paving__name,30
+0,,Paving,Cobblestones,Paving_cobble,1423,17,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_6,paving__name,15
+0,,Paving,Crazy Paving,Paving_crazy,1421,35,Gardener Level >= 14,level,14,,2,14,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_4,paving__name,50
+0,,Paving,Disco Paving,Paving_discoblue,1441,18,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
+0,,Paving,Disco Paving,Paving_discored,1442,19,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
+0,,Paving,Disco Paving,Paving_discogreen,1443,20,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
+0,,Paving,Disco Paving,Paving_discoyellow,1444,22,Gardener Level >= 6,level,6,,2,6,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
+0,,Paving,Disco Paving,Paving_discowhite,1445,21,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
+0,,Paving,Disco Paving,Paving_discopink,1446,23,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_24,paving__name,15
+0,,Paving,Flagstones of Fear,Paving_spopaving,1424,43,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,24,Paving,aid_loctext_pinata_text_avatar_paving_7,paving__name,30
+0,,Paving,Golden Paving,Paving_golden,1447,44,Gardener Level >= 26,level,26,,2,26,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_30,paving__name,15
+0,,Paving,Junction Track,Paving_trackcross,1431,31,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_14,paving__name,50
+0,,Paving,Moon Walk,Paving_spapaving,1440,42,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,24,Paving,aid_loctext_pinata_text_avatar_paving_23,paving__name,30
+0,,Paving,Octagonal Paving,Paving_octagonal,1427,36,Gardener Level >= 17,level,17,,2,17,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_10,paving__name,75
+0,,Paving,Polished Catwalk,Paving_faspaving,1434,33,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_17,paving__name,30
+0,,Paving,Pressed Steel,Paving_indpaving,1436,24,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_19,paving__name,30
+0,,Paving,Red Carpet,Paving_fasredcarpet,1435,34,Gardener Level >= 18,level,18,,2,18,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_18,paving__name,30
+0,,Paving,Relic Tiles,Paving_advpaving,1433,41,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,24,Paving,aid_loctext_pinata_text_avatar_paving_16,paving__name,30
+0,,Paving,Riveted Panels,Paving_indrivetpaving,1437,25,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_20,paving__name,30
+0,,Paving,Shivverme Timbers,Paving_pirpaving,1425,38,Gardener Level >= 34,level,34,,2,34,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_8,paving__name,30
+0,,Paving,Slab Paving,Paving_slab,1418,27,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_1,paving__name,15
+0,,Paving,Stone Paving,Paving_stone,1419,16,Gardener Level >= 2,level,2,,2,2,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_2,paving__name,5
+0,,Paving,Stone Score,Paving_muspaving,1438,37,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_21,paving__name,30
+0,,Paving,Straight Track,Paving_trackstraight,1428,28,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_11,paving__name,50
+0,,Paving,T-Junction Track,Paving_trackjunction,1430,30,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_13,paving__name,50
+0,,Paving,Turntable Track,Paving_trackturntable,1432,32,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,24,Paving,aid_loctext_pinata_text_avatar_paving_15,paving__name,50
+1,progression,Produce,Bone,Produce_bone,705,128,Gardener Level >= 13,level,13,,2,13,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_26,produce__name,100
+1,progression,Produce,Bread,Produce_bread,691,127,Gardener Level >= 7,level,7,,2,7,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_12,produce__name,60
+1,progression,Produce,Honey,Produce_honey,680,129,Gardener Level >= 3,level,3,,2,3,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_1,produce__name,100
+1,progression,Produce,Milk,Produce_milk,681,131,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_2,produce__name,280
+0,,Produce,Red Bone,Produce_dinoredbone,720,132,Gardener Level >= 45,level,45,,2,45,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_41,produce__name,100
+0,,Produce,Wool,Produce_wool,682,130,Gardener Level >= 9,level,9,,2,9,1,1,1,1,4,23,7,25,Produce,aid_loctext_pinata_text_avatar_produce_3,produce__name,210
+1,progression,Seed,Apple Seed,Seed_apple,478,57,Gardener Level >= 11 OR kind14 acquisition/appearance tag == 478 (Seed_apple),level OR acquisition/appearance,11,478:Seed_apple,6,11,478,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_48,seed__name,6
+1,progression,Seed,Banana Seed,Seed_banana,483,85,Gardener Level >= 37 OR kind14 acquisition/appearance tag == 483 (Seed_banana),level OR acquisition/appearance,37,483:Seed_banana,6,37,483,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_53,seed__name,56
+1,progression,Seed,Bird of Paradise,Seed_birdofparadiseplant,448,87,Gardener Level >= 40 OR kind14 acquisition/appearance tag == 448 (Seed_birdofparadiseplant),level OR acquisition/appearance,40,448:Seed_birdofparadiseplant,6,40,448,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_18,seed__name,72
+1,progression,Seed,Blackberry Seed,Seed_blackberrybush,482,59,Gardener Level >= 12 OR kind14 acquisition/appearance tag == 482 (Seed_blackberrybush),level OR acquisition/appearance,12,482:Seed_blackberrybush,6,12,482,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_52,seed__name,12
+1,progression,Seed,Bluebell Seed,Seed_bluebell,443,51,Gardener Level >= 7 OR kind14 acquisition/appearance tag == 443 (Seed_bluebell),level OR acquisition/appearance,7,443:Seed_bluebell,6,7,443,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_13,seed__name,6
+1,progression,Seed,Blueberry Bush Seed,Seed_zz3blueberrybush,490,70,Gardener Level >= 19 OR kind14 acquisition/appearance tag == 490 (Seed_zz3blueberrybush),level OR acquisition/appearance,19,490:Seed_zz3blueberrybush,6,19,490,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_60,seed__name,30
+1,progression,Seed,Bullrush Seed,Seed_bulrush,462,84,Gardener Level >= 36 OR kind14 acquisition/appearance tag == 462 (Seed_bulrush),level OR acquisition/appearance,36,462:Seed_bulrush,6,36,462,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_32,seed__name,56
+1,progression,Seed,Buttercup Seed,Seed_buttercup,442,45,Immediate publication at source initialization (zero pending mask),initial,,,0,0,1,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_12,seed__name,2
+1,progression,Seed,Cactus Seed,Seed_zz2cactus,452,86,Gardener Level >= 38 OR kind14 acquisition/appearance tag == 452 (Seed_zz2cactus),level OR acquisition/appearance,38,452:Seed_zz2cactus,6,38,452,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_22,seed__name,72
+1,progression,Seed,Carrot Seed,Seed_carrot,431,47,Gardener Level >= 4 OR kind14 acquisition/appearance tag == 431 (Seed_carrot),level OR acquisition/appearance,4,431:Seed_carrot,6,4,431,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_1,seed__name,2
+1,progression,Seed,Chili Seed,Seed_chilli,435,66,Gardener Level >= 14 OR kind14 acquisition/appearance tag == 435 (Seed_chilli),level OR acquisition/appearance,14,435:Seed_chilli,6,14,435,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_5,seed__name,20
+1,progression,Seed,Corn Seed,Seed_maize,438,56,Gardener Level >= 10 OR kind14 acquisition/appearance tag == 438 (Seed_maize),level OR acquisition/appearance,10,438:Seed_maize,6,10,438,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_8,seed__name,6
+1,progression,Seed,Daisy Seed,Seed_daisy,441,46,Immediate publication at source initialization (zero pending mask),initial,,,0,0,1,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_11,seed__name,2
+1,progression,Seed,Dandelion Seed,Seed_zz3dandelion,474,58,Gardener Level >= 11 OR kind14 acquisition/appearance tag == 474 (Seed_zz3dandelion),level OR acquisition/appearance,11,474:Seed_zz3dandelion,6,11,474,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_44,seed__name,12
+1,progression,Seed,Fir Seed,Seed_fir,481,69,Gardener Level >= 18 OR kind14 acquisition/appearance tag == 481 (Seed_fir),level OR acquisition/appearance,18,481:Seed_fir,6,18,481,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_51,seed__name,20
+1,progression,Seed,Fireweed Seed,Seed_zz1fireweed,472,68,Gardener Level >= 16 OR kind14 acquisition/appearance tag == 472 (Seed_zz1fireweed),level OR acquisition/appearance,16,472:Seed_zz1fireweed,6,16,472,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_42,seed__name,20
+1,progression,Seed,Garlic Seed,Seed_zz3garlic,433,65,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 433 (Seed_zz3garlic),level OR acquisition/appearance,13,433:Seed_zz3garlic,6,13,433,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_3,seed__name,20
+1,progression,Seed,Gem Seed,Seed_gem,485,88,Gardener Level >= 42 OR kind14 acquisition/appearance tag == 485 (Seed_gem),level OR acquisition/appearance,42,485:Seed_gem,6,42,485,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_55,seed__name,72
+1,progression,Seed,Gooseberry Seed,Seed_gooseberrybush,484,67,Gardener Level >= 15 OR kind14 acquisition/appearance tag == 484 (Seed_gooseberrybush),level OR acquisition/appearance,15,484:Seed_gooseberrybush,6,15,484,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_54,seed__name,20
+1,progression,Seed,Hazelnut Seed,Seed_hazelnut,479,61,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 479 (Seed_hazelnut),level OR acquisition/appearance,13,479:Seed_hazelnut,6,13,479,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_49,seed__name,12
+1,progression,Seed,Hemlock Seed,Seed_zz3hemlock,473,74,Gardener Level >= 25 OR kind14 acquisition/appearance tag == 473 (Seed_zz3hemlock),level OR acquisition/appearance,25,473:Seed_zz3hemlock,6,25,473,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_43,seed__name,22
+1,progression,Seed,Holly Bush Seed,Seed_zz1hollybush,491,52,Gardener Level >= 7 OR kind14 acquisition/appearance tag == 491 (Seed_zz1hollybush),level OR acquisition/appearance,7,491:Seed_zz1hollybush,6,7,491,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_61,seed__name,6
+1,progression,Seed,Monkeynut Seed,Seed_monkeynut,487,82,Gardener Level >= 34 OR kind14 acquisition/appearance tag == 487 (Seed_monkeynut),level OR acquisition/appearance,34,487:Seed_monkeynut,6,34,487,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_57,seed__name,42
+1,progression,Seed,Nightshade Seed,Seed_nightshadebush,488,78,Gardener Level >= 30 OR kind14 acquisition/appearance tag == 488 (Seed_nightshadebush),level OR acquisition/appearance,30,488:Seed_nightshadebush,6,30,488,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_58,seed__name,42
+1,progression,Seed,Oak Seed,Seed_oak,480,91,Gardener Level >= 48 OR kind14 acquisition/appearance tag == 480 (Seed_oak),level OR acquisition/appearance,48,480:Seed_oak,6,48,480,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_50,seed__name,275
+1,progression,Seed,Orange Tree Seed,Seed_zz2orange,492,76,Gardener Level >= 27 OR kind14 acquisition/appearance tag == 492 (Seed_zz2orange),level OR acquisition/appearance,27,492:Seed_zz2orange,6,27,492,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_62,seed__name,30
+1,progression,Seed,Orchid Seed,Seed_orchid,449,90,Gardener Level >= 46 OR kind14 acquisition/appearance tag == 449 (Seed_orchid),level OR acquisition/appearance,46,449:Seed_orchid,6,46,449,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_19,seed__name,90
+1,progression,Seed,Palm Seed,Seed_zz3palmtree,493,89,Gardener Level >= 45 OR kind14 acquisition/appearance tag == 493 (Seed_zz3palmtree),level OR acquisition/appearance,45,493:Seed_zz3palmtree,6,45,493,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_63,seed__name,90
+1,progression,Seed,Pea Seed,Seed_zz3pea,466,75,Gardener Level >= 26 OR kind14 acquisition/appearance tag == 466 (Seed_zz3pea),level OR acquisition/appearance,26,466:Seed_zz3pea,6,26,466,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_36,seed__name,30
+1,progression,Seed,Poison Ivy Seed,Seed_poisonivy,468,63,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 468 (Seed_poisonivy),level OR acquisition/appearance,13,468:Seed_poisonivy,6,13,468,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_38,seed__name,12
+1,progression,Seed,Poppy Seed,Seed_poppy,444,55,Gardener Level >= 10 OR kind14 acquisition/appearance tag == 444 (Seed_poppy),level OR acquisition/appearance,10,444:Seed_poppy,6,10,444,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_14,seed__name,6
+1,progression,Seed,Prickly Pear Seed,Seed_zz2pricklypear,471,80,Gardener Level >= 32 OR kind14 acquisition/appearance tag == 471 (Seed_zz2pricklypear),level OR acquisition/appearance,32,471:Seed_zz2pricklypear,6,32,471,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_41,seed__name,42
+1,progression,Seed,Pumpkin Seed,Seed_pumpkin,434,60,Gardener Level >= 12 OR kind14 acquisition/appearance tag == 434 (Seed_pumpkin),level OR acquisition/appearance,12,434:Seed_pumpkin,6,12,434,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_4,seed__name,12
+1,progression,Seed,Radish Seed,Seed_zz1radish,439,54,Gardener Level >= 8 OR kind14 acquisition/appearance tag == 439 (Seed_zz1radish),level OR acquisition/appearance,8,439:Seed_zz1radish,6,8,439,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_9,seed__name,12
+1,progression,Seed,Rose Seed,Seed_zz3rose,454,83,Gardener Level >= 35 OR kind14 acquisition/appearance tag == 454 (Seed_zz3rose),level OR acquisition/appearance,35,454:Seed_zz3rose,6,35,454,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_24,seed__name,56
+1,progression,Seed,Snapdragon Seed,Seed_snapdragon,447,79,Gardener Level >= 31 OR kind14 acquisition/appearance tag == 447 (Seed_snapdragon),level OR acquisition/appearance,31,447:Seed_snapdragon,6,31,447,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_17,seed__name,42
+1,progression,Seed,Snowdrop Seed,Seed_zz1snowdrop,451,53,Gardener Level >= 8 OR kind14 acquisition/appearance tag == 451 (Seed_zz1snowdrop),level OR acquisition/appearance,8,451:Seed_zz1snowdrop,6,8,451,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_21,seed__name,12
+1,progression,Seed,Sunflower Seed,Seed_sunflower,445,64,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 445 (Seed_sunflower),level OR acquisition/appearance,13,445:Seed_sunflower,6,13,445,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_15,seed__name,20
+1,progression,Seed,Thistle Seed,Seed_thistle,467,49,Gardener Level >= 6 OR kind14 acquisition/appearance tag == 467 (Seed_thistle),level OR acquisition/appearance,6,467:Seed_thistle,6,6,467,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_37,seed__name,6
+1,progression,Seed,Tiger Lily Seed,Seed_zz3tigerlily,453,81,Gardener Level >= 33 OR kind14 acquisition/appearance tag == 453 (Seed_zz3tigerlily),level OR acquisition/appearance,33,453:Seed_zz3tigerlily,6,33,453,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_23,seed__name,42
+1,progression,Seed,Toadstool Seed,Seed_toadstool,469,71,Gardener Level >= 20 OR kind14 acquisition/appearance tag == 469 (Seed_toadstool),level OR acquisition/appearance,20,469:Seed_toadstool,6,20,469,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_39,seed__name,20
+1,progression,Seed,Tulip Seed,Seed_tulip,446,72,Gardener Level >= 22 OR kind14 acquisition/appearance tag == 446 (Seed_tulip),level OR acquisition/appearance,22,446:Seed_tulip,6,22,446,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_16,seed__name,30
+1,progression,Seed,Turnip Seed,Seed_turnip,432,48,Gardener Level >= 4 OR kind14 acquisition/appearance tag == 432 (Seed_turnip),level OR acquisition/appearance,4,432:Seed_turnip,6,4,432,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_2,seed__name,2
+1,progression,Seed,Venus Piñata Trap,Seed_venusflytrap,470,77,Gardener Level >= 28 OR kind14 acquisition/appearance tag == 470 (Seed_venusflytrap),level OR acquisition/appearance,28,470:Seed_venusflytrap,6,28,470,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_40,seed__name,30
+1,progression,Seed,Water Lily Seed,Seed_waterlily,461,73,Gardener Level >= 24 OR kind14 acquisition/appearance tag == 461 (Seed_waterlily),level OR acquisition/appearance,24,461:Seed_waterlily,6,24,461,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_31,seed__name,30
+1,progression,Seed,Watercress Seed,Seed_watercress,460,62,Gardener Level >= 13 OR kind14 acquisition/appearance tag == 460 (Seed_watercress),level OR acquisition/appearance,13,460:Seed_watercress,6,13,460,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_30,seed__name,12
+1,progression,Seed,Yam Seed,Seed_zz2yam,440,50,Gardener Level >= 6 OR kind14 acquisition/appearance tag == 440 (Seed_zz2yam),level OR acquisition/appearance,6,440:Seed_zz2yam,6,6,440,1,1,1,4,23,7,28,Seed,aid_loctext_pinata_text_avatar_seed_10,seed__name,6
+0,,Spade Part,Chocolate Sniffer,SpadePart_extra1,1156,233,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,33,SpadePart,aid_loctext_pinata_text_avatar_spadepart_46,spadepart__name,450
+0,,Spade Part,Dastardos Head,SpadePart_head5,1116,231,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,33,SpadePart,aid_loctext_pinata_text_avatar_spadepart_6,spadepart__name,2100
+0,,Spade Part,Platinum Shovel Handle,SpadePart_handle6,1139,232,Gardener Level >= 30,level,30,,2,30,1,1,1,1,4,23,7,33,SpadePart,aid_loctext_pinata_text_avatar_spadepart_29,spadepart__name,1125
+0,,Toys,Battle Ready Armor,ZZToy_tank,2229,610,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_6,zztoy__name,700
+0,,Toys,Chew Chew Train,ZZToy_sweettrain,2234,612,Gardener Level >= 35,level,35,,2,35,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_11,zztoy__name,800
+0,,Toys,Conveyer,ZZToy_indconveyer,2237,617,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_14,zztoy__name,200
+0,,Toys,Fashion SLR,ZZToy_fascamera,2242,618,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_19,zztoy__name,300
+0,,Toys,Furraree,ZZToy_sportscar,2231,608,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_8,zztoy__name,550
+0,,Toys,Gong,ZZToy_origong,2243,624,Gardener Level >= 29,level,29,,2,29,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_20,zztoy__name,550
+0,,Toys,Kettle Drum,ZZToy_muskettle,2248,623,Gardener Level >= 35,level,35,,2,35,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_25,zztoy__name,360
+0,,Toys,Mine Cart,ZZToy_minecart,2249,614,Gardener Level >= 26,level,26,,2,26,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_26,zztoy__name,500
+0,,Toys,Piano,ZZToy_muspiano,2244,620,Gardener Level >= 23,level,23,,2,23,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_21,zztoy__name,310
+0,,Toys,Pink Princess-Devil o' the 7 Seas,ZZToy_pirclock,2240,625,Gardener Level >= 32,level,32,,2,32,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_17,zztoy__name,650
+0,,Toys,Poised Pengum,ZZToy_plane,2236,615,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_13,zztoy__name,1200
+0,,Toys,Spectral Locomotive,ZZToy_ghosttrain,2235,616,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_12,zztoy__name,1000
+0,,Toys,Station,ZZToy_station,2225,604,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_2,zztoy__name,150
+0,,Toys,Statue of the Great Gobstobbler,ZZToy_advsign,2239,627,kind16 value == 17 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,17,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_16,zztoy__name,1100
+0,,Toys,Stop Sign,ZZToy_stopsign,2226,605,Gardener Level >= 12,level,12,,2,12,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_3,zztoy__name,110
+0,,Toys,The Intrepid Voyager,ZZToy_sparocket,2238,626,kind16 value == 3 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,3,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_15,zztoy__name,1000
+0,,Toys,The Restless Dead,ZZToy_spocoffin,2241,628,kind16 value == 6 (queue7; gameplay meaning unresolved),queue7,,,128,0,1,1,1,1,4,6,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_18,zztoy__name,900
+0,,Toys,The Road Hog,ZZToy_dragster,2232,613,Gardener Level >= 40,level,40,,2,40,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_9,zztoy__name,1000
+0,,Toys,Trumpet,ZZToy_mustrumpet,2246,622,Gardener Level >= 29,level,29,,2,29,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_23,zztoy__name,330
+0,,Toys,Urny's Milk Float,ZZToy_milkfloat,2233,609,Gardener Level >= 25,level,25,,2,25,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_10,zztoy__name,600
+0,,Toys,Wild Cat Fulldozer,ZZToy_bulldozer,2230,611,Gardener Level >= 30,level,30,,2,30,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_7,zztoy__name,750
+0,,Toys,Woo Two Train,ZZToy_train2,2228,607,Gardener Level >= 15,level,15,,2,15,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_5,zztoy__name,300
+0,,Toys,Woo Woo Train,ZZToy_steamtrain,2224,606,Gardener Level >= 11,level,11,,2,11,1,1,1,1,4,23,7,42,ZZToy,aid_loctext_pinata_text_avatar_zztoy_1,zztoy__name,250
+0,,Vegetable,Carrot,Vegetable_carrot,1649,118,kind14 acquisition/appearance tag == 1649 (Vegetable_carrot),acquisition/appearance,,1649:Vegetable_carrot,4,0,1649,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_1,vegetable__name,10
+0,,Vegetable,Chili,Vegetable_chilli,1653,125,kind14 acquisition/appearance tag == 1653 (Vegetable_chilli),acquisition/appearance,,1653:Vegetable_chilli,4,0,1653,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_5,vegetable__name,100
+0,,Vegetable,Corn,Vegetable_maize,1656,122,kind14 acquisition/appearance tag == 1656 (Vegetable_maize),acquisition/appearance,,1656:Vegetable_maize,4,0,1656,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_8,vegetable__name,30
+0,,Vegetable,Garlic,Vegetable_zz3garlic,1651,124,kind14 acquisition/appearance tag == 1651 (Vegetable_zz3garlic),acquisition/appearance,,1651:Vegetable_zz3garlic,4,0,1651,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_3,vegetable__name,100
+0,,Vegetable,Pea,Vegetable_zz3pea,1655,126,kind14 acquisition/appearance tag == 1655 (Vegetable_zz3pea),acquisition/appearance,,1655:Vegetable_zz3pea,4,0,1655,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_7,vegetable__name,100
+0,,Vegetable,Pumpkin,Vegetable_pumpkin,1652,123,kind14 acquisition/appearance tag == 1652 (Vegetable_pumpkin),acquisition/appearance,,1652:Vegetable_pumpkin,4,0,1652,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_4,vegetable__name,60
+0,,Vegetable,Radish,Vegetable_zz1radish,1657,121,kind14 acquisition/appearance tag == 1657 (Vegetable_zz1radish),acquisition/appearance,,1657:Vegetable_zz1radish,4,0,1657,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_9,vegetable__name,60
+0,,Vegetable,Turnip,Vegetable_turnip,1650,119,kind14 acquisition/appearance tag == 1650 (Vegetable_turnip),acquisition/appearance,,1650:Vegetable_turnip,4,0,1650,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_2,vegetable__name,10
+0,,Vegetable,Yam,Vegetable_zz2yam,1658,120,Immediate publication at source initialization (zero pending mask),initial,,,0,0,1,1,1,1,4,23,7,36,Vegetable,aid_loctext_pinata_text_avatar_vegetable_10,vegetable__name,30
+0,,Watering Can,Everpour 5000 Watering Can,WateringCan_5,933,13,Gardener Level >= 20,level,20,,2,20,1,1,1,1,4,23,7,37,WateringCan,aid_loctext_pinata_text_avatar_wateringcan_5,wateringcan__name,2700
+0,,Watering Can,Glass Watering Can,WateringCan_4,932,12,Gardener Level >= 10,level,10,,2,10,1,1,1,1,4,23,7,37,WateringCan,aid_loctext_pinata_text_avatar_wateringcan_4,wateringcan__name,1575
+0,,Watering Can,Gold Watering Can,WateringCan_3,931,11,Gardener Level >= 5,level,5,,2,5,1,1,1,1,4,23,7,37,WateringCan,aid_loctext_pinata_text_avatar_wateringcan_3,wateringcan__name,750
+0,,Watering Can,One Pour Wonder,WateringCan_6,934,14,Gardener Level >= 30,level,30,,2,30,1,1,1,1,4,23,7,37,WateringCan,aid_loctext_pinata_text_avatar_wateringcan_6,wateringcan__name,4125

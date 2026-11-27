@@ -20,7 +20,11 @@ BLUEPRINT_ID_BASE = 100
 GARDEN_ITEM_ID_BASE = 200
 PRODUCE_ITEM_ID_BASE = 300
 CANDY_ITEM_ID_BASE = 320
+SEED_ITEM_ID_BASE = 400
 ACCESSORY_ITEM_ID_BASE = 500
+
+# Catalog Cleanup for large datasets
+lottie_catalog_rows = list(data.catalog_costolot.items())
 
 # Pinata Homes (Used for Romance Goal, Romance Checks, XP)
 unique_home_names = sorted(
@@ -43,41 +47,38 @@ paperpet_items = {
     for index, name in enumerate(data.catalog_paperpets)
 }
 
+# Seeds (Progression, Core of the AP)
+seed_items = {
+    f"{name}s": ItemData(
+        SEED_ITEM_ID_BASE + index,
+        ItemClassification.progression,
+    )
+    for index, (name, row) in enumerate(lottie_catalog_rows)
+    if row["ap_control"] == "1" and row["shop_section"] == "Seed"
+}
+
 # Garden Items (Useful & Progression)
 garden_items = {
-    "Captains Cutlass": ItemData(GARDEN_ITEM_ID_BASE, ItemClassification.useful),
-    "Dastardos Scarer": ItemData(GARDEN_ITEM_ID_BASE + 1, ItemClassification.useful),
-    "Pirate Statue": ItemData(GARDEN_ITEM_ID_BASE + 2, ItemClassification.progression),
-    "Red Eye Rainbow": ItemData(
-        GARDEN_ITEM_ID_BASE + 3, ItemClassification.progression
-    ),
-    "Water Waiver": ItemData(GARDEN_ITEM_ID_BASE + 4, ItemClassification.useful),
-    "Moon-on-a-Stick": ItemData(
-        GARDEN_ITEM_ID_BASE + 5, ItemClassification.progression
-    ),
-    "Firebrand": ItemData(GARDEN_ITEM_ID_BASE + 6, ItemClassification.progression),
-    "Fish Fountain": ItemData(GARDEN_ITEM_ID_BASE + 7, ItemClassification.progression),
-    "Hay Bale": ItemData(GARDEN_ITEM_ID_BASE + 8, ItemClassification.progression),
-    "Milk Churn": ItemData(GARDEN_ITEM_ID_BASE + 9, ItemClassification.progression),
-    "Pile of Leaves": ItemData(
-        GARDEN_ITEM_ID_BASE + 10, ItemClassification.progression
-    ),
-    "Lantern O' Loot": ItemData(GARDEN_ITEM_ID_BASE + 11, ItemClassification.useful),
-    "Surfboard": ItemData(GARDEN_ITEM_ID_BASE + 12, ItemClassification.progression),
-    "Tombstone": ItemData(GARDEN_ITEM_ID_BASE + 13, ItemClassification.progression),
-    "Barrel": ItemData(GARDEN_ITEM_ID_BASE + 14, ItemClassification.progression),
-    "Bird and Bear Statue": ItemData(
-        GARDEN_ITEM_ID_BASE + 15, ItemClassification.progression
-    ),
-    "Birdbath": ItemData(GARDEN_ITEM_ID_BASE + 16, ItemClassification.progression),
+    name: ItemData(
+        GARDEN_ITEM_ID_BASE + index,
+        (
+            ItemClassification.useful
+            if row["ap_item_type"] == "useful"
+            else ItemClassification.progression
+        ),
+    )
+    for index, (name, row) in enumerate(lottie_catalog_rows)
+    if row["ap_control"] == "1" and row["shop_section"] == "Garden Items"
 }
 
 # Produce
 produce_items = {
-    "Honey": ItemData(PRODUCE_ITEM_ID_BASE, ItemClassification.progression),
-    "Milk": ItemData(PRODUCE_ITEM_ID_BASE + 1, ItemClassification.progression),
-    "Bone": ItemData(PRODUCE_ITEM_ID_BASE + 2, ItemClassification.progression),
-    "Bread": ItemData(PRODUCE_ITEM_ID_BASE + 3, ItemClassification.progression),
+    name: ItemData(
+        PRODUCE_ITEM_ID_BASE + index,
+        ItemClassification.progression,
+    )
+    for index, (name, row) in enumerate(lottie_catalog_rows)
+    if row["ap_control"] == "1" and row["shop_section"] == "Produce"
 }
 
 # Candy
@@ -93,12 +94,12 @@ chocolate_coins = {
     "500 Coins": ItemData(COIN_ID_BASE + 1, ItemClassification.useful),
 }
 
-
 # Every possible item
 all_items = {
     **chocolate_coins,
     **pinata_home_blueprints,
     **garden_items,
+    **seed_items,
     **produce_items,
     **candy_items,
     **paperpet_items,
