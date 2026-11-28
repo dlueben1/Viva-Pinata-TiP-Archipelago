@@ -75,8 +75,7 @@ internal static class CoinRewards
         {
             try
             {
-                // Max(0) initializes a missing key and returns the existing total otherwise.
-                stored ??= await StoreAtLeastAsync(session, 0, cancel);
+                stored ??= await LoadCounterAsync(session, cancel);
                 var history = session.Items.AllItemsReceived;
                 if (!ReferenceEquals(history, previousHistory))
                 {
@@ -127,6 +126,18 @@ internal static class CoinRewards
             if (!cancel.IsCancellationRequested)
                 ready = false;
         }
+    }
+
+    private static async Task<long> LoadCounterAsync(ArchipelagoSession session, CancellationToken cancel)
+    {
+        cancel.ThrowIfCancellationRequested();
+        var counter = session.DataStorage[Scope.Slot, StorageKey];
+        // Explicitly supply the default. Some servers compare Max's operand with null for a missing key.
+        counter.Initialize(0L);
+        var value = await counter.GetAsync().WaitAsync(TimeSpan.FromSeconds(5), cancel);
+        if (value is null || value.Type != JTokenType.Integer || (long)value < 0)
+            throw new InvalidOperationException("The server did not return an initialized coin counter.");
+        return (long)value;
     }
 
     private static async Task<long> StoreAtLeastAsync(ArchipelagoSession session, long total, CancellationToken cancel)
