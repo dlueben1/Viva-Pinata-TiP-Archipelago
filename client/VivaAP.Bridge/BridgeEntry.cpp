@@ -97,9 +97,7 @@ extern "C" REXFABRIC_MOD_EXPORT int RexFabricModInit(
     {
         MessageBoxW(
             nullptr,
-            L"Viva Pinata Archipelago requires the "
-            L"TiPAP launcher.\n\n"
-            L"Please start the game through TiPAP.exe "
+            L"Open the Archipelago Launcher, choose Launch TiP, "
             L"and select your Archipelago patch file.\n\n"
             L"The Archipelago mod will be disabled "
             L"for this session. The game can continue normally.",

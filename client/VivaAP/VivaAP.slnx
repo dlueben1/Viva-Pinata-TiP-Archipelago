@@ -9,5 +9,4 @@
   </Folder>
   <Project Path="../VivaAP.Bridge/VivaAP.Bridge.vcxproj" Id="0f2637ce-e014-42aa-a982-1d6591a44008" />
   <Project Path="../VivaAP.Client/VivaAP.Client.csproj" />
-  <Project Path="../VivaAP.Launcher/VivaAP.Launcher.csproj" Id="6272ee33-ccca-4d81-ab7d-331bef9db6f3" />
 </Solution>
