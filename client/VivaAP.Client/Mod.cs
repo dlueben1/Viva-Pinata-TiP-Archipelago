@@ -4,6 +4,8 @@ using VivaAP.Client.Hooks;
 using VivaAP.Client.Interop;
 using VivaAP.Client.Utils;
 using VivaAP.Client.Patches;
+using VivaAP.Client.Patches.MainMenu;
+using VivaAP.Client.Patches.SeedBag;
 using VivaAP.Client.Patches.Seedos;
 
 namespace VivaAP.Client;
@@ -54,7 +56,13 @@ public static class Mod
                     return 0;
                 }
 
-                PatchManager.Start(SeedosPatches.Create(), SeedosPatches.Dependencies);
+                PatchManager.Start(
+                    [.. SeedosPatches.Create(), new Patch_SeedBagAdmission(), new Patch_SeedBagMembership(),
+                        new Patch_SeedBagEligibility(),
+                        new Patch_MainMenuSetup(), new Patch_MainMenuSelection(), new Patch_MainMenuPresentation()],
+                    [.. SeedosPatches.Dependencies, .. Patch_SeedBagEligibility.Dependencies,
+                        .. MainMenuAvailability.Dependencies]
+                );
 
                 // Register the hooks from each feature's observer
                 hooks = new GameHooks();
