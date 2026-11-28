@@ -64,3 +64,7 @@ The architecture, features, and final code are all written and maintained by me.
 With respect to @SolarCookies wishes, I have not used AI to run against any of their code specific to the recomp - I've only used it against the original Xbox 360 disassembly.
 
 I'm also a human who makes mistakes, so if anything seems wrong with the repo, please reach out and I'd be happy to resolve any issues!
+
+## Credits
+
+Credit to StarlightNebula for the amazing logo!

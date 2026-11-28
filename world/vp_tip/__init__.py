@@ -1,4 +1,4 @@
-from worlds.LauncherComponents import Component, Type, components, launch
+from worlds.LauncherComponents import Component, Type, components, icon_paths, launch
 
 from .world import TIPWorld
 
@@ -13,5 +13,6 @@ def launch_tip(*_args):
     launch(_run_launcher, name="Launch TiP")
 
 
-components.append(Component("Launch TiP", func=launch_tip, component_type=Type.TOOL,
+icon_paths["vp_tip"] = f"ap:{__name__}/VPTIP_AP_Logo_Squared.png"
+components.append(Component("Launch TiP", func=launch_tip, component_type=Type.TOOL, icon="vp_tip",
                             description="Launch ReTiP with your Archipelago patch and connection settings."))
