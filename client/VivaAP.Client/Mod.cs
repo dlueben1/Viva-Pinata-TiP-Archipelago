@@ -59,9 +59,10 @@ public static class Mod
                 PatchManager.Start(
                     [.. SeedosPatches.Create(), new Patch_SeedBagAdmission(), new Patch_SeedBagMembership(),
                         new Patch_SeedBagEligibility(),
-                        new Patch_MainMenuSetup(), new Patch_MainMenuSelection(), new Patch_MainMenuPresentation()],
+                        new Patch_MainMenuSetup(), new Patch_MainMenuSelection(), new Patch_MainMenuPresentation(),
+                        new Patch_CoinRewards()],
                     [.. SeedosPatches.Dependencies, .. Patch_SeedBagEligibility.Dependencies,
-                        .. MainMenuAvailability.Dependencies]
+                        .. MainMenuAvailability.Dependencies, Patch_CoinRewards.Credit]
                 );
 
                 // Register the hooks from each feature's observer
@@ -127,6 +128,7 @@ public static class Mod
             try
             {
                 PatchManager.Stop();
+                CoinRewards.Disconnect();
                 NativeStateSynchronizer.Stop();
                 hooks?.Dispose();
             }

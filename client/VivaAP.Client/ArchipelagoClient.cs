@@ -8,10 +8,7 @@ namespace VivaAP.Client
 {
     public static class ArchipelagoClient
     {
-        /// <summary>
-        /// Lock so that we only process one Archipelago message at a time
-        /// </summary>
-        private static readonly object _lock = new();
+        private static bool nativeItemsStarted;
 
         public static string? Host { get; set; }
         public static int? Port { get; set; }
@@ -63,12 +60,18 @@ namespace VivaAP.Client
         {
             try
             {
-                session = ArchipelagoSessionFactory.CreateSession(host, port);
+                CoinRewards.Disconnect();
+                // A re-login to the launched room keeps the library's receipt handler attached.
+                session ??= ArchipelagoSessionFactory.CreateSession(host, port);
 
                 await session.ConnectAsync();
 
-                // Attach the Native Event Handler before connecting, because items can flood in
-                NativeStateSynchronizer.Start();
+                // Attach before login so the initial receipt history reaches the native unlock handler.
+                if (!nativeItemsStarted)
+                {
+                    NativeStateSynchronizer.Start();
+                    nativeItemsStarted = true;
+                }
 
                 var result = await session.LoginAsync(
                     "Viva Pinata: Trouble in Paradise",
@@ -83,6 +86,7 @@ namespace VivaAP.Client
                     return false;
                 }
 
+                CoinRewards.Start(session);
                 LogUtility.Info($"Connected to Archipelago as {slot}");
                 return true;
             }
